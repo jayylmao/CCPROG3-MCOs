@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Driver {
 	/**
 	 * Instantiates the driver class and invokes the main menu.
-	 * @param args
+	 * @param args Arguments for invoking the Driver class from the console.
 	 */
 	public static void main(String[] args) {
 		Driver driver = new Driver();
@@ -235,6 +235,7 @@ public class Driver {
 			System.out.print(String.format("[%02d.] ", i + 1));
 			System.out.println("Name: " + hotels.get(i).getName());
 			System.out.println("      Rooms: " + hotels.get(i).getRoomCount());
+			System.out.println("      Occupied: " + hotels.get(i).getOccuipedRoomCount() + " Free: " + hotels.get(i).getFreeRoomCount());
 			System.out.println("      Base price: ₱" + hotels.get(i).getBasePrice() + "\n");
 		}
 
@@ -251,6 +252,6 @@ public class Driver {
 	}
 
 	private void bookingMenu(HotelReservationSystem rSystem) {
-		printHeader("Booking");
+		printHeader("Book a room");
 	}
 }

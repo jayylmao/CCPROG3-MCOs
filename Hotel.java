@@ -13,9 +13,9 @@ public class Hotel {
 	 * List of rooms in the hotel.
 	 * Constraints: Must be between 1 - 50.
 	 */
-	private ArrayList<Room> rooms = new ArrayList<Room>();
+	private ArrayList<Room> rooms;
 
-	private ArrayList<Room> reservations = new ArrayList<Room>();
+	private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
 
 	/**
 	 * How much a room costs per night.
@@ -34,7 +34,13 @@ public class Hotel {
 	public Hotel(String name, int roomCount, float basePrice) {
 		this.name = name;
 		this.roomCount = roomCount;
+		rooms = new ArrayList<Room>(roomCount);
+
 		this.basePrice = basePrice;
+
+		for (int i = 0; i < roomCount; i++) {
+			rooms.add(new Room(String.format("%03d", i + 1)));
+		}
 	}
 
 	public String getName() {
@@ -61,6 +67,28 @@ public class Hotel {
 		return roomCount;
 	}
 
+	public int getFreeRoomCount() {
+		int count = 0;
+		for (int i = 0; i < rooms.size(); i++) {
+			if (!rooms.get(i).isOccupied()) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
+	public int getOccuipedRoomCount() {
+		int count = 0;
+		for (int i = 0; i < rooms.size(); i++) {
+			if (rooms.get(i).isOccupied()) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
 	public int getReservationCount() {
 		return reservations.size();
 	}
@@ -75,15 +103,6 @@ public class Hotel {
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	/**
-	 * Initialize all rooms in the hotel's list as blank rooms.
-	 */
-	public void initializeRooms() {
-		for (int i = 0; i < roomCount; i++) {
-			rooms.set(i, new Room(String.format("%03d", i + 1)));
 		}
 	}
 }

@@ -10,11 +10,10 @@ public class Room {
 	/**
 	 * A flag that checks if the Room is occupied or not.
 	 */
-	private boolean occupied;
+	private boolean occupied = false;
 
 	public Room() {
 		name = "";
-		occupied = false;
 	}
 
 	public Room(String roomName) {
