@@ -12,11 +12,29 @@ public class Room {
 	 */
 	private boolean occupied;
 
+	public Room() {
+		name = "";
+		occupied = false;
+	}
+
+	public Room(String roomName) {
+		name = roomName;
+		occupied = false;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public boolean isOccupied() {
 		return occupied;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setOccupationState(boolean occupied) {
+		this.occupied = occupied;
 	}
 }

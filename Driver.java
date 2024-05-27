@@ -20,6 +20,7 @@ public class Driver {
 	private void mainMenu() {
 		HotelReservationSystem rSystem = new HotelReservationSystem();
 		Scanner scanner = new Scanner(System.in);
+
 		int menuOption;
 
 		do {
@@ -41,6 +42,14 @@ public class Driver {
 
 			System.out.print("[/]: Select a menu option: ");
 
+			// Input validation.
+			while (!scanner.hasNextInt()) {
+				System.out.println("[*]: Enter a number from 0 - 4.");
+				scanner.next();
+
+				System.out.print("[/]: Select a menu option: ");
+			}
+
 			menuOption = scanner.nextInt();
 
 			switch (menuOption) {
@@ -51,13 +60,16 @@ public class Driver {
 					rSystem.createHotel(newHotel);
 					break;
 				case 2:
-					viewHotelMenu();
+					viewHotelMenu(rSystem.getHotels());
 					break;
 				case 3:
 					manageHotelMenu();
 					break;
 				case 4:
 					listHotelsMenu(rSystem.getHotels());
+					break;
+				case 5:
+					bookingMenu(rSystem);
 					break;
 				default:
 					System.out.println("[*]: Invalid input.");
@@ -68,6 +80,10 @@ public class Driver {
 		scanner.close();
 	}
 
+	/**
+	 * Standardized way of printing a menu header.
+	 * @param messageString Header title.
+	 */
 	private void printHeader(String messageString) {
 		int length = messageString.length();
 
@@ -84,6 +100,11 @@ public class Driver {
 		System.out.print("\n");
 	}
 
+	/**
+	 * Shows the user a menu to create a hotel.
+	 * @param rSystem Instance of the reservation system and its methods.
+	 * @return Created hotel.
+	 */
 	private Hotel createHotelMenu(HotelReservationSystem rSystem) {
 		Scanner hotelCreateScanner = new Scanner(System.in); // Closing this causes a NoSuchElement exception?
 		String name = "";
@@ -113,6 +134,12 @@ public class Driver {
 					printHeader("Create a hotel - Room count");
 					do {
 						System.out.print("Enter the number of rooms in the hotel: ");
+
+						while (!hotelCreateScanner.hasNextInt()) {
+							System.out.println("[*]: Enter a valid integer from 0 - 50.");
+							hotelCreateScanner.next();
+						}
+
 						roomCount = hotelCreateScanner.nextInt();
 					} while (roomCount < 1 || roomCount > 50);
 
@@ -122,6 +149,12 @@ public class Driver {
 					printHeader("Create a hotel - Base room price");
 					do {
 						System.out.print("Enter the base price of the rooms in the hotel: ");
+
+						while (!hotelCreateScanner.hasNextFloat()) {
+							System.out.println("[*]: Enter a valid number greater than or equal to 100.");
+							hotelCreateScanner.next();
+						}
+
 						basePrice = hotelCreateScanner.nextFloat();
 					} while (basePrice < 100.0);
 
@@ -135,6 +168,12 @@ public class Driver {
 						System.out.println("Base room price: ₱" + basePrice);
 
 						System.out.print("[/]: Input '0' to exit: ");
+
+						while (!hotelCreateScanner.hasNextInt()) {
+							System.out.println("[*]: Enter a '0' or one of the menu options.");
+							hotelCreateScanner.next();
+						}
+
 						reviewInput = hotelCreateScanner.nextInt();
 					} while (reviewInput != 0);
 
@@ -148,9 +187,37 @@ public class Driver {
 		return new Hotel(name, roomCount, basePrice);
 	}
 
-	private void viewHotelMenu() {
-		printHeader("View a hotel");
+	/**
+	 * Shows the user a menu to view a hotel.
+	 */
+	private void viewHotelMenu(ArrayList<Hotel> hotels) {
+		Scanner viewMenuScanner = new Scanner(System.in);
+		String input;
+		boolean hotelFound = false;
+		Hotel currentHotel;
 
+		do {
+			printHeader("View a hotel");
+			System.out.print("Enter the name of the hotel you want to view, or '0' to exit: ");
+			input = viewMenuScanner.nextLine();
+
+			for (int i = 0; i < hotels.size(); i++) {
+				if (hotels.get(i).getName().equals(input)) {
+					hotelFound = true;
+					currentHotel = hotels.get(i);
+
+					System.out.println("Name: " + currentHotel.getName());
+					System.out.println("Rooms: " + currentHotel.getRoomCount());
+					System.out.println("Estimate Earnings: ₱" + currentHotel.getReservationCount() * currentHotel.getBasePrice() + "\n");
+
+					break;
+				}
+			}
+
+			if (!hotelFound) {
+				System.out.println("[*]: No hotel was found with that name.");
+			}
+		} while (!input.equals("0"));
 	}
 
 	private void manageHotelMenu() {
@@ -173,7 +240,17 @@ public class Driver {
 
 		do {
 			System.out.print("[/]: Input '0' to exit: ");
+
+			while (!listScanner.hasNextInt()) {
+				System.out.println("[*]: Enter a '0' to go back to the menu.");
+				listScanner.next();
+			}
+
 			input = listScanner.nextInt();
 		} while (input != 0);
+	}
+
+	private void bookingMenu(HotelReservationSystem rSystem) {
+		printHeader("Booking");
 	}
 }

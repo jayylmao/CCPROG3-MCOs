@@ -61,6 +61,10 @@ public class Hotel {
 		return roomCount;
 	}
 
+	public int getReservationCount() {
+		return reservations.size();
+	}
+
 	public float getBasePrice() {
 		return basePrice;
 	}
@@ -71,6 +75,15 @@ public class Hotel {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	/**
+	 * Initialize all rooms in the hotel's list as blank rooms.
+	 */
+	public void initializeRooms() {
+		for (int i = 0; i < roomCount; i++) {
+			rooms.set(i, new Room(String.format("%03d", i + 1)));
 		}
 	}
 }
