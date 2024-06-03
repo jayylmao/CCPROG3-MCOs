@@ -2,24 +2,16 @@
  * The Reservation class defines a reservation and its corresponding details.
  */
 public class Reservation {
-	/**
-	 * The first name of the guest.
-	 */
+	/** The first name of the guest. */
 	private String firstName;
 
-	/**
-	 * The last name of the guest.
-	 */
+	/** The last name of the guest. */
 	private String lastName;
 
-	/**
-	 * The check-in date.
-	 */
+	/** The check-in date. */
 	private Date checkIn;
 
-	/**
-	 * The check-out date.
-	 */
+	/** The check-out date. */
 	private Date checkOut;
 
 	public String getFirstName() {

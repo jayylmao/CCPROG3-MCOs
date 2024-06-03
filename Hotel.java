@@ -4,9 +4,7 @@ import java.util.ArrayList;
  * The Hotel class defines a hotel with a name, an array of rooms, and a base room price.
  */
 public class Hotel {
-	/**
-	 * Name of the hotel.
-	 */
+	/** Name of the hotel. */
 	private String name;
 
 	/**
@@ -22,7 +20,7 @@ public class Hotel {
 	 * All rooms in the hotel cost the same.
 	 * Constraints: Must be >= 100.
 	 */
-	private float basePrice;
+	private double basePrice;
 
 	private int roomCount;
 
@@ -31,13 +29,17 @@ public class Hotel {
 	 * @param name Name of hotel.
 	 * @param roomCount How many rooms are in the hotel.
 	 */
-	public Hotel(String name, int roomCount, float basePrice) {
+	public Hotel(String name, int roomCount) {
 		this.name = name;
 		this.roomCount = roomCount;
+
+		// Create new ArrayList instance rooms.
 		rooms = new ArrayList<Room>(roomCount);
 
-		this.basePrice = basePrice;
+		// Default room base price is 1299 as per spec.
+		this.basePrice = 1299;
 
+		// Initialize rooms when creating the hotel.
 		for (int i = 0; i < roomCount; i++) {
 			rooms.add(new Room(String.format("%03d", i + 1)));
 		}
@@ -51,6 +53,11 @@ public class Hotel {
 		return rooms;
 	}
 
+	/**
+	 * getRoom() takes a room name and searches the hotel for a room with that name.
+	 * @param inputRoomName Name to search for.
+	 * @return Room object with matching name.
+	 */
 	public Room getRoom(String inputRoomName) {
 		Room blankRoom = new Room();
 
@@ -67,7 +74,11 @@ public class Hotel {
 		return roomCount;
 	}
 
-	public int getFreeRoomCount() {
+	/**
+	 * getFreeRoomCount() returns the number of rooms in the hotel that are not occupied.
+	 * @return Number of unoccupied (free) rooms.
+	 */
+	public int getAvailableRoomCount() {
 		int count = 0;
 		for (int i = 0; i < rooms.size(); i++) {
 			if (!rooms.get(i).isOccupied()) {
@@ -78,7 +89,11 @@ public class Hotel {
 		return count;
 	}
 
-	public int getOccuipedRoomCount() {
+	/**
+	 * getOccupiedRoomCount() returns the number of rooms in the hotel that are occupied.
+	 * @return Number of occupied rooms.
+	 */
+	public int getBookedRoomCount() {
 		int count = 0;
 		for (int i = 0; i < rooms.size(); i++) {
 			if (rooms.get(i).isOccupied()) {
@@ -89,14 +104,28 @@ public class Hotel {
 		return count;
 	}
 
+	/**
+	 * getReservation() returns the nth reservation from the list of reservations in the hotel.
+	 * @param n Number in the reservation list.
+	 * @return nth reservation in the list.
+	 */
+	public Reservation getReservation(int n) {
+		return reservations.get(n);
+	}
+
 	public int getReservationCount() {
 		return reservations.size();
 	}
 
-	public float getBasePrice() {
+	public double getBasePrice() {
 		return basePrice;
 	}
 
+	/**
+	 * addRoom() adds a room to the hotel as long as doing so does not cause the number of rooms to exceed the specified room count.
+	 * @param room Room to add to the hotel.
+	 * @return Boolean informing the caller if the operation was successful or not.
+	 */
 	public boolean addRoom(Room room) {
 		if (rooms.size() < roomCount) {
 			rooms.add(room);

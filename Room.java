@@ -12,6 +12,15 @@ public class Room {
 	 */
 	private boolean occupied = false;
 
+	/**
+	 * We have a couple options for how to design this. Should we:
+	 * a.) Put the reservation instance in the room instance when a reservation is made
+	 * b.) Have a string roomName in each reservation instance that gets updated when a reservation is made
+	 * c.) Do both
+	 * ?
+	 */
+	private Reservation reservation;
+
 	public Room() {
 		name = "";
 	}

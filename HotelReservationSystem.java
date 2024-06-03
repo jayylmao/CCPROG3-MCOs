@@ -24,7 +24,17 @@ public class HotelReservationSystem {
 	}
 
 	/**
+	 * Returns the number of hotels in the list.
+	 * @return Number of hotels in the list.
+	 */
+	public int getHotelCount() {
+		return getHotels().size();
+	}
+
+	/**
 	 * Checks each hotel in the list to see if there are any duplicate names.
+	 * @param name String to check against list of hotel names to check for duplicate.
+	 * @return Boolean that indicates if a duplicate was found or not.
 	 */
 	public boolean isDuplicate(String name) {
 		String currentHotelName;
