@@ -206,9 +206,47 @@ public class Driver {
 		} while (!input.equals("0"));
 	}
 
+	/**
+	 * Shows the submenu that lets the user manage individual hotels.
+	 */
 	private void manageHotelMenu() {
-		printHeader("Manage a hotel");
+		Hotel currentHotel;
+		int input;
 
+		// Return to main menu if no hotels are in the list.
+		if (rSystem.getHotelCount() < 1) {
+			System.out.println("[*]: There are no hotels registered in the system. Add one from the 'Create Hotel' menu. ");
+			return;
+		}
+
+		printHeader("Manage a hotel");
+		for (int i = 0; i < rSystem.getHotelCount(); i++) {
+			currentHotel = rSystem.getHotels().get(i);
+			System.out.print(String.format("[%02d.] ", i + 1));
+			System.out.println("Name: " + currentHotel.getName());
+			System.out.println("      Rooms: " + currentHotel.getRoomCount());
+			System.out.println("      Booked: " + currentHotel.getBookedRoomCount() + " Available: " + currentHotel.getAvailableRoomCount());
+			System.out.println("      Base price: ₱" + currentHotel.getBasePrice() + "\n");
+		}
+
+		// TODO: get user input to choose hotel from list.
+
+		do {
+			System.out.println("[0.] Back to main menu");
+			System.out.println("Go back to the main menu.");
+
+			System.out.println("[1.] Change hotel name");
+			System.out.println("Go back to the main menu.");
+
+			System.out.print("[/]: Select a menu option: ");
+
+			while (!scanner.hasNextInt()) {
+				System.out.print("[/]: Select a menu option from 0 - 3: ");
+				scanner.nextLine();
+			}
+
+			input = Integer.parseInt(scanner.nextLine());
+		} while (input != 0);
 	}
 
 	/**

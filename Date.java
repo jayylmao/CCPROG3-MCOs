@@ -11,9 +11,17 @@ public class Date {
 	private int minute;
 
 	public Date(int date, int month, int year) {
-		this.date = date;
-		this.month = month;
-		this.year = year;
+		if (date < 1 || date > 31) {
+			throw new IllegalArgumentException("Invalid date entered: " + date);
+		} else if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("Invalid month entered: " + month);
+		} else if (year < 1) {
+			throw new IllegalArgumentException("Invalid year entered: " + year);
+		} else {
+			this.date = date;
+			this.month = month;
+			this.year = year;
+		}
 	}
 
 	public Date(int date, int month, int year, int hour, int minute) {
@@ -48,5 +56,18 @@ public class Date {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+
+	/**
+	 * Returns a date object containing the difference between the date object and another given as a parameter.
+	 * @param otherDate Other date object to get difference of. (otherDate - this date object).
+	 * @return Difference in dates as object.
+	 */
+	public Date getDateDifference(Date otherDate) {
+		int dateDiff = otherDate.getDate() - getDate();
+		int monthDiff = otherDate.getMonth() - getMonth();
+		int yearDiff = otherDate.getYear() - getYear();
+
+		return new Date(dateDiff, monthDiff, yearDiff);
 	}
 }

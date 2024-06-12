@@ -14,6 +14,9 @@ public class Reservation {
 	/** The check-out date. */
 	private Date checkOut;
 
+	/** The price reserved by the guest at the time of booking. */
+	private double reservedPrice;
+
 	public String getFirstName() {
 		return firstName;
 	}
