@@ -8,7 +8,7 @@ public class HotelReservationSystem {
 	private ArrayList<Hotel> hotels = new ArrayList<Hotel>();
 
 	/**
-	 * Creates a hotel and stores it in the list.
+	 * Adds a hotel and stores it in the list.
 	 * @param hotel Hotel object to add to the list.
 	 */
 	public void addHotel(Hotel hotel) {

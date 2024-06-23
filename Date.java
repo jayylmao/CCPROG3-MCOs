@@ -3,35 +3,35 @@
  * It is to be used to store the date of a reservation.
  */
 public class Date {
-	private int date;
+	private int day;
 	private int month;
 	private int year;
 
 	private int hour;
 	private int minute;
 
-	public Date(int date, int month, int year) {
-		if (date < 1 || date > 31) {
-			throw new IllegalArgumentException("Invalid date entered: " + date);
+	public Date(int day, int month, int year) {
+		if (day < 1 || day > 31) {
+			throw new IllegalArgumentException("Invalid date entered: " + day);
 		} else if (month < 1 || month > 12) {
 			throw new IllegalArgumentException("Invalid month entered: " + month);
 		} else if (year < 1) {
 			throw new IllegalArgumentException("Invalid year entered: " + year);
 		} else {
-			this.date = date;
+			this.day = day;
 			this.month = month;
 			this.year = year;
 		}
 	}
 
-	public Date(int date, int month, int year, int hour, int minute) {
-		this(date, month, year);
+	public Date(int day, int month, int year, int hour, int minute) {
+		this(day, month, year);
 		this.hour = hour;
 		this.minute = minute;
 	}
 
-	public int getDate() {
-		return date;
+	public int getDay() {
+		return day;
 	}
 
 	public int getMonth() {
@@ -42,12 +42,20 @@ public class Date {
 		return year;
 	}
 
+	public int getHour() {
+		return hour;
+	}
+
+	public int getMinute() {
+		return minute;
+	}
+
 	public String getTime() {
 		return String.format("%02d", hour) + ":" + String.format("%02d", minute);
 	}
 
-	public void setDate(int date) {
-		this.date = date;
+	public void setDay(int day) {
+		this.day = day;
 	}
 
 	public void setMonth(int month) {
@@ -64,10 +72,50 @@ public class Date {
 	 * @return Difference in dates as object.
 	 */
 	public Date getDateDifference(Date otherDate) {
-		int dateDiff = otherDate.getDate() - getDate();
+		int dateDiff = otherDate.getDay() - getDay();
 		int monthDiff = otherDate.getMonth() - getMonth();
 		int yearDiff = otherDate.getYear() - getYear();
 
 		return new Date(dateDiff, monthDiff, yearDiff);
+	}
+
+	public boolean isBefore(Date date) {
+		if(date.getYear() < this.year) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() < this.month) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() < this.day) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() < this.hour) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() <= this.minute) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public boolean isAfter(Date date) {
+		if(date.getYear() > this.year) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() > this.month) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() > this.day) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() > this.hour) {
+			return true;
+		}
+		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() >= this.minute) {
+			return true;
+		}
+		
+		return false;
 	}
 }

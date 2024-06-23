@@ -46,6 +46,18 @@ public class Reservation {
 		return false;
 	}
 
+	public void setReservedPrice(double reservedPrice) {
+		this.reservedPrice = reservedPrice;
+	}
+
+	public double getReservedPrice() {
+		return reservedPrice;
+	}
+
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+
 	public Date getCheckIn() {
 		return checkIn;
 	}
@@ -56,13 +68,13 @@ public class Reservation {
 
 	public void setCheckIn(int month, int date, int year) {
 		checkIn.setMonth(month);
-		checkIn.setDate(date);
+		checkIn.setDay(date);
 		checkIn.setYear(year);
 	}
 
 	public void setCheckOut(int month, int date, int year) {
 		checkOut.setMonth(month);
-		checkOut.setDate(date);
+		checkOut.setDay(date);
 		checkOut.setYear(year);
 	}
 }
