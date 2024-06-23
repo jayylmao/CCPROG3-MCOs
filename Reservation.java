@@ -1,13 +1,8 @@
+import java.util.ArrayList;
 /**
  * The Reservation class defines a reservation and its corresponding details.
  */
 public class Reservation {
-	/** The first name of the guest. */
-	private String firstName;
-
-	/** The last name of the guest. */
-	private String lastName;
-
 	/** The check-in date. */
 	private Date checkIn;
 
@@ -17,12 +12,38 @@ public class Reservation {
 	/** The price reserved by the guest at the time of booking. */
 	private double reservedPrice;
 
-	public String getFirstName() {
-		return firstName;
+	/** The list of Customers that have reserved a room (it may be a group of people that want to reserve a room together) */
+	private ArrayList<Customer> customers = new ArrayList<Customer>();;
+
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Customer customer) {
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
+		this.reservedPrice = reservedPrice;
+		this.customers.add(customer);
 	}
 
-	public String getName() {
-		return firstName + " " + lastName;
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, ArrayList<Customer> customerList) {
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
+		this.reservedPrice = reservedPrice;
+		
+		for(int i = 0; i < customerList.size(); i++) {
+			this.customers.add(customerList.get(i));
+		}
+	}
+
+	public void addCustomer(Customer customer) {
+		this.customers.add(customer);
+	}
+
+	public boolean removeCustomer(String first, String last) {
+		for(int i = 0; i < this.customers.size(); i++) {
+			if(this.customers.get(i).getFirstName().equals(first) && this.customers.get(i).getLastName().equals(last)) {
+				this.customers.remove(i);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Date getCheckIn() {
@@ -31,14 +52,6 @@ public class Reservation {
 
 	public Date getCheckOut() {
 		return checkOut;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public void setCheckIn(int month, int date, int year) {

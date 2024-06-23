@@ -18,6 +18,8 @@ public class Room {
 	 * b.) Have a string roomName in each reservation instance that gets updated when a reservation is made
 	 * c.) Do both
 	 * ?
+	 * ans: We should probably do option a. This is since a reservation would be useless if a room gets destroyed, so it's easier to let the Reservation class
+	 * 		be a composition of the Room class. A customer should just make a new reservation if such a case happens
 	 */
 	private Reservation reservation;
 

@@ -13,7 +13,7 @@ public class Hotel {
 	 */
 	private ArrayList<Room> rooms;
 
-	private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+	// private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
 
 	/**
 	 * How much a room costs per night.
@@ -109,13 +109,9 @@ public class Hotel {
 	 * @param n Number in the reservation list.
 	 * @return nth reservation in the list.
 	 */
-	public Reservation getReservation(int n) {
-		return reservations.get(n);
-	}
-
-	public int getReservationCount() {
-		return reservations.size();
-	}
+	// public Reservation getReservation(int n) {
+	// 	return reservations.get(n);
+	// }
 
 	public double getBasePrice() {
 		return basePrice;
@@ -126,7 +122,7 @@ public class Hotel {
 	 * @param room Room to add to the hotel.
 	 * @return Boolean informing the caller if the operation was successful or not.
 	 */
-	public boolean addRoom(Room room) {
+	public boolean addRoom(Room room) { // We may need to change this so that Room objects are a composition of Hotel objects and not aggregation
 		if (rooms.size() < roomCount) {
 			rooms.add(room);
 			return true;
