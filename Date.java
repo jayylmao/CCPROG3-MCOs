@@ -32,26 +32,50 @@ public class Date {
 		this.minute = minute;
 	}
 
+	/**
+	 * Gets the Date object's day number.
+	 * @return Day of the month.
+	 */
 	public int getDay() {
 		return day;
 	}
 
+	/**
+	 * Gets the Date object's month number.
+	 * @return Month of the year.
+	 */
 	public int getMonth() {
 		return month;
 	}
 
+	/**
+	 * Gets the Date object's year number.
+	 * @return Year number.
+	 */
 	public int getYear() {
 		return year;
 	}
 
+	/**
+	 * Gets the Date object's hour number.
+	 * @return Hour of the day from 0-23.
+	 */
 	public int getHour() {
 		return hour;
 	}
 
+	/**
+	 * Gets the Date object's minute number.
+	 * @return Minute of the hour from 0-59.
+	 */
 	public int getMinute() {
 		return minute;
 	}
 
+	/**
+	 * Gets the time of the Date object expressed as a String.
+	 * @return Formatted String regarding the time.
+	 */
 	public String getTime() {
 		return String.format("%02d", hour) + ":" + String.format("%02d", minute);
 	}
@@ -81,6 +105,11 @@ public class Date {
 		return new Date(dateDiff, monthDiff, yearDiff);
 	}
 
+	/**
+	 * Checks if this Date object's date is before a given Date object's date.
+	 * @param date Other Date object to compare.
+	 * @return true if this Date object is before the given Date object parameter. False otherwise.
+	 */
 	public boolean isBefore(Date date) {
 		if(date.getYear() < this.year) {
 			return false;
@@ -101,6 +130,11 @@ public class Date {
 		return true;
 	}
 
+	/**
+	 * Checks if this Date object's date is after a given Date object's date.
+	 * @param date Other Date object to compare.
+	 * @return true if this Date object is after the given Date object parameter. False otherwise.
+	 */
 	public boolean isAfter(Date date) {
 		if(date.getYear() > this.year) {
 			return false;

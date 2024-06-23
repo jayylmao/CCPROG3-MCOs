@@ -24,32 +24,63 @@ public class Room {
 	 */
 	private ArrayList<Reservation> reservations;
 
+	/**
+	 * Constructor that creates a blank Room instance. Used for determining whether or not a room was found when searching by name.
+	 */
 	public Room() {
 		name = "";
 	}
 
+	/**
+	 * Regular Constructor that creates a Room instance.
+	 * @param roomName The name of the Room. Should be unique compared to other Room instances.
+	 */
 	public Room(String roomName) {
 		name = roomName;
 		occupied = false;
 		this.reservations = new ArrayList<Reservation>();
 	}
 
+	/**
+	 * Gets the name of the Room.
+	 * @return Name of the Room.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Checks if the room is occupied, which is another way of saying if it is already booked.
+	 * @return True if the room is occupied/booked. False otherwise.
+	 */
 	public boolean isOccupied() {
 		return occupied;
 	}
 
+	/**
+	 * Sets the name of the Room. It is assumed that the new name will be unique compared to the other room objects prior to calling this function.
+	 * @param name New name for the room.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Sets the occupation state of the Room. Happens when the reservation list contains Reservation instances.
+	 * @param occupied True or false depending on whether or not the room is occupied.
+	 */
 	public void setOccupationState(boolean occupied) {
 		this.occupied = occupied;
 	}
 
+	/**
+	 * Creates a Reservation instance and stores it in a list of reservations, given that it does not conflict with any prior reservations.
+	 * @param guest Guest object that is reserving the room.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time.
+	 * @param reservedPrice Price of the reservation per night.
+	 * @return True if a reservation is successful (i.e no overlap with previous reservations or the room is unoccupied). False otherwise.
+	 */
 	public boolean reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice) {
 		if(!occupied && !checkIn.isAfter(checkOut)) {
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
@@ -76,6 +107,14 @@ public class Room {
 		return true;
 	}
 
+	/**
+	 * Secondary function that creates a Reservation instance for a group of guests and stores it in a list of reservations, given that it does not conflict with any prior reservations.
+	 * @param guests ArrayList of Guest objects that are reserving the room together.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time.
+	 * @param reservedPrice Price of the reservation per night.
+	 * @return True if a reservation is successful (i.e no overlap with previous reservations or the room is unoccupied). False otherwise.
+	 */
 	public boolean reserveRoom(ArrayList<Guest> guests, Date checkIn, Date checkOut, double reservedPrice) {
 		if(!occupied && !checkIn.isAfter(checkOut)) {
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guests));
@@ -101,10 +140,17 @@ public class Room {
 		return true;
 	}
 
+	/**
+	 * Gets the list of Reservations that the Room has.
+	 * @return List of Reservations.
+	 */
 	public ArrayList<Reservation> getReservations() {
 		return this.reservations;
 	}
 
+	/**
+	 * Sorts the list of Reservations in chronological order.
+	 */
 	public void sortReservations() {
 		int minIndex;
 		Reservation temp;
