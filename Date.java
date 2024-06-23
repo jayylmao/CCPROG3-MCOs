@@ -7,7 +7,9 @@ public class Date {
 	private int month;
 	private int year;
 
+	/** Hour which is within the range of 0-23. */
 	private int hour;
+	/** Minute which is within the range of 0-59. */
 	private int minute;
 
 	public Date(int day, int month, int year) {
@@ -81,41 +83,41 @@ public class Date {
 
 	public boolean isBefore(Date date) {
 		if(date.getYear() < this.year) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() < this.month) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() < this.day) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() < this.hour) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() <= this.minute) {
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	public boolean isAfter(Date date) {
 		if(date.getYear() > this.year) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() > this.month) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() > this.day) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() > this.hour) {
-			return true;
+			return false;
 		}
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() >= this.minute) {
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 }

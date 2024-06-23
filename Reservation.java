@@ -12,34 +12,46 @@ public class Reservation {
 	/** The price reserved by the guest at the time of booking. */
 	private double reservedPrice;
 
-	/** The list of Customers that have reserved a room (it may be a group of people that want to reserve a room together) */
-	private ArrayList<Customer> customers = new ArrayList<Customer>();;
+	/** The total price for the booking. */
+	private double totalPrice;
 
-	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Customer customer) {
+	/** The list of Guests that have reserved a room (it may be a group of people that want to reserve a room together) */
+	private ArrayList<Guest> guests = new ArrayList<Guest>();;
+
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest) {
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.reservedPrice = reservedPrice;
-		this.customers.add(customer);
+		this.guests.add(guest);
+		this.totalPrice = calculateTotalPrice(checkIn, checkOut);
 	}
 
-	public Reservation(Date checkIn, Date checkOut, double reservedPrice, ArrayList<Customer> customerList) {
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, ArrayList<Guest> guestList) {
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.reservedPrice = reservedPrice;
 		
-		for(int i = 0; i < customerList.size(); i++) {
-			this.customers.add(customerList.get(i));
+		for(int i = 0; i < guestList.size(); i++) {
+			this.guests.add(guestList.get(i));
 		}
+		this.totalPrice = calculateTotalPrice(checkIn, checkOut);
 	}
 
-	public void addCustomer(Customer customer) {
-		this.customers.add(customer);
+	public double calculateTotalPrice(Date checkIn, Date checkOut) {
+		if(checkOut.getDay() == checkIn.getDay()) {
+			return this.reservedPrice;
+		}
+		return this.reservedPrice * (checkOut.getDay() - checkIn.getDay());
 	}
 
-	public boolean removeCustomer(String first, String last) {
-		for(int i = 0; i < this.customers.size(); i++) {
-			if(this.customers.get(i).getFirstName().equals(first) && this.customers.get(i).getLastName().equals(last)) {
-				this.customers.remove(i);
+	public void addGuest(Guest guest) {
+		this.guests.add(guest);
+	}
+
+	public boolean removeGuest(String first, String last) {
+		for(int i = 0; i < this.guests.size(); i++) {
+			if(this.guests.get(i).getFirstName().equals(first) && this.guests.get(i).getLastName().equals(last)) {
+				this.guests.remove(i);
 				return true;
 			}
 		}
@@ -48,14 +60,19 @@ public class Reservation {
 
 	public void setReservedPrice(double reservedPrice) {
 		this.reservedPrice = reservedPrice;
+		this.totalPrice = calculateTotalPrice(this.checkIn, this.checkOut);
 	}
 
 	public double getReservedPrice() {
-		return reservedPrice;
+		return this.reservedPrice;
 	}
 
-	public ArrayList<Customer> getCustomers() {
-		return customers;
+	public double getTotalPrice() {
+		return this.totalPrice;
+	}
+
+	public ArrayList<Guest> getGuests() {
+		return guests;
 	}
 
 	public Date getCheckIn() {
