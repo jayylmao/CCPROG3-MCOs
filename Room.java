@@ -14,13 +14,7 @@ public class Room {
 	private boolean occupied = false;
 
 	/**
-	 * We have a couple options for how to design this. Should we:
-	 * a.) Put the reservation instance in the room instance when a reservation is made
-	 * b.) Have a string roomName in each reservation instance that gets updated when a reservation is made
-	 * c.) Do both
-	 * ?
-	 * ans: We should probably do option a. This is since a reservation would be useless if a room gets destroyed, so it's easier to let the Reservation class
-	 * 		be a composition of the Room class. A guest should just make a new reservation if such a case happens
+	 * The list of reservations for the room.
 	 */
 	private ArrayList<Reservation> reservations;
 
@@ -47,6 +41,14 @@ public class Room {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * Gets the number of reservations for the room.
+	 * @return Number of reservations for the room.
+	 */
+	public int getReservationCount() {
+		return reservations.size();
 	}
 
 	/**
@@ -104,6 +106,7 @@ public class Room {
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
 			sortReservations();
 		}
+
 		return true;
 	}
 

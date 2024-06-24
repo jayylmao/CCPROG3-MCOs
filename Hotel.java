@@ -22,8 +22,6 @@ public class Hotel {
 	 */
 	private double basePrice;
 
-	private int roomCount;
-
 	/**
 	 * Constructor that creates an empty hotel with only its name.
 	 * @param name Name of hotel.
@@ -31,7 +29,6 @@ public class Hotel {
 	 */
 	public Hotel(String name, int roomCount) {
 		this.name = name;
-		this.roomCount = roomCount;
 
 		// Create new ArrayList instance rooms.
 		rooms = new ArrayList<Room>(roomCount);
@@ -80,11 +77,11 @@ public class Hotel {
 	}
 
 	public int getRoomCount() {
-		return roomCount;
+		return rooms.size();
 	}
 
 	/**
-	 * getFreeRoomCount() returns the number of rooms in the hotel that are not occupied.
+	 * getAvailableRoomCount() returns the number of rooms in the hotel that are not occupied.
 	 * @return Number of unoccupied (free) rooms.
 	 */
 	public int getAvailableRoomCount() {
@@ -122,8 +119,7 @@ public class Hotel {
 	 */
 	public void addRoom(int count) {
 		for (int i = 0; i < count; i++) {
-			roomCount += 1;
-			rooms.add(new Room(String.format("%03d", roomCount)));
+			rooms.add(new Room(String.format("%03d", getRoomCount() + 1)));
 		}
 	}
 
@@ -136,7 +132,6 @@ public class Hotel {
 		for (int i = 0; i < rooms.size(); i++) {
 			if (rooms.get(i).getName().equals(name)) {
 				rooms.remove(i);
-				roomCount -= 1;
 				return true;
 			}
 		}

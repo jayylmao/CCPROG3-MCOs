@@ -98,8 +98,10 @@ public class HotelReservationSystem {
 	 * @return Success condition.
 	 */
 	public boolean updateBasePrice(Hotel hotel, double newBasePrice) {
-		if (hotel.getReservationCount() != 0) {
-			return false;
+		for (int i = 0; i < hotel.getRoomCount(); i++) {
+			if (hotel.getRoom(i).getReservationCount() != 0) {
+				return false;
+			}
 		}
 
 		if (newBasePrice >= 100.0) {

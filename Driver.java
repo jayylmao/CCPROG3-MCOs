@@ -441,5 +441,6 @@ public class Driver {
 
 	private void bookingMenu() {
 		printHeader("Book a room");
+		System.out.println("Enter a room to book: ");
 	}
 }
