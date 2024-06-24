@@ -118,4 +118,19 @@ public class HotelReservationSystem {
 
 		return false;
 	}
+
+	/**
+	 * Removes a Hotel instance using a name.
+	 * @param name Name of the Hotel to be removed.
+	 * @return True if a Hotel is successfully removed. False otherwise.
+	 */
+	public boolean removeHotel(String name) {
+		for(int i = 0; i < getHotelCount(); i++) {
+			if(getHotels().get(i).getName() == name) {
+				this.hotels.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 }
