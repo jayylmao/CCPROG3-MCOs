@@ -168,4 +168,20 @@ public class Hotel {
 	public void setBasePrice(double basePrice) {
 		this.basePrice = basePrice;
 	}
+
+	/**
+	 * Gets the total amount of earnings from all reservations in the Hotel.
+	 * @return Total amount of Earnings based on the number of reservations and how long each reservation lasts.
+	 */
+	public double getTotalEarnings() {
+		double total = 0;
+
+		for(int i = 0; i < this.rooms.size(); i++) {
+			for(int j = 0; j < getRoom(i).getReservationCount(); j++) {
+				total += getRoom(i).getReservation(j).getTotalPrice();
+			}
+		}
+
+		return total;
+	}
 }
