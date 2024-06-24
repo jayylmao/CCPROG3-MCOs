@@ -8,7 +8,7 @@ public class Room {
 	private String name;
 
 	/**
-	 * A flag that checks if the Room is occupied or not.
+ 	 * A flag that checks if the Room is occupied or not.
 	 */
 	private boolean occupied = false;
 

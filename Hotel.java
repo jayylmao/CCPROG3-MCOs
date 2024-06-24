@@ -70,6 +70,15 @@ public class Hotel {
 		return blankRoom;
 	}
 
+	public Room getRoom(int i) {
+		if (i >= 0 && i < getRoomCount()) {
+			return rooms.get(i);
+		} else {
+			return new Room();
+		}
+
+	}
+
 	public int getRoomCount() {
 		return roomCount;
 	}
@@ -122,16 +131,37 @@ public class Hotel {
 	}
 
 	/**
-	 * addRoom() adds a room to the hotel as long as doing so does not cause the number of rooms to exceed the specified room count.
-	 * @param room Room to add to the hotel.
-	 * @return Boolean informing the caller if the operation was successful or not.
+	 * addRoom() adds a room to the hotel.
 	 */
-	public boolean addRoom(Room room) {
-		if (rooms.size() < roomCount) {
-			rooms.add(room);
-			return true;
-		} else {
-			return false;
+	public void addRoom(int count) {
+		for (int i = 0; i < count; i++) {
+			roomCount += 1;
+			rooms.add(new Room(String.format("%03d", roomCount)));
 		}
+	}
+
+	/**
+	 * removeRoom() removes a room from the hotel.
+	 * @param name Name of room to remove.
+	 * @return Success condition.
+	 */
+	public boolean removeRoom(String name) {
+		for (int i = 0; i < rooms.size(); i++) {
+			if (rooms.get(i).getName().equals(name)) {
+				rooms.remove(i);
+				roomCount -= 1;
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setBasePrice(double basePrice) {
+		this.basePrice = basePrice;
 	}
 }
