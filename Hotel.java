@@ -106,6 +106,40 @@ public class Hotel {
 		return count;
 	}
 
+	/**
+	 * Returns the number of rooms in the hotel that are occupied in a specific timeframe.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
+	 * @return Number of occupied rooms.
+	 */
+	public int getBookedRoomCount(Date checkIn, Date checkOut) {
+		int count = 0;
+		for (int i = 0; i < this.rooms.size(); i++) {
+			if (!isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
+	/**
+	 * Returns the number of rooms in the hotel that are available in a specific timeframe.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
+	 * @return Number of unoccupied (free) rooms.
+	 */
+	public int getAvailableRoomCount(Date checkIn, Date checkOut) {
+		int count = 0;
+		for (int i = 0; i < this.rooms.size(); i++) {
+			if (isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
 	public double getBasePrice() {
 		return basePrice;
 	}
@@ -171,5 +205,21 @@ public class Hotel {
 
 	public void setBasePrice(double basePrice) {
 		this.basePrice = basePrice;
+	}
+
+	/**
+	 * Gets the total amount of earnings from all reservations in the Hotel.
+	 * @return Total amount of Earnings based on the number of reservations and how long each reservation lasts.
+	 */
+	public double getTotalEarnings() {
+		double total = 0;
+
+		for(int i = 0; i < this.rooms.size(); i++) {
+			for(int j = 0; j < getRoom(i).getReservationCount(); j++) {
+				total += getRoom(i).getReservation(j).getTotalPrice();
+			}
+		}
+
+		return total;
 	}
 }
