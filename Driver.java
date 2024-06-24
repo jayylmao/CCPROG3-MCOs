@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -303,11 +302,63 @@ public class Driver {
 	}
 
 	/**
+	 * confirmChange() asks the user to confirm a change and shows them the previous and new value.
+	 * @param previousValue Previous value.
+	 * @param newValue New value.
+	 * @return True if user confirmed the change. False otherwise.
+	 */
+	private boolean confirmChange(int previousValue, int newValue) {
+		return confirmChange(String.valueOf(previousValue), String.valueOf(newValue));
+	}
+
+	/**
+	 * confirmChange() asks the user to confirm a change and shows them the previous and new value.
+	 * @param previousValue Previous value.
+	 * @param newValue New value.
+	 * @return True if user confirmed the change. False otherwise.
+	 */
+	private boolean confirmChange(double previousValue, double newValue) {
+		return confirmChange(String.valueOf(previousValue), String.valueOf(newValue));
+	}
+
+	/**
+	 * confirmChange() asks the user to confirm a change and shows them the previous and new value.
+	 * @param previousValue Previous value.
+	 * @param newValue New value.
+	 * @return True if user confirmed the change. False otherwise.
+	 */
+	private boolean confirmChange(String previousValue, String newValue) {
+		String input;
+		boolean validInput = false;
+
+		do {
+			System.out.println("Previous value: " + previousValue + " | New value: " + newValue);
+			System.out.print("Are you sure about this change? (Y/N): ");
+
+			input = scanner.nextLine().toUpperCase();
+
+			if (!input.equals("Y") &&
+				!input.equals("N")) {
+				System.out.println("[*]: Enter 'Y' or 'N'.");
+			} else {
+				validInput = true;
+			}
+		} while (!validInput);
+
+		if (input.equals("Y")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Ask the user for a new hotel name and set it.
 	 * @param hotel Hotel to change name of.
 	 */
 	private void changeHotelName(Hotel hotel) {
 		String name;
+		boolean changeConfirmed;
 
 		printHeader("Change hotel name");
 		System.out.println("Current name: " + hotel.getName());
@@ -315,7 +366,9 @@ public class Driver {
 
 		name = scanner.nextLine();
 
-		if (!name.equals("0")) {
+		changeConfirmed = confirmChange(hotel.getName(), name);
+
+		if (!name.equals("0") && changeConfirmed) {
 			rSystem.changeHotelName(hotel, name);
 		}
 	}
@@ -327,6 +380,7 @@ public class Driver {
 	private void addRooms(Hotel hotel) {
 		int count;
 		boolean validInput = false;
+		boolean changeConfirmed;
 
 		printHeader("Add rooms to hotel");
 		System.out.println("Current rooms in hotel: " + hotel.getRoomCount());
@@ -337,13 +391,20 @@ public class Driver {
 			while (!scanner.hasNextInt()) {
 				System.out.println("[*]: Enter a valid positive integer. The total cannot exceed 50.");
 				scanner.nextLine();
+				System.out.print("How many rooms do you want to add? Enter '0' to go back: ");
 			}
 
 			count = Integer.parseInt(scanner.nextLine());
 
 			if (hotel.getRoomCount() + count > 50) {
 				System.out.println("[*]: Enter a valid positive integer. The total cannot exceed 50.");
-			} else {
+				System.out.print("How many rooms do you want to add? Enter '0' to go back: ");
+			} else if (hotel.getRoomCount() + count <= 50) {
+				changeConfirmed = confirmChange(hotel.getRoomCount(), hotel.getRoomCount() + count);
+
+				if (!changeConfirmed) {
+					break;
+				}
 				validInput = rSystem.addRooms(hotel, count);
 			}
 		} while (!validInput && count != 0);
@@ -372,8 +433,6 @@ public class Driver {
 			}
 		}
 
-		System.out.print("|");
-
 		do {
 			System.out.print("\nSelect a room not marked as occupied to remove, or enter '0' to exit: ");
 			roomName = scanner.nextLine();
@@ -392,6 +451,7 @@ public class Driver {
 	private void updateBasePrice(Hotel hotel) {
 		double basePrice;
 		boolean successfullyChangedBasePrice = false;
+		boolean changeConfirmed;
 
 		if (hotel.getBookedRoomCount() == 0) {
 			do {
@@ -406,6 +466,11 @@ public class Driver {
 				}
 
 				basePrice = Double.parseDouble(scanner.nextLine());
+				changeConfirmed = confirmChange(hotel.getBasePrice(), basePrice);
+
+				if (!changeConfirmed) {
+					break;
+				}
 
 				successfullyChangedBasePrice = rSystem.updateBasePrice(hotel, basePrice);
 
@@ -662,7 +727,7 @@ public class Driver {
 	}
 
 	/**
-	 * displayOccupancy() displays a calendar showing the dates available.
+	 * displayCalendar() displays a calendar showing the dates available.
 	 */
 	private void displayCalendar() {
 		for (int i = 1; i <= 31; i++) {

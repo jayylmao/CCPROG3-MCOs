@@ -114,8 +114,10 @@ public class Hotel {
 	 * addRoom() adds a room to the hotel.
 	 */
 	public void addRoom(int count) {
+		int lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
+
 		for (int i = 0; i < count; i++) {
-			rooms.add(new Room(String.format("%03d", getRoomCount() + 1)));
+			rooms.add(new Room(String.format("%03d", lastRoomName + 1)));
 		}
 	}
 
