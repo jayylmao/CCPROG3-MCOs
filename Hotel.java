@@ -13,7 +13,7 @@ public class Hotel {
 	 */
 	private ArrayList<Room> rooms;
 
-	private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+	// private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
 
 	/**
 	 * How much a room costs per night.
@@ -118,13 +118,9 @@ public class Hotel {
 	 * @param n Number in the reservation list.
 	 * @return nth reservation in the list.
 	 */
-	public Reservation getReservation(int n) {
-		return reservations.get(n);
-	}
-
-	public int getReservationCount() {
-		return reservations.size();
-	}
+	// public Reservation getReservation(int n) {
+	// 	return reservations.get(n);
+	// }
 
 	public double getBasePrice() {
 		return basePrice;

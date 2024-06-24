@@ -62,7 +62,7 @@ public class Driver {
 					break;
 				case 1:
 					Hotel newHotel = createHotelMenu();
-					rSystem.createHotel(newHotel);
+					rSystem.addHotel(newHotel);
 					break;
 				case 2:
 					viewHotelMenu();
@@ -194,7 +194,7 @@ public class Driver {
 					System.out.println("Name: " + currentHotel.getName());
 					System.out.println("Rooms: " + currentHotel.getRoomCount());
 					System.out.println("      Booked: " + currentHotel.getBookedRoomCount() + " Available: " + currentHotel.getAvailableRoomCount());
-					System.out.println("Estimate Earnings: ₱" + currentHotel.getReservationCount() * currentHotel.getBasePrice() + "\n");
+					System.out.println("Estimate Earnings: ₱" + currentHotel.getBookedRoomCount() * currentHotel.getBasePrice() + "\n");
 
 					break;
 				}

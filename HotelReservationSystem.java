@@ -8,10 +8,10 @@ public class HotelReservationSystem {
 	private ArrayList<Hotel> hotels = new ArrayList<Hotel>();
 
 	/**
-	 * Creates a hotel and stores it in the list.
+	 * Adds a hotel and stores it in the list.
 	 * @param hotel Hotel object to add to the list.
 	 */
-	public void createHotel(Hotel hotel) {
+	public void addHotel(Hotel hotel) {
 		hotels.add(hotel);
 	}
 
@@ -43,7 +43,7 @@ public class HotelReservationSystem {
 			currentHotelName = hotels.get(i).getName();
 
 			if (currentHotelName == name) {
-				return true;
+				return true; // Duplicate was found if this is returned
 			}
 		}
 
