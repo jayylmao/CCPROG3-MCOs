@@ -11,7 +11,7 @@ public class Room {
 	/**
  	 * A flag that checks if the Room is occupied or not.
 	 */
-	private boolean occupied = false;
+	private boolean occupied;
 
 	/**
 	 * The list of reservations for the room.
@@ -30,8 +30,8 @@ public class Room {
 	 * @param roomName The name of the Room. Should be unique compared to other Room instances.
 	 */
 	public Room(String roomName) {
-		name = roomName;
-		occupied = false;
+		this.name = roomName;
+		this.occupied = false;
 		this.reservations = new ArrayList<Reservation>();
 	}
 
@@ -200,6 +200,9 @@ public class Room {
 	public boolean removeReservation(int n) {
 		if(n < this.reservations.size() && n >= 0) {
 			this.reservations.remove(n);
+			if(this.reservations.size() == 0) {
+				setOccupationState(false);
+			}
 			return true;
 		}
 		else {

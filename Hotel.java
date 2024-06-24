@@ -106,6 +106,40 @@ public class Hotel {
 		return count;
 	}
 
+	/**
+	 * Returns the number of rooms in the hotel that are occupied in a specific timeframe.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
+	 * @return Number of occupied rooms.
+	 */
+	public int getBookedRoomCount(Date checkIn, Date checkOut) {
+		int count = 0;
+		for (int i = 0; i < this.rooms.size(); i++) {
+			if (!isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
+	/**
+	 * Returns the number of rooms in the hotel that are available in a specific timeframe.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
+	 * @return Number of unoccupied (free) rooms.
+	 */
+	public int getAvailableRoomCount(Date checkIn, Date checkOut) {
+		int count = 0;
+		for (int i = 0; i < this.rooms.size(); i++) {
+			if (isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
 	public double getBasePrice() {
 		return basePrice;
 	}
