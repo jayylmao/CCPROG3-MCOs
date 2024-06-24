@@ -113,15 +113,6 @@ public class Hotel {
 		return count;
 	}
 
-	/**
-	 * getReservation() returns the nth reservation from the list of reservations in the hotel.
-	 * @param n Number in the reservation list.
-	 * @return nth reservation in the list.
-	 */
-	// public Reservation getReservation(int n) {
-	// 	return reservations.get(n);
-	// }
-
 	public double getBasePrice() {
 		return basePrice;
 	}
