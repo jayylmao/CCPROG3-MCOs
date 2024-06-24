@@ -172,4 +172,19 @@ public class Room {
 			}
 		}
 	}
+
+	/**
+	 * Removes a Reservation instance using an index. 
+	 * @param n Index of reservation to be removed.
+	 * @return True if a reservation is successfully removed. False otherwise.
+	 */
+	public boolean removeReservation(int n) {
+		if(n < this.reservations.size() && n >= 0) {
+			this.reservations.remove(n);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
