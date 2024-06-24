@@ -140,6 +140,24 @@ public class Hotel {
 		return count;
 	}
 
+	/**
+	 * Returns the list of rooms in the hotel that are available in a specific timeframe.
+	 * @param checkIn Date object describing the check in time.
+	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
+	 * @return List of unoccupied (free) rooms at the time.
+	 */
+	public ArrayList<Room> getAvailableRooms(Date checkIn, Date checkOut) {
+		ArrayList<Room> available = new ArrayList<Room>();
+		
+		for (int i = 0; i < this.rooms.size(); i++) {
+			if (isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
+				available.add(getRoom(i));
+			}
+		}
+
+		return available;
+	}
+
 	public double getBasePrice() {
 		return basePrice;
 	}
@@ -187,13 +205,17 @@ public class Hotel {
 		boolean roomAvailable = true;
 		Room room = getRoom(roomName);
 
-		for (int j = 0; j < room.getReservationCount(); j++) {
-			if (room.getReservations().get(j).getCheckIn().isBetween(checkInDate, checkOutDate) ||
-				room.getReservations().get(j).getCheckOut().isBetween(checkInDate, checkOutDate) ||
-				checkInDate.isBetween(room.getReservations().get(j).getCheckIn(), room.getReservations().get(j).getCheckOut()) ||
-				checkOutDate.isBetween(room.getReservations().get(j).getCheckIn(), room.getReservations().get(j).getCheckOut())) {
-				roomAvailable = false;
-			}
+		// for (int j = 0; j < room.getReservationCount(); j++) {
+		// 	if (room.getReservations().get(j).getCheckIn().isBetween(checkInDate, checkOutDate) ||
+		// 		room.getReservations().get(j).getCheckOut().isBetween(checkInDate, checkOutDate) ||
+		// 		checkInDate.isBetween(room.getReservations().get(j).getCheckIn(), room.getReservations().get(j).getCheckOut()) ||
+		// 		checkOutDate.isBetween(room.getReservations().get(j).getCheckIn(), room.getReservations().get(j).getCheckOut())) {
+		// 		roomAvailable = false;
+		// 	}
+		// }
+		
+		if(room.isOccupied(checkInDate) || room.isOccupied(checkOutDate)) {
+			roomAvailable = false;
 		}
 
 		return roomAvailable;

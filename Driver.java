@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * The Driver class displays the user interface and takes interactions from the user.
@@ -186,6 +187,8 @@ public class Driver {
 	private void viewHotelMenu() {
 		String input;
 		Hotel hotel;
+		Date checkIn, checkOut;
+		ArrayList<Room> availRooms;
 
 		do {
 			printHeader("View a hotel");
@@ -194,15 +197,167 @@ public class Driver {
 
 			hotel = rSystem.getHotel(input);
 
-			if (hotel == null) {
+			if (hotel == null && !input.equals("0")) {
 				System.out.println("[*]: No hotel was found with that name.");
-			} else {
-				System.out.println("Name: " + hotel.getName());
-				System.out.println("      Rooms: " + hotel.getRoomCount());
-				System.out.println("      Booked: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
-				System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
 			}
-		} while (!input.equals("0"));
+			else if(!input.equals("0")) {
+				do {
+					System.out.println("Name: " + hotel.getName());
+					System.out.println("      Rooms: " + hotel.getRoomCount());
+					System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
+					System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
+					
+					printHeader("Select Option");
+				
+					System.out.println("[0.] Exit");
+
+					System.out.println("[1.] View available rooms in a specific timeframe");
+
+					System.out.println("[2.] View specific room information");
+
+					System.out.print("[/]: Select a menu option: ");
+
+					input = scanner.nextLine();
+
+					switch (input) {
+						case "0":
+							break;
+						case "1":
+							checkIn = setCheckInDate();
+							checkOut = setCheckOutDate(checkIn);
+							System.out.println("Booked rooms: " + hotel.getBookedRoomCount(checkIn, checkOut) + ", Available: " + hotel.getAvailableRoomCount(checkIn, checkOut));
+							availRooms = hotel.getAvailableRooms(checkIn, checkOut);
+							System.out.print("Available Rooms: ");
+							for(int i = 0; i < availRooms.size(); i++) {
+								if(i == availRooms.size() - 1) {
+									System.out.printf("%s", availRooms.get(i).getName());
+								}
+								else {
+									System.out.printf("%s, ", availRooms.get(i).getName());
+								}
+							}
+							break;
+						case "2":
+							viewRoomMenu(hotel);
+							break;
+						default:
+							System.out.println("[*]: Invalid input.");
+							break;
+					}
+				} while(!input.equals("0"));
+				input = "";
+			}
+		} while(!input.equals("0"));
+	}
+
+	/**
+	 * Shows the user a menu to view specific rooms.
+	 * @param hotel Hotel in which the rooms are contained in.
+	 */
+	private void viewRoomMenu(Hotel hotel) {
+		String input, option;
+		Room room;
+
+		do {
+			printHeader("Select Room");
+
+			System.out.print("| ");
+			for(int i = 0; i < hotel.getRoomCount(); i++) {
+				System.out.printf("%s", hotel.getRoom(i).getName());
+				if ((i + 1) % 10 == 0) {
+					System.out.println(" |");
+					System.out.print("| ");
+				}
+				else {
+					System.out.print(" | ");
+				}
+			}
+			System.out.print("Enter the name of the room you want to view, or '0' to exit: ");
+
+			input = scanner.nextLine();
+
+			room = hotel.getRoom(input);
+
+			if (room == null) {
+				System.out.println("[*]: No room was found with that name.");
+			}
+			else {
+				System.out.println("Name: " + room.getName());
+				System.out.println("      Price per night: ₱" + hotel.getFormattedBasePrice() + "\n");
+				System.out.println("Availability");
+				displayCalendar(room);
+
+				if(room.isOccupied()) {
+					do {
+						System.out.print("Do you want to diplay reservation info? (Y/N): ");
+						option = scanner.nextLine();
+						switch(option) {
+							case "y":
+							case "Y":
+								option = "Y";
+								break;
+							case "n":
+							case "N":
+								option = "N";
+								break;
+							default: System.out.println("[*]: Invalid input.");
+						}
+					} while(!option.equals("Y") || !option.equals("N"));
+					
+					if(option.equals("N")) {
+						input = "0";
+					}
+					else if(option.equals("Y")) {
+						viewReservations(room);
+					}
+				}
+			}
+		} while(!input.equals("0"));
+	}
+
+	/**
+	 * Shows the user a menu to view Reservations.
+	 * @param room the Room object that contains the reservation instances, if there are any.
+	 */
+	private void viewReservations(Room room) {
+		String input;
+		int index;
+
+		do {
+			printHeader(String.format("Select a Reservation for Room %s", room.getName()));
+			
+			for (int i = 0; i < room.getReservationCount(); i++) {
+				System.out.println(String.format("[%02d.] , Check in: %s, Check out: %s",
+												i + 1, room.getReservation(i).getCheckIn().getFormattedDate(),
+												room.getReservation(i).getCheckOut().getFormattedDate()));
+			}
+
+			System.out.print("Enter the number of the reservation you want to view, or '0' to exit: ");
+
+			while (!scanner.hasNextInt()) {
+				System.out.println("[*]: Enter a positive integer from 1 to " + room.getReservationCount() + ", Or enter 0 to exit.");
+				scanner.nextLine();
+			}
+
+			input = scanner.nextLine();
+			index = Integer.parseInt(input);
+			
+			index -= 1;
+
+			if(index >= 0 && index < room.getReservationCount()) {
+				System.out.println("Guests      : ");
+				for (int j = 0; j < room.getReservation(index).getGuests().size(); j++) {
+					System.out.println("                    " + room.getReservation(index).getGuests().get(j).getName());
+				}
+				System.out.println("      Check-in date : " + room.getReservation(index).getCheckIn().getFormattedDate());
+				System.out.println("      Check-out date: " + room.getReservation(index).getCheckOut().getFormattedDate());
+				System.out.println("      Reserved price: " + room.getReservation(index).getReservedPrice());
+				System.out.println("      Total price   : ₱" + room.getReservation(index).getTotalPrice());
+			}
+			else if ((index < 0 || index >= room.getReservationCount()) && !input.equals("0")) {
+				System.out.println("[*]: Error. Enter a positive integer from 1 to " + room.getReservationCount() + ", Or enter 0 to exit.");
+			}
+		} while(!input.equals("0"));
 	}
 
 	/**
@@ -544,7 +699,7 @@ public class Driver {
 
 			if (roomName.equals("0")) {
 				break;
-			} if (room == null) {
+			} else if (room == null) {
 				System.out.println("[*]: Enter a valid room number.");
 			} else if (room.getReservationCount() == 0) {
 				System.out.println("[*]: This room has no reservations.");
@@ -872,6 +1027,33 @@ public class Driver {
 			} else {
 				System.out.print("| " + i + " ");
 			}
+		}
+		System.out.print("|\n");
+	}
+
+	/**
+	 * displayCalendar() displays a calendar showing the dates available for a certain room.
+	 * @param room Room to display availability.
+	 */
+	private void displayCalendar(Room room) {
+		Date currentDate;
+		boolean validDay;
+
+		for (int i = 1; i <= 31; i++) {
+			validDay = true;
+			currentDate = new Date(i);
+			for(int j = 0; j < room.getReservationCount(); j++) {
+				if(currentDate.isBetween(room.getReservation(j).getCheckIn(), room.getReservation(j).getCheckOut())) {
+					validDay = false;
+				}
+			}
+			if(!validDay) {
+				System.out.print("| X ");
+			}
+			else {
+				System.out.print("| " + i + " ");
+			}
+			
 		}
 		System.out.print("|\n");
 	}

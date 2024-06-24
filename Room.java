@@ -52,7 +52,7 @@ public class Room {
 	}
 
 	/**
-	 * Checks if the room is occupied, which is another way of saying if it is already booked.
+	 * Checks if the room is occupied at all, which is another way of saying if it has at least 1 booking/reservation.
 	 * @return True if the room is occupied/booked. False otherwise.
 	 */
 	public boolean isOccupied() {
