@@ -110,6 +110,10 @@ public class Hotel {
 		return basePrice;
 	}
 
+	public String getFormattedBasePrice() {
+		return String.format("%.2f", basePrice);
+	}
+
 	/**
 	 * addRoom() adds a room to the hotel.
 	 */

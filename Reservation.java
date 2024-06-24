@@ -9,14 +9,14 @@ public class Reservation {
 	/** The check-out date. */
 	private Date checkOut;
 
-	/** The price reserved by the guest at the time of booking. */
+	/** The price per night reserved by the guest at the time of booking. */
 	private double reservedPrice;
 
 	/** The total price for the booking. */
 	private double totalPrice;
 
 	/** The list of Guests that have reserved a room (it may be a group of people that want to reserve a room together) */
-	private ArrayList<Guest> guests = new ArrayList<Guest>();;
+	private ArrayList<Guest> guests = new ArrayList<Guest>();
 
 	/**
 	 * Constructor that creates a Reservation instance.
@@ -112,6 +112,10 @@ public class Reservation {
 	 */
 	public double getTotalPrice() {
 		return this.totalPrice;
+	}
+
+	public String getFormattedTotalPrice() {
+		return String.format("%.2f", String.valueOf(this.totalPrice));
 	}
 
 	/**

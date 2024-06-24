@@ -198,8 +198,12 @@ public class Room {
 	 * @return True if a reservation is successfully removed. False otherwise.
 	 */
 	public boolean removeReservation(int n) {
-		if(n < this.reservations.size() && n >= 0) {
+		if (n < this.reservations.size() && n >= 0) {
 			this.reservations.remove(n);
+
+			if (this.reservations.size() == 0) {
+				this.occupied = false;
+			}
 			return true;
 		}
 		else {

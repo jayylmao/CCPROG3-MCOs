@@ -145,6 +145,7 @@ public class Driver {
 						while (!scanner.hasNextInt()) {
 							System.out.println("[*]: Enter a valid integer from 0 - 50.");
 							scanner.nextLine();
+							System.out.print("Enter the number of rooms in the hotel: ");
 						}
 
 						roomCount = Integer.parseInt(scanner.nextLine());
@@ -163,6 +164,7 @@ public class Driver {
 						while (!scanner.hasNextInt()) {
 							System.out.println("[*]: Enter a '0' or one of the menu options.");
 							scanner.nextLine();
+							System.out.print("[/]: Input '0' to exit: ");
 						}
 
 						reviewInput = Integer.parseInt(scanner.nextLine());
@@ -198,7 +200,7 @@ public class Driver {
 				System.out.println("Name: " + hotel.getName());
 				System.out.println("      Rooms: " + hotel.getRoomCount());
 				System.out.println("      Booked: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
-				System.out.println("      Base price: ₱" + hotel.getBasePrice() + "\n");
+				System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
 			}
 		} while (!input.equals("0"));
 	}
@@ -210,6 +212,7 @@ public class Driver {
 		Hotel currentHotel = new Hotel(null, 0);
 		String input;
 		int input2;
+		boolean hotelRemoved = false;
 
 		// Return to main menu if no hotels are in the list.
 		if (rSystem.getHotelCount() < 1) {
@@ -224,7 +227,7 @@ public class Driver {
 			System.out.println("Name: " + currentHotel.getName());
 			System.out.println("      Rooms: " + currentHotel.getRoomCount());
 			System.out.println("      Booked: " + currentHotel.getBookedRoomCount() + " Available: " + currentHotel.getAvailableRoomCount());
-			System.out.println("      Base price: ₱" + currentHotel.getBasePrice() + "\n");
+			System.out.println("      Base price: ₱" + currentHotel.getFormattedBasePrice() + "\n");
 		}
 
 		do {
@@ -288,16 +291,16 @@ public class Driver {
 						updateBasePrice(currentHotel);
 						break;
 					case 5:
-						// removeReservation();
+						removeReservation(currentHotel);
 						break;
 					case 6:
-						// removeHotel();
+						hotelRemoved = removeHotel(currentHotel);
 						break;
 					default:
 						System.out.println("[*]: Enter a number from 0 - 6.");
 						break;
 				}
-			} while (input2 != 0);
+			} while (input2 != 0 && !hotelRemoved);
 		}
 	}
 
@@ -333,6 +336,36 @@ public class Driver {
 
 		do {
 			System.out.println("Previous value: " + previousValue + " | New value: " + newValue);
+			System.out.print("Are you sure about this change? (Y/N): ");
+
+			input = scanner.nextLine().toUpperCase();
+
+			if (!input.equals("Y") &&
+				!input.equals("N")) {
+				System.out.println("[*]: Enter 'Y' or 'N'.");
+			} else {
+				validInput = true;
+			}
+		} while (!validInput);
+
+		if (input.equals("Y")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * confirmChange() asks the user to confirm a change.
+	 * @param message Message to show user before confirming the change.
+	 * @return True if user confirmed the change. False otherwise.
+	 */
+	private boolean confirmChange(String message) {
+		String input;
+		boolean validInput = false;
+
+		do {
+			System.out.println(message);
 			System.out.print("Are you sure about this change? (Y/N): ");
 
 			input = scanner.nextLine().toUpperCase();
@@ -399,7 +432,7 @@ public class Driver {
 			if (hotel.getRoomCount() + count > 50) {
 				System.out.println("[*]: Enter a valid positive integer. The total cannot exceed 50.");
 				System.out.print("How many rooms do you want to add? Enter '0' to go back: ");
-			} else if (hotel.getRoomCount() + count <= 50) {
+			} else if (hotel.getRoomCount() + count <= 50 && count != 0) {
 				changeConfirmed = confirmChange(hotel.getRoomCount(), hotel.getRoomCount() + count);
 
 				if (!changeConfirmed) {
@@ -412,7 +445,7 @@ public class Driver {
 
 	/**
 	 * removeRooms() asks the user to enter the name of a room to remove.
-	 * @param hotel
+	 * @param hotel Hotel to remove rooms from.
 	 */
 	private void removeRooms(Hotel hotel) {
 		boolean successfullyRemovedRoom = false;
@@ -429,7 +462,7 @@ public class Driver {
 			}
 
 			if ((i + 1) % 10 == 0) {
-				System.out.println(" |");
+				System.out.println(" |\n");
 			}
 		}
 
@@ -456,7 +489,7 @@ public class Driver {
 		if (hotel.getBookedRoomCount() == 0) {
 			do {
 				printHeader("Update base price");
-				System.out.println("Current price: ₱" + hotel.getBasePrice());
+				System.out.println("Current price: ₱" + hotel.getFormattedBasePrice());
 				System.out.print("Enter the new base price, or enter '0' to exit: ₱");
 				// Input validation.
 				while (!scanner.hasNextInt()) {
@@ -485,6 +518,92 @@ public class Driver {
 	}
 
 	/**
+	 * removeReservation() asks the user to remove a specific reservation.
+	 * @param hotel Hotel to remove reservation from.
+	 */
+	private void removeReservation(Hotel hotel) {
+		String roomName;
+		Room room;
+		int input;
+
+		boolean changeConfirmed = false;
+
+		do {
+			printHeader("Remove reservation");
+			for (int i = 0; i < hotel.getRoomCount(); i++) {
+				System.out.print("| " + hotel.getRoom(i).getName() + " (" + hotel.getRoom(i).getReservationCount() + ") ");
+
+				if ((i + 1) % 10 == 0) {
+					System.out.print("|\n");
+				}
+			}
+			System.out.print("\nEnter a room number with indicated reservations, or '0' to go back: ");
+			roomName = scanner.nextLine();
+
+			room = hotel.getRoom(roomName);
+
+			if (roomName.equals("0")) {
+				break;
+			} if (room == null) {
+				System.out.println("[*]: Enter a valid room number.");
+			} else if (room.getReservationCount() == 0) {
+				System.out.println("[*]: This room has no reservations.");
+			} else {
+				for (int i = 0; i < room.getReservationCount(); i++) {
+					System.out.print(String.format("[%02d.] ", i + 1));
+					System.out.println("Guests      : ");
+
+					for (int j = 0; j < room.getReservation(i).getGuests().size(); j++) {
+						System.out.println("                    " + room.getReservation(i).getGuests().get(j).getName());
+					}
+
+					System.out.println("      Check-in date : " + room.getReservation(i).getCheckIn().getFormattedDate());
+					System.out.println("      Check-out date: " + room.getReservation(i).getCheckOut().getFormattedDate());
+					System.out.println("      Reserved price: " + room.getReservation(i).getReservedPrice());
+					System.out.println("      Total price   : ₱" + room.getReservation(i).getTotalPrice());
+				}
+
+				do {
+					System.out.println("Select a reservation to remove: ");
+
+					while (!scanner.hasNextInt()) {
+						System.out.println("[*]: Enter a positive integer from 0 to " + room.getReservationCount() + ".");
+						scanner.nextLine();
+						System.out.println("Select a reservation to remove: ");
+					}
+
+					input = Integer.parseInt(scanner.nextLine());
+
+					if (input > 0 && input <= room.getReservationCount()) {
+						changeConfirmed = confirmChange("Removing reservation " + input);
+
+						if (changeConfirmed) {
+							room.removeReservation(input - 1);
+						}
+					} else {
+						System.out.println("[*]: Enter a positive integer from 1 to " + room.getReservationCount() + ".");
+					}
+				} while (!changeConfirmed);
+			}
+		} while (!roomName.equals("0"));
+	}
+
+	/**
+	 * removeHotel() asks the user for the name of a hotel to remove from the system.
+	 * @param hotel Hotel to remove from the system.
+	 * @return True if hotel is removed. False otherwise.
+	 */
+	private boolean removeHotel(Hotel hotel) {
+		boolean changeConfirmed = confirmChange("Removing hotel " + hotel.getName());
+
+		if (changeConfirmed) {
+			rSystem.removeHotel(hotel.getName());
+		}
+
+		return changeConfirmed;
+	}
+
+	/**
 	 * listHotelsMenu() lists all hotels stored in the system.
 	 */
 	private void listHotelsMenu() {
@@ -500,7 +619,7 @@ public class Driver {
 			System.out.println("Name: " + currentHotel.getName());
 			System.out.println("      Rooms: " + currentHotel.getRoomCount());
 			System.out.println("      Booked: " + currentHotel.getBookedRoomCount() + " Available: " + currentHotel.getAvailableRoomCount());
-			System.out.println("      Base price: ₱" + currentHotel.getBasePrice() + "\n");
+			System.out.println("      Base price: ₱" + currentHotel.getFormattedBasePrice() + "\n");
 		}
 
 		do {
@@ -509,6 +628,7 @@ public class Driver {
 			while (!scanner.hasNextInt()) {
 				System.out.println("[*]: Enter a '0' to go back to the menu.");
 				scanner.nextLine();
+				System.out.print("[/]: Input '0' to exit: ");
 			}
 
 			input = Integer.parseInt(scanner.nextLine());
@@ -556,14 +676,14 @@ public class Driver {
 					step += 1;
 					break;
 				case 5:
-					room.reserveRoom(guest, checkInDate, checkOutDate, hotel.getBasePrice() * checkInDate.getDayDifference(checkOutDate));
+					room.reserveRoom(guest, checkInDate, checkOutDate, hotel.getBasePrice());
 					printHeader("Review your details");
 					System.out.println("Name          : " + guest.getName());
 					System.out.println("Hotel         : " + hotel.getName());
 					System.out.println("Room          : " + room.getName());
 					System.out.println("Check-in date : " + checkInDate.getFormattedDate());
 					System.out.println("Check-out date: " + checkOutDate.getFormattedDate());
-					System.out.println("Total price   : ₱" + room.getReservation(room.getReservationCount() - 1).getReservedPrice());
+					System.out.println("Total price   : ₱" + room.getReservation(room.getReservationCount() - 1).getTotalPrice());
 					finishBooking = true;
 				default:
 					break;
@@ -605,7 +725,7 @@ public class Driver {
 				System.out.println("Name: " + hotel.getName());
 				System.out.println("      Rooms: " + hotel.getRoomCount());
 				System.out.println("      Booked: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
-				System.out.println("      Base price: ₱" + hotel.getBasePrice() + "\n");
+				System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
 			}
 
 			System.out.print("Enter the name of a hotel to book: ");
@@ -643,7 +763,7 @@ public class Driver {
 				}
 
 				if ((i + 1) % 10 == 0) {
-					System.out.print(" |");
+					System.out.print("|\n");
 				}
 			}
 			System.out.print("\nEnter a room number: ");
@@ -679,6 +799,7 @@ public class Driver {
 			while (!scanner.hasNextInt()) {
 				System.out.print("[*]: Enter a valid unbooked day from 0 - 31:");
 				scanner.nextLine();
+				System.out.print("Enter your check-in date: ");
 			}
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
@@ -711,6 +832,7 @@ public class Driver {
 			while (!scanner.hasNextInt()) {
 				System.out.print("[*]: Enter a valid unbooked day from 1 - 31 after your check-in date:");
 				scanner.nextLine();
+				System.out.print("Enter your check-out date: ");
 			}
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
