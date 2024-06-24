@@ -74,6 +74,16 @@ public class HotelReservationSystem {
 		}
 	}
 
+	public Hotel getHotel(String name) {
+		for (int i = 0; i < getHotels().size(); i++) {
+			if (getHotels().get(i).getName().equals(name)) {
+				return getHotels().get(i);
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * removeRoom() removes a room given the name of a room.
 	 * @param hotel Hotel to remove room from.
@@ -82,10 +92,7 @@ public class HotelReservationSystem {
 	 */
 	public boolean removeRoom(Hotel hotel, String name) {
 		boolean successfullyRemovedRoom;
-
-		do {
-			successfullyRemovedRoom = hotel.removeRoom(name);
-		} while (!successfullyRemovedRoom);
+		successfullyRemovedRoom = hotel.removeRoom(name);
 
 		return successfullyRemovedRoom;
 	}

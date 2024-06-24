@@ -44,7 +44,7 @@ public class Reservation {
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.reservedPrice = reservedPrice;
-		
+
 		for(int i = 0; i < guestList.size(); i++) {
 			this.guests.add(guestList.get(i));
 		}

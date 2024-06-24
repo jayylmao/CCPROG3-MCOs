@@ -13,8 +13,6 @@ public class Hotel {
 	 */
 	private ArrayList<Room> rooms;
 
-	// private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-
 	/**
 	 * How much a room costs per night.
 	 * All rooms in the hotel cost the same.
@@ -56,22 +54,20 @@ public class Hotel {
 	 * @return Room object with matching name.
 	 */
 	public Room getRoom(String inputRoomName) {
-		Room blankRoom = new Room();
-
 		for (int i = 0; i < rooms.size(); i++) {
-			if (rooms.get(i).getName() == inputRoomName) {
+			if (inputRoomName.equals(rooms.get(i).getName())) {
 				return rooms.get(i);
 			}
 		}
 
-		return blankRoom;
+		return null;
 	}
 
 	public Room getRoom(int i) {
 		if (i >= 0 && i < getRoomCount()) {
 			return rooms.get(i);
 		} else {
-			return new Room();
+			return null;
 		}
 
 	}
@@ -130,13 +126,37 @@ public class Hotel {
 	 */
 	public boolean removeRoom(String name) {
 		for (int i = 0; i < rooms.size(); i++) {
-			if (rooms.get(i).getName().equals(name)) {
+			if (rooms.get(i).getName().equals(name) &&
+				rooms.get(i).getReservationCount() == 0) {
 				rooms.remove(i);
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	/**
+	 * isRoomAvailable() checks if a given room is available between the specified dates.
+	 * @param roomName Name of room to check in to.
+	 * @param checkInDate Check-in date of user.
+	 * @param checkOutDate Check-out date of user.
+	 * @return True if room is available. False otherwise.
+	 */
+	public boolean isRoomAvailable(String roomName, Date checkInDate, Date checkOutDate) {
+		boolean roomAvailable = true;
+		Room room = getRoom(roomName);
+
+		for (int j = 0; j < room.getReservationCount(); j++) {
+			if (room.getReservations().get(j).getCheckIn().isBetween(checkInDate, checkOutDate) ||
+				room.getReservations().get(j).getCheckOut().isBetween(checkInDate, checkOutDate) ||
+				checkInDate.isBetween(room.getReservations().get(j).getCheckIn(), room.getReservations().get(j).getCheckOut()) ||
+				checkOutDate.isBetween(room.getReservations().get(j).getCheckIn(), room.getReservations().get(j).getCheckOut())) {
+				roomAvailable = false;
+			}
+		}
+
+		return roomAvailable;
 	}
 
 	public void setName(String name) {

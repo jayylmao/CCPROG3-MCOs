@@ -12,6 +12,22 @@ public class Date {
 	/** Minute which is within the range of 0-59. */
 	private int minute;
 
+	/**
+	 * This constructor creates a Date instance with just a given day, setting the month and year to June 2024.
+	 * @param day Given day.
+	 */
+	public Date(int day) {
+		if (day < 1 || day > 31) {
+			throw new IllegalArgumentException("Invalid date entered: " + day);
+		}
+
+		this.day = day;
+		this.month = 6;
+		this.year = 2024;
+		this.hour = 15;
+		this.minute = 0;
+	}
+
 	public Date(int day, int month, int year) {
 		if (day < 1 || day > 31) {
 			throw new IllegalArgumentException("Invalid date entered: " + day);
@@ -80,6 +96,14 @@ public class Date {
 		return String.format("%02d", hour) + ":" + String.format("%02d", minute);
 	}
 
+	/**
+	 * getFormattedDate() returns a string containing the date, formatted in YYYY-MM-DD HH:MM
+	 * @return
+	 */
+	public String getFormattedDate() {
+		return getYear() + "-" + getMonth() + "-" + getDay() + " " + String.format("%02d", getHour()) + ":" + String.format("%02d", getMinute());
+	}
+
 	public void setDay(int day) {
 		this.day = day;
 	}
@@ -92,17 +116,21 @@ public class Date {
 		this.year = year;
 	}
 
-	/**
-	 * Returns a date object containing the difference between the date object and another given as a parameter.
-	 * @param otherDate Other date object to get difference of. (otherDate - this date object).
-	 * @return Difference in dates as object.
-	 */
-	public Date getDateDifference(Date otherDate) {
-		int dateDiff = otherDate.getDay() - getDay();
-		int monthDiff = otherDate.getMonth() - getMonth();
-		int yearDiff = otherDate.getYear() - getYear();
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
 
-		return new Date(dateDiff, monthDiff, yearDiff);
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+
+	/**
+	 * getDayDifference() returns the difference between the date object and another given as a parameter in days.
+	 * @param otherDate Other date object to get difference of. (otherDate - this date object).
+	 * @return Difference in days between two dates.
+	 */
+	public int getDayDifference(Date otherDate) {
+		return otherDate.getDay() - getDay();
 	}
 
 	/**
@@ -111,22 +139,22 @@ public class Date {
 	 * @return true if this Date object is before the given Date object parameter. False otherwise.
 	 */
 	public boolean isBefore(Date date) {
-		if(date.getYear() < this.year) {
+		if (date.getYear() < this.year) {
 			return false;
 		}
-		else if(date.getYear() == this.year && date.getMonth() < this.month) {
+		else if (date.getYear() == this.year && date.getMonth() < this.month) {
 			return false;
 		}
-		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() < this.day) {
+		else if (date.getYear() == this.year && date.getMonth() == this.month && date.getDay() < this.day) {
 			return false;
 		}
-		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() < this.hour) {
+		else if (date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() < this.hour) {
 			return false;
 		}
-		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() <= this.minute) {
+		else if (date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() <= this.minute) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -151,7 +179,17 @@ public class Date {
 		else if(date.getYear() == this.year && date.getMonth() == this.month && date.getDay() == this.day && date.getHour() == this.hour && date.getMinute() >= this.minute) {
 			return false;
 		}
-		
+
 		return true;
+	}
+
+	/**
+	 * isBetween() checks if this Date is in between two other Date instances.
+	 * @param dateBefore The Date before this Date.
+	 * @param dateAfter The Date after this Date.
+	 * @return True if the Date object is before the 2nd date parameter and after the 1st date parameter.
+	 */
+	public boolean isBetween(Date dateAfter, Date dateBefore) {
+		return this.isBefore(dateBefore) && this.isAfter(dateAfter);
 	}
 }

@@ -60,6 +60,21 @@ public class Room {
 	}
 
 	/**
+	 * isOccupied() checks if the room is occupied on a given date.
+	 * @param date Given date to check for occupancy status.
+	 * @return True if the given date has an existing booking. False otherwise.
+	 */
+	public boolean isOccupied(Date date) {
+		for (int i = 0; i < reservations.size(); i++) {
+			if (date.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Sets the name of the Room. It is assumed that the new name will be unique compared to the other room objects prior to calling this function.
 	 * @param name New name for the room.
 	 */
@@ -143,6 +158,10 @@ public class Room {
 		return true;
 	}
 
+	public Reservation getReservation(int i) {
+		return reservations.get(i);
+	}
+
 	/**
 	 * Gets the list of Reservations that the Room has.
 	 * @return List of Reservations.
@@ -174,7 +193,7 @@ public class Room {
 	}
 
 	/**
-	 * Removes a Reservation instance using an index. 
+	 * Removes a Reservation instance using an index.
 	 * @param n Index of reservation to be removed.
 	 * @return True if a reservation is successfully removed. False otherwise.
 	 */

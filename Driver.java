@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -42,6 +43,9 @@ public class Driver {
 			System.out.println("[4.] List hotels");
 			System.out.println("Show a list of all hotels stored in the reservation system.\n");
 
+			System.out.println("[5.] Book room");
+			System.out.println("Book a specific room in a chosen hotel.\n");
+
 			System.out.print("[/]: Select a menu option: ");
 
 			// Input validation.
@@ -80,7 +84,7 @@ public class Driver {
 					System.out.println("[*]: Invalid input.");
 					break;
 			}
-		} while(menuOption != 0);
+		} while (menuOption != 0);
 
 		scanner.close();
 	}
@@ -91,6 +95,8 @@ public class Driver {
 	 */
 	private void printHeader(String messageString) {
 		int length = messageString.length();
+
+		System.out.print("\n");
 
 		for (int i = 0; i < 9; i++) {
 			System.out.print("=");
@@ -178,30 +184,22 @@ public class Driver {
 	 */
 	private void viewHotelMenu() {
 		String input;
-		boolean hotelFound = false;
-		Hotel currentHotel;
+		Hotel hotel;
 
 		do {
 			printHeader("View a hotel");
 			System.out.print("Enter the name of the hotel you want to view, or '0' to exit: ");
 			input = scanner.nextLine();
 
-			for (int i = 0; i < rSystem.getHotels().size(); i++) {
-				if (rSystem.getHotels().get(i).getName().equals(input)) {
-					hotelFound = true;
-					currentHotel = rSystem.getHotels().get(i);
+			hotel = rSystem.getHotel(input);
 
-					System.out.println("Name: " + currentHotel.getName());
-					System.out.println("Rooms: " + currentHotel.getRoomCount());
-					System.out.println("      Booked: " + currentHotel.getBookedRoomCount() + " Available: " + currentHotel.getAvailableRoomCount());
-					System.out.println("Estimate Earnings: ₱" + currentHotel.getBookedRoomCount() * currentHotel.getBasePrice() + "\n");
-
-					break;
-				}
-			}
-
-			if (!hotelFound) {
+			if (hotel == null) {
 				System.out.println("[*]: No hotel was found with that name.");
+			} else {
+				System.out.println("Name: " + hotel.getName());
+				System.out.println("      Rooms: " + hotel.getRoomCount());
+				System.out.println("      Booked: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
+				System.out.println("      Base price: ₱" + hotel.getBasePrice() + "\n");
 			}
 		} while (!input.equals("0"));
 	}
@@ -213,7 +211,6 @@ public class Driver {
 		Hotel currentHotel = new Hotel(null, 0);
 		String input;
 		int input2;
-		boolean hotelFound = false;
 
 		// Return to main menu if no hotels are in the list.
 		if (rSystem.getHotelCount() < 1) {
@@ -235,20 +232,14 @@ public class Driver {
 			System.out.print("Enter the name of the hotel you want to manage, or '0' to exit: ");
 			input = scanner.nextLine();
 
-			for (int i = 0; i < rSystem.getHotels().size(); i++) {
-				if (rSystem.getHotels().get(i).getName().equals(input)) {
-					hotelFound = true;
-					currentHotel = rSystem.getHotels().get(i);
-					break;
-				}
-			}
+			currentHotel = rSystem.getHotel(input);
 
-			if (!hotelFound && !input.equals("0")) {
+			if (currentHotel == null && !input.equals("0")) {
 				System.out.println("[*]: No hotel was found with that name.");
 			}
-		} while (!input.equals("0") && !hotelFound);
+		} while (currentHotel == null && !input.equals("0"));
 
-		if (hotelFound && !input.equals("0")) {
+		if (currentHotel != null && !input.equals("0")) {
 			do {
 				printHeader("Manage a hotel");
 				System.out.println("[0.] Back to main menu");
@@ -275,8 +266,9 @@ public class Driver {
 				System.out.print("[/]: Select a menu option: ");
 
 				while (!scanner.hasNextInt()) {
-					System.out.print("[*]: Select a menu option from 0 - 6: ");
+					System.out.println("[*]: Select a menu option from 0 - 6. ");
 					scanner.nextLine();
+					System.out.print("[/]: Select a menu option: ");
 				}
 
 				input2 = Integer.parseInt(scanner.nextLine());
@@ -343,14 +335,18 @@ public class Driver {
 		do {
 			// Input validation.
 			while (!scanner.hasNextInt()) {
-				System.out.println("[*]: Enter a valid positive integer.");
+				System.out.println("[*]: Enter a valid positive integer. The total cannot exceed 50.");
 				scanner.nextLine();
 			}
 
 			count = Integer.parseInt(scanner.nextLine());
 
-			validInput = rSystem.addRooms(hotel, count);
-		} while (!validInput);
+			if (hotel.getRoomCount() + count > 50) {
+				System.out.println("[*]: Enter a valid positive integer. The total cannot exceed 50.");
+			} else {
+				validInput = rSystem.addRooms(hotel, count);
+			}
+		} while (!validInput && count != 0);
 	}
 
 	/**
@@ -358,7 +354,7 @@ public class Driver {
 	 * @param hotel
 	 */
 	private void removeRooms(Hotel hotel) {
-		boolean successfullyRemovedRoom;
+		boolean successfullyRemovedRoom = false;
 		String roomName;
 
 		printHeader("Remove rooms from hotel");
@@ -366,25 +362,27 @@ public class Driver {
 		for (int i = 0; i < hotel.getRoomCount(); i++) {
 			System.out.print("| " + hotel.getRoom(i).getName());
 			if (hotel.getRoom(i).isOccupied()) {
-				System.out.print(" X");
+				System.out.print(" X ");
+			} else {
+				System.out.print("   ");
 			}
 
-			if (i % 10 == 0 && i != 0) {
+			if ((i + 1) % 10 == 0) {
 				System.out.println(" |");
 			}
 		}
 
-		System.out.println(" |");
+		System.out.print("|");
 
 		do {
-			System.out.print("Select a room not marked as occupied to remove: ");
+			System.out.print("\nSelect a room not marked as occupied to remove, or enter '0' to exit: ");
 			roomName = scanner.nextLine();
 			successfullyRemovedRoom = rSystem.removeRoom(hotel, roomName);
 
-			if (!successfullyRemovedRoom) {
-				System.out.println("[*]: Room not found.");
+			if (!successfullyRemovedRoom && !roomName.equals("0")) {
+				System.out.println("[*]: Enter a valid room to remove.");
 			}
-		} while (!successfullyRemovedRoom);
+		} while (!successfullyRemovedRoom && !roomName.equals("0"));
 	}
 
 	/**
@@ -393,19 +391,32 @@ public class Driver {
 	 */
 	private void updateBasePrice(Hotel hotel) {
 		double basePrice;
-		boolean successfullyChangedBasePrice;
+		boolean successfullyChangedBasePrice = false;
 
-		do {
-			// Input validation.
-			while (!scanner.hasNextInt()) {
-				System.out.println("[*]: Enter a valid positive integer.");
-				scanner.nextLine();
-			}
+		if (hotel.getBookedRoomCount() == 0) {
+			do {
+				printHeader("Update base price");
+				System.out.println("Current price: ₱" + hotel.getBasePrice());
+				System.out.print("Enter the new base price, or enter '0' to exit: ₱");
+				// Input validation.
+				while (!scanner.hasNextInt()) {
+					System.out.println("[*]: Enter a valid positive integer greater than 100.");
+					scanner.nextLine();
+					System.out.print("Enter the new base price: ₱");
+				}
 
-			basePrice = Double.parseDouble(scanner.nextLine());
+				basePrice = Double.parseDouble(scanner.nextLine());
 
-			successfullyChangedBasePrice = rSystem.updateBasePrice(hotel, basePrice);
-		} while (!successfullyChangedBasePrice);
+				successfullyChangedBasePrice = rSystem.updateBasePrice(hotel, basePrice);
+
+				if (!successfullyChangedBasePrice && basePrice != 0) {
+					System.out.println("[*]: Enter a valid positive integer greater than 100.");
+				}
+			} while (!successfullyChangedBasePrice && basePrice != 0);
+		} else {
+			System.out.println("[*]: You cannot update the base price of the hotel while there are reservations.");
+			return;
+		}
 	}
 
 	/**
@@ -439,8 +450,242 @@ public class Driver {
 		} while (input != 0);
 	}
 
+	/**
+	 * bookingMenu() opens the menu that allows a user to book a specific room in a hotel during specified dates.
+	 */
 	private void bookingMenu() {
-		printHeader("Book a room");
-		System.out.println("Enter a room to book: ");
+		Hotel hotel = null;
+		Room room = null;
+		Guest guest = null;
+		Date checkInDate = null;
+		Date checkOutDate = null;
+		int step = 0;
+
+		boolean finishBooking = false;
+
+		do {
+			switch (step) {
+				case 0:
+					printHeader("Enter your name");
+					guest = setGuest();
+					step += 1;
+					break;
+				case 1:
+					printHeader("Choose a hotel");
+					hotel = setHotel();
+					step += 1;
+					break;
+				case 2:
+					printHeader("Choose a check-in date");
+					checkInDate = setCheckInDate();
+					step += 1;
+					break;
+				case 3:
+					printHeader("Choose a check-out date");
+					checkOutDate = setCheckOutDate(checkInDate);
+					step += 1;
+					break;
+				case 4:
+					printHeader("Choose a room");
+					room = setRoom(hotel, checkInDate, checkOutDate);
+					step += 1;
+					break;
+				case 5:
+					room.reserveRoom(guest, checkInDate, checkOutDate, hotel.getBasePrice() * checkInDate.getDayDifference(checkOutDate));
+					printHeader("Review your details");
+					System.out.println("Name          : " + guest.getName());
+					System.out.println("Hotel         : " + hotel.getName());
+					System.out.println("Room          : " + room.getName());
+					System.out.println("Check-in date : " + checkInDate.getFormattedDate());
+					System.out.println("Check-out date: " + checkOutDate.getFormattedDate());
+					System.out.println("Total price   : ₱" + room.getReservation(room.getReservationCount() - 1).getReservedPrice());
+					finishBooking = true;
+				default:
+					break;
+			}
+		} while (!finishBooking);
+
+	}
+
+	/**
+	 * setGuest() asks the user for their first and last names and returns a Guest instance with those details.
+	 * @return Instance of Guest with given details.
+	 */
+	private Guest setGuest() {
+		String firstName;
+		String lastName;
+
+		System.out.print("Enter your first name: ");
+		firstName = scanner.nextLine();
+
+		System.out.print("Enter your last name: ");
+		lastName = scanner.nextLine();
+
+		return new Guest(firstName, lastName);
+	}
+
+	/**
+	 * setHotel() asks the user for the name of a hotel and returns the corresponding hotel with that name.
+	 * @return Hotel with name entered by user.
+	 */
+	private Hotel setHotel() {
+		String hotelName;
+		Hotel hotel;
+
+		do {
+			// Display available hotels.
+			for (int i = 0; i < rSystem.getHotelCount(); i++) {
+				hotel = rSystem.getHotels().get(i);
+				System.out.print(String.format("[%02d.] ", i + 1));
+				System.out.println("Name: " + hotel.getName());
+				System.out.println("      Rooms: " + hotel.getRoomCount());
+				System.out.println("      Booked: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
+				System.out.println("      Base price: ₱" + hotel.getBasePrice() + "\n");
+			}
+
+			System.out.print("Enter the name of a hotel to book: ");
+			hotelName = scanner.nextLine();
+
+			hotel = rSystem.getHotel(hotelName);
+
+			if (hotel != null) {
+				return hotel;
+			} else {
+				System.out.println("[*]: No hotel with that name was found.");
+			}
+		} while (hotel == null || hotel.getAvailableRoomCount() == 0);
+
+		return hotel;
+	}
+
+	/**
+	 * setRoom() returns the first
+	 * @param hotel Hotel to get room list from.
+	 * @return Room with name entered by user.
+	 */
+	private Room setRoom(Hotel hotel, Date checkInDate, Date checkOutDate) {
+		Room room = null;
+		String roomName;
+		boolean successfullySetRoom = false;
+
+		do {
+			for (int i = 0; i < hotel.getRoomCount(); i++) {
+				System.out.print("| " + hotel.getRoom(i).getName());
+				if (!hotel.isRoomAvailable(hotel.getRoom(i).getName(), checkInDate, checkOutDate)) {
+					System.out.print(" X ");
+				} else {
+					System.out.print("   ");
+				}
+
+				if ((i + 1) % 10 == 0) {
+					System.out.print(" |");
+				}
+			}
+			System.out.print("\nEnter a room number: ");
+			roomName = scanner.nextLine();
+
+			room = hotel.getRoom(roomName);
+
+			if (room != null && hotel.isRoomAvailable(roomName, checkInDate, checkOutDate)) {
+				successfullySetRoom = true;
+				System.out.println("[/]: You have been assigned to room " + room.getName());
+			} else if (room == null) {
+				System.out.println("[*]: Invalid room name.");
+			} else if (!hotel.isRoomAvailable(roomName, checkInDate, checkOutDate)) {
+				System.out.println("[*]: Room + " + roomName + " is not available on your selected dates.");
+			}
+		} while (!successfullySetRoom);
+		return room;
+	}
+
+	/**
+	 * setCheckInDate() asks the user for the date they would like to check in on.
+	 * @param room Room to check in to.
+	 * @return Date that the user selected.
+	 */
+	private Date setCheckInDate() {
+		Date date = null;
+		int dateNumber;
+
+		do {
+			displayCalendar();
+			System.out.print("Enter your check-in date: ");
+
+			while (!scanner.hasNextInt()) {
+				System.out.print("[*]: Enter a valid unbooked day from 0 - 31:");
+				scanner.nextLine();
+			}
+
+			dateNumber = Integer.parseInt(scanner.nextLine());
+
+			if (dateNumber > 1 || dateNumber < 31) {
+				date = new Date(dateNumber);
+				date.setHour(14);
+				date.setMinute(0);
+			} else {
+				System.out.print("[*]: Enter a valid unbooked day from 0 - 31: ");
+			}
+		} while (date == null);
+		return date;
+	}
+
+	/**
+	 * setCheckOutDate() asks the user for the date they would like to check out on.
+	 * @param room Room to check in to.
+	 * @param checkInDate Date that the user will check in to the room on.
+	 * @return Date that the user selected.
+	 */
+	private Date setCheckOutDate(Date checkInDate) {
+		Date date = null;
+		int dateNumber;
+
+		do {
+			displayCalendar(checkInDate);
+			System.out.print("Enter your check-out date: ");
+
+			while (!scanner.hasNextInt()) {
+				System.out.print("[*]: Enter a valid unbooked day from 1 - 31 after your check-in date:");
+				scanner.nextLine();
+			}
+
+			dateNumber = Integer.parseInt(scanner.nextLine());
+
+			if ((dateNumber > 1 || dateNumber < 31) && new Date(dateNumber).isAfter(checkInDate)) {
+				date = new Date(dateNumber);
+				date.setHour(12);
+				date.setMinute(0);
+			} else {
+				System.out.println("[*]: Enter a valid unbooked day from 1 - 31 after your check-in date. ");
+			}
+		} while (date == null);
+		return date;
+	}
+
+	/**
+	 * displayOccupancy() displays a calendar showing the dates available.
+	 */
+	private void displayCalendar() {
+		for (int i = 1; i <= 31; i++) {
+			System.out.print("| " + i + " ");
+		}
+		System.out.print("|\n");
+	}
+
+	/**
+	 * displayCalendar() displays a calendar showing the dates available after a certain date.
+	 * @param date Date to start after.
+	 */
+	private void displayCalendar(Date date) {
+		Date currentDate;
+		for (int i = 1; i <= 31; i++) {
+			currentDate = new Date(i);
+
+			if (currentDate.isBefore(date)) {
+				System.out.print("| X ");
+			} else {
+				System.out.print("| " + i + " ");
+			}
+		}
+		System.out.print("|\n");
 	}
 }
