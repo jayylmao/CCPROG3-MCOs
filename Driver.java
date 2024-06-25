@@ -240,7 +240,7 @@ public class Driver {
 								else {
 									System.out.printf(" X ", hotel.getRoom(i).getName());
 								}
-								if ((i + 1) % 10 == 0) {
+								if ((i + 1) % 10 == 0 && (i + 1) < hotel.getRoomCount()) {
 									System.out.println(" |");
 									System.out.print("| ");
 								}
@@ -276,7 +276,7 @@ public class Driver {
 			System.out.print("| ");
 			for(int i = 0; i < hotel.getRoomCount(); i++) {
 				System.out.printf("%s", hotel.getRoom(i).getName());
-				if ((i + 1) % 10 == 0) {
+				if ((i + 1) % 10 == 0 && (i + 1) < hotel.getRoomCount()) {
 					System.out.println(" |");
 					System.out.print("| ");
 				}
@@ -930,18 +930,23 @@ public class Driver {
 		boolean successfullySetRoom = false;
 
 		do {
-			for (int i = 0; i < hotel.getRoomCount(); i++) {
-				System.out.print("| " + hotel.getRoom(i).getName());
-				if (!hotel.isRoomAvailable(hotel.getRoom(i).getName(), checkInDate, checkOutDate)) {
-					System.out.print(" X ");
-				} else {
-					System.out.print("  ");
+			System.out.print("| ");
+			for(int i = 0; i < hotel.getRoomCount(); i++) {
+				if(hotel.isRoomAvailable(hotel.getRoom(i).getName(), checkInDate, checkOutDate)) {
+					System.out.printf("%s", hotel.getRoom(i).getName());
 				}
-
-				if ((i + 1) % 10 == 0) {
-					System.out.print("|\n");
+				else {
+					System.out.printf(" X ", hotel.getRoom(i).getName());
+				}
+				if ((i + 1) % 10 == 0 && (i + 1) < hotel.getRoomCount()) {
+					System.out.println(" |");
+					System.out.print("| ");
+				}
+				else {
+					System.out.print(" | ");
 				}
 			}
+			System.out.println("");
 			System.out.print("\nEnter a room number: ");
 			roomName = scanner.nextLine();
 
@@ -1028,10 +1033,19 @@ public class Driver {
 	 * displayCalendar() displays a calendar showing the dates available.
 	 */
 	private void displayCalendar() {
+		System.out.print("| ");
 		for (int i = 1; i <= 31; i++) {
-			System.out.print("| " + i + " ");
+			System.out.printf("%2d", i);
+			if(i % 7 == 0 && i < 31) {
+				System.out.println(" |");
+				System.out.print("| ");
+			}
+			else {
+				System.out.print(" | ");
+			}
+
 		}
-		System.out.print("|\n");
+		System.out.print("\n");
 	}
 
 	/**
@@ -1040,16 +1054,25 @@ public class Driver {
 	 */
 	private void displayCalendar(Date date) {
 		Date currentDate;
+		System.out.print("| ");
 		for (int i = 1; i <= 31; i++) {
 			currentDate = new Date(i);
 
 			if (currentDate.isBefore(date)) {
-				System.out.print("| X ");
+				System.out.print("XX");
 			} else {
-				System.out.print("| " + i + " ");
+				System.out.print(String.format("%2d", i));
+			}
+
+			if(i % 7 == 0 && i < 31) {
+				System.out.println(" |");
+				System.out.print("| ");
+			}
+			else {
+				System.out.print(" | ");
 			}
 		}
-		System.out.print("|\n");
+		System.out.print("\n");
 	}
 
 	/**
@@ -1060,6 +1083,7 @@ public class Driver {
 		Date currentDate;
 		boolean validDay;
 
+		System.out.print("| ");
 		for (int i = 1; i <= 31; i++) {
 			validDay = true;
 			currentDate = new Date(i);
@@ -1069,13 +1093,20 @@ public class Driver {
 				}
 			}
 			if(!validDay) {
-				System.out.print("| X ");
+				System.out.print("XX");
 			}
 			else {
-				System.out.print("| " + i + " ");
+				System.out.print(String.format("%2d", i));
 			}
 
+			if(i % 7 == 0 && i < 31) {
+				System.out.println(" |");
+				System.out.print("| ");
+			}
+			else {
+				System.out.print(" | ");
+			}
 		}
-		System.out.print("|\n");
+		System.out.print("\n");
 	}
 }
