@@ -355,7 +355,7 @@ public class Driver {
 			index -= 1;
 
 			if(index >= 0 && index < room.getReservationCount()) {
-				System.out.print(      "Guests      : ");
+				System.out.print("      Guests        : ");
 				for (int j = 0; j < room.getReservation(index).getGuests().size(); j++) {
 					if(j == 0) {
 						System.out.println(room.getReservation(index).getGuests().get(j).getName());
@@ -722,7 +722,7 @@ public class Driver {
 				room.sortReservations();
 				for (int i = 0; i < room.getReservationCount(); i++) {
 					System.out.print(String.format("[%02d.] ", i + 1));
-					System.out.print("      Guests      : ");
+					System.out.print("      Guests        : ");
 
 					for (int j = 0; j < room.getReservation(i).getGuests().size(); j++) {
 						if(j == 0) {
