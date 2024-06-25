@@ -48,7 +48,7 @@ public class HotelReservationSystem {
 
 		for (int i = 0; i < hotels.size(); i++) {
 			currentHotelName = hotels.get(i).getName();
-			
+
 			if (currentHotelName.equals(name)) {
 				return true; // Duplicate was found if this is returned
 			}
@@ -74,8 +74,7 @@ public class HotelReservationSystem {
 	 */
 	public boolean addRooms(Hotel hotel, int count) {
 		if (count > 0) {
-			hotel.addRoom(count);
-			return true;
+			return hotel.addRoom(count);
 		} else {
 			return false;
 		}

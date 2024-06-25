@@ -26,17 +26,19 @@ public class Hotel {
 	 * @param roomCount How many rooms are in the hotel.
 	 */
 	public Hotel(String name, int roomCount) {
-		this.name = name;
+		if (roomCount > 0 && roomCount < 51) {
+			this.name = name;
 
-		// Create new ArrayList instance rooms.
-		rooms = new ArrayList<Room>(roomCount);
+			// Create new ArrayList instance rooms.
+			rooms = new ArrayList<Room>(roomCount);
 
-		// Default room base price is 1299 as per spec.
-		this.basePrice = 1299;
+			// Default room base price is 1299 as per spec.
+			this.basePrice = 1299;
 
-		// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
-		for (int i = 0; i < roomCount; i++) {
-			rooms.add(new Room(String.format("%03d", i + 1)));
+			// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
+			for (int i = 0; i < roomCount; i++) {
+				rooms.add(new Room(String.format("%03d", i + 1)));
+			}
 		}
 	}
 
@@ -166,15 +168,22 @@ public class Hotel {
 	}
 
 	/**
-	 * addRoom() adds a room to the hotel.
+	 * addRoom() adds a specified number of rooms to the hotel.
 	 * @param count Number of rooms to add.
 	 * Precondition: getRoomCount() + count <= 50
+	 * @return True if rooms were added. False otherwise.
 	 */
-	public void addRoom(int count) {
-		int lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
+	public boolean addRoom(int count) {
+		if (getRoomCount() + count > 50) {
+			return false;
+		} else {
+			int lastRoomName;
 
-		for (int i = 0; i < count; i++) {
-			rooms.add(new Room(String.format("%03d", lastRoomName + 1)));
+			for (int i = 0; i < count; i++) {
+				lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
+				rooms.add(new Room(String.format("%03d", lastRoomName + 1)));
+			}
+			return true;
 		}
 	}
 
