@@ -66,8 +66,8 @@ public class Reservation {
 	 * @return Total price of the booking.
 	 */
 	public double calculateTotalPrice(Date checkIn, Date checkOut) {
-		if(checkOut.getDay() == checkIn.getDay()) {
-			return this.reservedPrice;
+		if(checkOut.getDay() == checkIn.getDay() || checkOut.isBefore(checkIn)) {
+			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		}
 		return this.reservedPrice * checkIn.getDayDifference(checkOut);
 	}
