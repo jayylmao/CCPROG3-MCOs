@@ -28,26 +28,6 @@ public class Date {
 		this.minute = 0;
 	}
 
-	public Date(int day, int month, int year) {
-		if (day < 1 || day > 31) {
-			throw new IllegalArgumentException("Invalid date entered: " + day);
-		} else if (month < 1 || month > 12) {
-			throw new IllegalArgumentException("Invalid month entered: " + month);
-		} else if (year < 1) {
-			throw new IllegalArgumentException("Invalid year entered: " + year);
-		} else {
-			this.day = day;
-			this.month = month;
-			this.year = year;
-		}
-	}
-
-	public Date(int day, int month, int year, int hour, int minute) {
-		this(day, month, year);
-		this.hour = hour;
-		this.minute = minute;
-	}
-
 	/**
 	 * Gets the Date object's day number.
 	 * @return Day of the month.

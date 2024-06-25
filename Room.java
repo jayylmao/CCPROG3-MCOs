@@ -19,13 +19,6 @@ public class Room {
 	private ArrayList<Reservation> reservations;
 
 	/**
-	 * Constructor that creates a blank Room instance. Used for determining whether or not a room was found when searching by name.
-	 */
-	public Room() {
-		name = "";
-	}
-
-	/**
 	 * Regular Constructor that creates a Room instance.
 	 * @param roomName The name of the Room. Should be unique compared to other Room instances.
 	 */
@@ -60,21 +53,6 @@ public class Room {
 	}
 
 	/**
-	 * isOccupied() checks if the room is occupied on a given date.
-	 * @param date Given date to check for occupancy status.
-	 * @return True if the given date has an existing booking. False otherwise.
-	 */
-	public boolean isOccupied(Date date) {
-		for (int i = 0; i < reservations.size(); i++) {
-			if (date.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * Sets the name of the Room. It is assumed that the new name will be unique compared to the other room objects prior to calling this function.
 	 * @param name New name for the room.
 	 */
@@ -99,21 +77,21 @@ public class Room {
 	 * @return True if a reservation is successful (i.e no overlap with previous reservations or the room is unoccupied). False otherwise.
 	 */
 	public boolean reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice) {
-		if(!occupied && !checkIn.isAfter(checkOut)) {
+		if (!occupied && !checkIn.isAfter(checkOut)) {
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
 			this.setOccupationState(true);
 			return true;
 		}
-		else if(checkIn.isAfter(checkOut)) {
+		else if (checkIn.isAfter(checkOut)) {
 			return false;
 		}
-		else if(occupied) {
-			for(int i = 0; i < this.reservations.size(); i++) {
+		else if (occupied) {
+			for (int i = 0; i < this.reservations.size(); i++) {
 				// Check for overlap between checkIn and checkOut times
-				if(checkIn.isBefore(this.reservations.get(i).getCheckOut()) && checkIn.isAfter(this.reservations.get(i).getCheckIn())) {
+				if (checkIn.isBefore(this.reservations.get(i).getCheckOut()) && checkIn.isAfter(this.reservations.get(i).getCheckIn())) {
 					return false;
 				}
-				else if(checkOut.isBefore(this.reservations.get(i).getCheckOut()) && checkOut.isAfter(this.reservations.get(i).getCheckIn())) {
+				else if (checkOut.isBefore(this.reservations.get(i).getCheckOut()) && checkOut.isAfter(this.reservations.get(i).getCheckIn())) {
 					return false;
 				}
 			}
@@ -173,7 +151,7 @@ public class Room {
 	/**
 	 * Sorts the list of Reservations in chronological order.
 	 */
-	public void sortReservations() {
+	private void sortReservations() {
 		int minIndex;
 		Reservation temp;
 

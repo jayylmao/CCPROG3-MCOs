@@ -5,7 +5,11 @@ import java.util.ArrayList;
  * The frontend interacts with this to get info on hotels.
  */
 public class HotelReservationSystem {
-	private ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+	private ArrayList<Hotel> hotels;
+
+	public HotelReservationSystem() {
+		hotels = new ArrayList<Hotel>();
+	}
 
 	/**
 	 * Adds a hotel and stores it in the list.
@@ -132,20 +136,5 @@ public class HotelReservationSystem {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Removes a Hotel instance using an index.
-	 * @param n index of the Hotel to be removed.
-	 * @return True if a Hotel is successfully removed. False otherwise.
-	 */
-	public boolean removeHotel(int n) {
-		if(n < this.hotels.size() && n >= 0) {
-			this.hotels.remove(n);
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 }

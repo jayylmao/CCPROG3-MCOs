@@ -142,16 +142,4 @@ public class Reservation {
 	public Date getCheckOut() {
 		return checkOut;
 	}
-
-	public void setCheckIn(int month, int date, int year) {
-		checkIn.setMonth(month);
-		checkIn.setDay(date);
-		checkIn.setYear(year);
-	}
-
-	public void setCheckOut(int month, int date, int year) {
-		checkOut.setMonth(month);
-		checkOut.setDay(date);
-		checkOut.setYear(year);
-	}
 }

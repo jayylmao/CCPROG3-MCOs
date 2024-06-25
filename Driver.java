@@ -544,7 +544,7 @@ public class Driver {
 
 			if (roomName.equals("0")) {
 				break;
-			} if (room == null) {
+			} else if (room == null) {
 				System.out.println("[*]: Enter a valid room number.");
 			} else if (room.getReservationCount() == 0) {
 				System.out.println("[*]: This room has no reservations.");
