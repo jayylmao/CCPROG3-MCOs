@@ -27,7 +27,8 @@ public class Reservation {
 	 */
 	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest) {
 		if (checkOut.isBefore(checkIn)) {
-			throw new IllegalArgumentException("Check out date must be after check in.");
+			this.checkIn = null;
+			this.checkOut = null;
 		} else {
 			this.checkIn = checkIn;
 			this.checkOut = checkOut;
@@ -45,14 +46,18 @@ public class Reservation {
 	 * @param guestList ArrayList of Guest objects that are reserving the room together.
 	 */
 	public Reservation(Date checkIn, Date checkOut, double reservedPrice, ArrayList<Guest> guestList) {
-		this.checkIn = checkIn;
-		this.checkOut = checkOut;
-		this.reservedPrice = reservedPrice;
+		if (checkOut.isBefore(checkIn)) {
+			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
+		} else {
+			this.checkIn = checkIn;
+			this.checkOut = checkOut;
+			this.reservedPrice = reservedPrice;
 
-		for(int i = 0; i < guestList.size(); i++) {
-			this.guests.add(guestList.get(i));
+			for (int i = 0; i < guestList.size(); i++) {
+				this.guests.add(guestList.get(i));
+			}
+			this.totalPrice = calculateTotalPrice(checkIn, checkOut);
 		}
-		this.totalPrice = calculateTotalPrice(checkIn, checkOut);
 	}
 
 	/**
