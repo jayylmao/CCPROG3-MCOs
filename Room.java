@@ -9,7 +9,7 @@ public class Room {
 	private String name;
 
 	/**
- 	 * A flag that checks if the Room is occupied or not.
+ 	 * A flag that checks if the Room is occupied or not. This is a general flag to see if a Room has any Reservation instance at all throughout the month
 	 */
 	private boolean occupied;
 
@@ -102,9 +102,8 @@ public class Room {
 					return false;
 				}
 			}
-			// If it passes the list without returning true, it for sure does not overlap with other reservations
+			// If it passes the list without returning false, it for sure does not overlap with other reservations.
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
-			sortReservations();
 		}
 
 		return true;
@@ -138,19 +137,28 @@ public class Room {
 				}
 			}
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guests));
-			sortReservations();
 		}
 		return true;
 	}
 
+	/**
+	 * Gets a Reservation instance based on an index.
+	 * @param i Index of the Reservation instance.
+	 * @return Reservation instance. Returns null if index is out of bounds.
+	 */
 	public Reservation getReservation(int i) {
-		return reservations.get(i);
+		if(i < this.reservations.size() && i >= 0) {
+			return reservations.get(i);
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
 	 * Sorts the list of Reservations in chronological order.
 	 */
-	private void sortReservations() {
+	public void sortReservations() {
 		int minIndex;
 		Reservation temp;
 

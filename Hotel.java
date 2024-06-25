@@ -34,24 +34,24 @@ public class Hotel {
 		// Default room base price is 1299 as per spec.
 		this.basePrice = 1299;
 
-		// Initialize rooms when creating the hotel.
+		// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
 		for (int i = 0; i < roomCount; i++) {
 			rooms.add(new Room(String.format("%03d", i + 1)));
 		}
 	}
 
+	/**
+	 * Gets the name of the Hotel.
+	 * @return Hotel name.
+	 */
 	public String getName() {
 		return name;
-	}
-
-	public ArrayList<Room> getRooms() {
-		return rooms;
 	}
 
 	/**
 	 * getRoom() takes a room name and searches the hotel for a room with that name.
 	 * @param inputRoomName Name to search for.
-	 * @return Room object with matching name.
+	 * @return Room object with matching name. Returns null if no Room with a matching name was found.
 	 */
 	public Room getRoom(String inputRoomName) {
 		for (int i = 0; i < rooms.size(); i++) {
@@ -63,6 +63,11 @@ public class Hotel {
 		return null;
 	}
 
+	/**
+	 * Secondary getRoom function that uses an index instead of a name to return a Room object.
+	 * @param i index of the Room.
+	 * @return Room object with matching index. Returns null if out of bounds.
+	 */
 	public Room getRoom(int i) {
 		if (i >= 0 && i < getRoomCount()) {
 			return rooms.get(i);
@@ -72,12 +77,16 @@ public class Hotel {
 
 	}
 
+	/**
+	 * Gets the total count of Rooms in the Hotel.
+	 * @return Number of Rooms that the Hotel has.
+	 */
 	public int getRoomCount() {
 		return rooms.size();
 	}
 
 	/**
-	 * getAvailableRoomCount() returns the number of rooms in the hotel that are not occupied.
+	 * getAvailableRoomCount() returns the number of rooms in the hotel that are not occupied at all throughout the entire month.
 	 * @return Number of unoccupied (free) rooms.
 	 */
 	public int getAvailableRoomCount() {
@@ -92,7 +101,7 @@ public class Hotel {
 	}
 
 	/**
-	 * getOccupiedRoomCount() returns the number of rooms in the hotel that are occupied.
+	 * getOccupiedRoomCount() returns the number of rooms in the hotel that are occupied or have at least one reservation throughout the month.
 	 * @return Number of occupied rooms.
 	 */
 	public int getBookedRoomCount() {
@@ -158,16 +167,26 @@ public class Hotel {
 		return available;
 	}
 
+	/**
+	 * Gets the base price per night for all Rooms in the Hotel.
+	 * @return Base price per night. It is defaulted to 1299
+	 */
 	public double getBasePrice() {
 		return basePrice;
 	}
 
+	/**
+	 * Gets the base price as a formatted String (real number with 2 decimal places) for all Rooms in the Hotel.
+	 * @return Base price per night as a String.
+	 */
 	public String getFormattedBasePrice() {
 		return String.format("%.2f", basePrice);
 	}
 
 	/**
 	 * addRoom() adds a room to the hotel.
+	 * @param count Number of rooms to add.
+	 * Precondition: getRoomCount() + count <= 50
 	 */
 	public void addRoom(int count) {
 		int lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
@@ -221,10 +240,19 @@ public class Hotel {
 		return roomAvailable;
 	}
 
+	/**
+	 * Sets the name of the Hotel.
+	 * @param name New name of Hotel.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Sets the new base price of the Hotel.
+	 * @param basePrice New base price of the Hotel.
+	 * Precondition: No reservations are in the hotel.
+	 */
 	public void setBasePrice(double basePrice) {
 		this.basePrice = basePrice;
 	}

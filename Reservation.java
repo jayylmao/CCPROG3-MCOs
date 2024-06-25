@@ -55,14 +55,13 @@ public class Reservation {
 	 * Calculates the total price of the booking
 	 * @param checkIn Date object describing the check in time.
 	 * @param checkOut Date object describing the check out time.
-	 * @return total price of the booking
-	 * NOTE: not yet finished
+	 * @return Total price of the booking.
 	 */
 	public double calculateTotalPrice(Date checkIn, Date checkOut) {
 		if(checkOut.getDay() == checkIn.getDay()) {
 			return this.reservedPrice;
 		}
-		return this.reservedPrice * (checkOut.getDay() - checkIn.getDay());
+		return this.reservedPrice * checkIn.getDayDifference(checkOut);
 	}
 
 	/**
@@ -90,7 +89,7 @@ public class Reservation {
 	}
 
 	/**
-	 * Sets the price per night.
+	 * Sets the price per night. It also recalculates the total price.
 	 * @param reservedPrice New price per night.
 	 */
 	public void setReservedPrice(double reservedPrice) {
@@ -114,6 +113,10 @@ public class Reservation {
 		return this.totalPrice;
 	}
 
+	/**
+	 * Gets the total price as a formatted String (real number with 2 decimal places) for the Reservation.
+	 * @return Total price as a String.
+	 */
 	public String getFormattedTotalPrice() {
 		return String.format("%.2f", String.valueOf(this.totalPrice));
 	}

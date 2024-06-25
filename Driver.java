@@ -321,6 +321,8 @@ public class Driver {
 
 		do {
 			printHeader(String.format("Select a Reservation for Room %s", room.getName()));
+			
+			room.sortReservations();
 
 			for (int i = 0; i < room.getReservationCount(); i++) {
 				System.out.println(String.format("[%02d.] , Check in: %s, Check out: %s",
@@ -348,7 +350,7 @@ public class Driver {
 				System.out.println("      Check-in date : " + room.getReservation(index).getCheckIn().getFormattedDate());
 				System.out.println("      Check-out date: " + room.getReservation(index).getCheckOut().getFormattedDate());
 				System.out.println("      Reserved price: " + room.getReservation(index).getReservedPrice());
-				System.out.println("      Total price   : ₱" + room.getReservation(index).getTotalPrice());
+				System.out.println("      Total price   : ₱" + room.getReservation(index).getFormattedTotalPrice());
 			}
 			else if ((index < 0 || index >= room.getReservationCount()) && !input.equals("0")) {
 				System.out.println("[*]: Error. Enter a positive integer from 1 to " + room.getReservationCount() + ", Or enter 0 to exit.");
@@ -700,6 +702,7 @@ public class Driver {
 			} else if (room.getReservationCount() == 0) {
 				System.out.println("[*]: This room has no reservations.");
 			} else {
+				room.sortReservations();
 				for (int i = 0; i < room.getReservationCount(); i++) {
 					System.out.print(String.format("[%02d.] ", i + 1));
 					System.out.println("Guests      : ");
@@ -711,7 +714,7 @@ public class Driver {
 					System.out.println("      Check-in date : " + room.getReservation(i).getCheckIn().getFormattedDate());
 					System.out.println("      Check-out date: " + room.getReservation(i).getCheckOut().getFormattedDate());
 					System.out.println("      Reserved price: " + room.getReservation(i).getReservedPrice());
-					System.out.println("      Total price   : ₱" + room.getReservation(i).getTotalPrice());
+					System.out.println("      Total price   : ₱" + room.getReservation(i).getFormattedTotalPrice());
 				}
 
 				do {
@@ -834,7 +837,7 @@ public class Driver {
 					System.out.println("Room          : " + room.getName());
 					System.out.println("Check-in date : " + checkInDate.getFormattedDate());
 					System.out.println("Check-out date: " + checkOutDate.getFormattedDate());
-					System.out.println("Total price   : ₱" + room.getReservation(room.getReservationCount() - 1).getTotalPrice());
+					System.out.println("Total price   : ₱" + room.getReservation(room.getReservationCount() - 1).getFormattedTotalPrice());
 					finishBooking = true;
 				default:
 					break;

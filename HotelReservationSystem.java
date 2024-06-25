@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public class HotelReservationSystem {
 	private ArrayList<Hotel> hotels;
 
+	/**
+	 * Contructor that initializes the hotels ArrayList.
+	 */
 	public HotelReservationSystem() {
 		hotels = new ArrayList<Hotel>();
 	}
@@ -78,6 +81,11 @@ public class HotelReservationSystem {
 		}
 	}
 
+	/**
+	 * Gets a Hotel based on a given name.
+	 * @param name Name of Hotel to search.
+	 * @return Hotel with matching name. Null if there is no Hotel with matching name.
+	 */
 	public Hotel getHotel(String name) {
 		for (int i = 0; i < getHotels().size(); i++) {
 			if (getHotels().get(i).getName().equals(name)) {

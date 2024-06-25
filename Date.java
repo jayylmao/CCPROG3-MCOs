@@ -78,28 +78,24 @@ public class Date {
 
 	/**
 	 * getFormattedDate() returns a string containing the date, formatted in YYYY-MM-DD HH:MM
-	 * @return
+	 * @return Formatted String regarding the full date.
 	 */
 	public String getFormattedDate() {
 		return getYear() + "-" + getMonth() + "-" + getDay() + " " + String.format("%02d", getHour()) + ":" + String.format("%02d", getMinute());
 	}
 
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
+	/**
+	 * Sets the hour variable in the Date object.
+	 * @param hour Hour number that the hour variable will be set to.
+	 */
 	public void setHour(int hour) {
 		this.hour = hour;
 	}
 
+	/**
+	 * Sets the minute variable in the Date object.
+	 * @param minute Minute number that the minute variable will be set to.
+	 */
 	public void setMinute(int minute) {
 		this.minute = minute;
 	}
