@@ -204,10 +204,11 @@ public class Driver {
 			else if(!input.equals("0")) {
 				do {
 					printHeader("Hotel");
-					System.out.println("Name: " + hotel.getName());
-					System.out.println("      Rooms: " + hotel.getRoomCount());
-					System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + "    Available: " + hotel.getAvailableRoomCount());
-					System.out.println("      Base price: " + hotel.getFormattedBasePrice() + "\n");
+					System.out.println("Name                             : " + hotel.getName());
+					System.out.println("Rooms                            : " + hotel.getRoomCount());
+					System.out.println("Booked rooms throughout the month: " + hotel.getBookedRoomCount() + "    Available: " + hotel.getAvailableRoomCount());
+					System.out.println("Base price                       : " + hotel.getFormattedBasePrice());
+					System.out.println("Monthly earnings                 : " + hotel.getFormattedBasePrice() + "\n");
 
 					printHeader("View hotel information");
 

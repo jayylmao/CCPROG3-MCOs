@@ -126,6 +126,10 @@ public class Hotel {
 	 * @return Number of occupied rooms.
 	 */
 	public int getBookedRoomCount(Date checkIn, Date checkOut) {
+		if (checkOut.isBefore(checkIn)) {
+			throw new IllegalArgumentException("Check-out date must be after check-in date.");
+		}
+
 		int count = 0;
 		for (int i = 0; i < this.rooms.size(); i++) {
 			if (!isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
@@ -143,6 +147,10 @@ public class Hotel {
 	 * @return Number of unoccupied (free) rooms.
 	 */
 	public int getAvailableRoomCount(Date checkIn, Date checkOut) {
+		if (checkOut.isBefore(checkIn)) {
+			throw new IllegalArgumentException("Check-out date must be after check-in date.");
+		}
+
 		int count = 0;
 		for (int i = 0; i < this.rooms.size(); i++) {
 			if (isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
@@ -176,7 +184,7 @@ public class Hotel {
 	 * @return True if rooms were added. False otherwise.
 	 */
 	public boolean addRoom(int count) {
-		if (getRoomCount() + count > 50) {
+		if (getRoomCount() + count > 50 || count < 1) {
 			return false;
 		} else {
 			int lastRoomName;
