@@ -35,7 +35,7 @@ public class HotelReservationSystem {
 	 * @return Number of hotels in the list.
 	 */
 	public int getHotelCount() {
-		return getHotelCount();
+		return hotels.size();
 	}
 
 	/**
