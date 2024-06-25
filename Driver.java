@@ -621,7 +621,7 @@ public class Driver {
 				if (!changeConfirmed) {
 					break;
 				}
-				validInput = rSystem.addRooms(hotel, count);
+				validInput = hotel.addRoom(count);
 			}
 		} while (!validInput && count != 0);
 	}
@@ -652,7 +652,7 @@ public class Driver {
 		do {
 			System.out.print("\nSelect a room not marked as occupied to remove, or enter '0' to exit: ");
 			roomName = scanner.nextLine();
-			successfullyRemovedRoom = rSystem.removeRoom(hotel, roomName);
+			successfullyRemovedRoom = hotel.removeRoom(roomName);
 
 			if (!successfullyRemovedRoom && !roomName.equals("0")) {
 				System.out.println("[*]: Enter a valid room to remove.");

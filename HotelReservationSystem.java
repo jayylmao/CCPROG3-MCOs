@@ -73,20 +73,6 @@ public class HotelReservationSystem {
 	}
 
 	/**
-	 * addRooms() adds a given number of rooms in a given hotel, given a valid input.
-	 * @param hotel Hotel to add rooms to.
-	 * @param count Number of rooms to add to hotel.
-	 * @return Success condition.
-	 */
-	public boolean addRooms(Hotel hotel, int count) {
-		if (count > 0) {
-			return hotel.addRoom(count);
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 * Gets a Hotel based on a given name.
 	 * @param name Name of Hotel to search.
 	 * @return Hotel with matching name. Null if there is no Hotel with matching name.
@@ -99,19 +85,6 @@ public class HotelReservationSystem {
 		}
 
 		return null;
-	}
-
-	/**
-	 * removeRoom() removes a room given the name of a room.
-	 * @param hotel Hotel to remove room from.
-	 * @param name Name of room to remove.
-	 * @return Success condition.
-	 */
-	public boolean removeRoom(Hotel hotel, String name) {
-		boolean successfullyRemovedRoom;
-		successfullyRemovedRoom = hotel.removeRoom(name);
-
-		return successfullyRemovedRoom;
 	}
 
 	/**
