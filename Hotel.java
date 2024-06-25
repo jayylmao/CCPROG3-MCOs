@@ -150,24 +150,6 @@ public class Hotel {
 	}
 
 	/**
-	 * Returns the list of rooms in the hotel that are available in a specific timeframe.
-	 * @param checkIn Date object describing the check in time.
-	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
-	 * @return List of unoccupied (free) rooms at the time.
-	 */
-	public ArrayList<Room> getAvailableRooms(Date checkIn, Date checkOut) {
-		ArrayList<Room> available = new ArrayList<Room>();
-
-		for (int i = 0; i < this.rooms.size(); i++) {
-			if (isRoomAvailable(getRoom(i).getName(), checkIn, checkOut)) {
-				available.add(getRoom(i));
-			}
-		}
-
-		return available;
-	}
-
-	/**
 	 * Gets the base price per night for all Rooms in the Hotel.
 	 * @return Base price per night. It is defaulted to 1299
 	 */

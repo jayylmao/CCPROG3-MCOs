@@ -41,7 +41,7 @@ public class Room {
 	 * @return Number of reservations for the room.
 	 */
 	public int getReservationCount() {
-		return reservations.size();
+		return this.reservations.size();
 	}
 
 	/**
