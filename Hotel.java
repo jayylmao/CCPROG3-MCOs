@@ -224,7 +224,7 @@ public class Hotel {
 		boolean roomAvailable = true;
 		Room room = getRoom(roomName);
 
-		if(room.isOccupied(checkInDate) || room.isOccupied(checkOutDate)) {
+		if(room.isOccupied(checkInDate, checkOutDate)) {
 			roomAvailable = false;
 		}
 

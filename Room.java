@@ -54,14 +54,16 @@ public class Room {
 
 	/**
 	 * isOccupied() checks if the room is occupied on a given date.
-	 * @param date Given date to check for occupancy status.
+	 * @param checkIn Given check in date to check for occupancy status.
+	 * @param checkOut Given check out date to check for occupancy status.
 	 * @return True if the given date has an existing booking. False otherwise.
 	 */
-	public boolean isOccupied(Date date) {
+	public boolean isOccupied(Date checkIn, Date checkOut) {
 		for (int i = 0; i < reservations.size(); i++) {
-			if (date.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut()) ||
-				reservations.get(i).getCheckIn().isBetween(date, reservations.get(i).getCheckOut()) ||
-				reservations.get(i).getCheckOut().isBetween(reservations.get(i).getCheckIn(), date)) {
+			if (checkIn.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut()) ||
+				checkOut.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut()) ||
+				reservations.get(i).getCheckIn().isBetween(checkIn, checkOut) ||
+				reservations.get(i).getCheckOut().isBetween(checkIn, checkOut)) {
 				return true;
 			}
 		}
@@ -95,14 +97,9 @@ public class Room {
 			return false;
 		}
 		else if (occupied) {
-			for (int i = 0; i < this.reservations.size(); i++) {
-				// Check for overlap between checkIn and checkOut times
-				if (checkIn.isBefore(this.reservations.get(i).getCheckOut()) && checkIn.isAfter(this.reservations.get(i).getCheckIn())) {
-					return false;
-				}
-				else if (checkOut.isBefore(this.reservations.get(i).getCheckOut()) && checkOut.isAfter(this.reservations.get(i).getCheckIn())) {
-					return false;
-				}
+			// Check for overlap between checkIn and checkOut times
+			if (isOccupied(checkIn, checkOut)) {
+				return false;
 			}
 			// If it passes the list without returning false, it for sure does not overlap with other reservations.
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
@@ -129,14 +126,9 @@ public class Room {
 			return false;
 		}
 		else if(occupied) {
-			for(int i = 0; i < this.reservations.size(); i++) {
-				// Check for overlap between checkIn and checkOut times
-				if(checkIn.isBefore(this.reservations.get(i).getCheckOut()) && checkIn.isAfter(this.reservations.get(i).getCheckIn())) {
-					return false;
-				}
-				else if(checkOut.isBefore(this.reservations.get(i).getCheckOut()) && checkOut.isAfter(this.reservations.get(i).getCheckIn())) {
-					return false;
-				}
+			// Check for overlap between checkIn and checkOut times
+			if (isOccupied(checkIn, checkOut)) {
+				return false;
 			}
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guests));
 		}
