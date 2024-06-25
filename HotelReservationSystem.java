@@ -35,7 +35,7 @@ public class HotelReservationSystem {
 	 * @return Number of hotels in the list.
 	 */
 	public int getHotelCount() {
-		return getHotels().size();
+		return getHotelCount();
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class HotelReservationSystem {
 	 * @return Hotel with matching name. Null if there is no Hotel with matching name.
 	 */
 	public Hotel getHotel(String name) {
-		for (int i = 0; i < getHotels().size(); i++) {
+		for (int i = 0; i < getHotelCount(); i++) {
 			if (getHotels().get(i).getName().equals(name)) {
 				return getHotels().get(i);
 			}
