@@ -207,13 +207,16 @@ public class Driver {
 					System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
 					System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
 
-					printHeader("Select Option");
+					printHeader("View hotel information");
 
 					System.out.println("[0.] Exit");
+					System.out.println("Return to the main menu.\n");
 
-					System.out.println("[1.] View available rooms in a specific timeframe");
+					System.out.println("[1.] View available rooms");
+					System.out.println("View available rooms in a specific timeframe.\n");
 
-					System.out.println("[2.] View specific room information");
+					System.out.println("[2.] View room information");
+					System.out.println("View information for a specific room in the hotel.\n");
 
 					System.out.print("[/]: Select a menu option: ");
 
@@ -236,6 +239,7 @@ public class Driver {
 									System.out.printf("%s, ", availRooms.get(i).getName());
 								}
 							}
+							System.out.print("\n");
 							break;
 						case "2":
 							viewRoomMenu(hotel);
