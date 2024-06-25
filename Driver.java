@@ -985,7 +985,7 @@ public class Driver {
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
 
-			if (dateNumber > 0 || dateNumber < 31) {
+			if (dateNumber > 0 && dateNumber < 31) {
 				date = new Date(dateNumber);
 				date.setHour(14);
 				date.setMinute(0);
@@ -1018,12 +1018,13 @@ public class Driver {
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
 
-			if ((dateNumber > 1 || dateNumber <= 31)) {
+			if ((dateNumber > 1 && dateNumber <= 31)) {
 				date = new Date(dateNumber);
 				date.setHour(12);
 				date.setMinute(0);
-				if(date.isAfter(checkInDate)) {
+				if(date.isBefore(checkInDate)) {
 					date = null;
+					System.out.println("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date. ");
 				}
 			} else {
 				System.out.println("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date. ");
