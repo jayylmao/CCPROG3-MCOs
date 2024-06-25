@@ -7,7 +7,7 @@ public class Driver {
 	/** Create instance of reservation system. */
 	private HotelReservationSystem rSystem = new HotelReservationSystem();
 
-	Scanner scanner;
+	private Scanner scanner;
 
 	/**
 	 * Instantiates the driver class and invokes the main menu.

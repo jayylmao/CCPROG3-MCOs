@@ -26,11 +26,15 @@ public class Reservation {
 	 * @param guest Guest object that is reserving the room.
 	 */
 	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest) {
-		this.checkIn = checkIn;
-		this.checkOut = checkOut;
-		this.reservedPrice = reservedPrice;
-		this.guests.add(guest);
-		this.totalPrice = calculateTotalPrice(checkIn, checkOut);
+		if (checkOut.isBefore(checkIn)) {
+			throw new IllegalArgumentException("Check out date must be after check in.");
+		} else {
+			this.checkIn = checkIn;
+			this.checkOut = checkOut;
+			this.reservedPrice = reservedPrice;
+			this.guests.add(guest);
+			this.totalPrice = calculateTotalPrice(checkIn, checkOut);
+		}
 	}
 
 	/**
