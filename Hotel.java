@@ -39,6 +39,8 @@ public class Hotel {
 			for (int i = 0; i < roomCount; i++) {
 				rooms.add(new Room(String.format("%03d", i + 1)));
 			}
+		} else {
+			throw new IllegalArgumentException("Rooms must be from 1 - 50.");
 		}
 	}
 
