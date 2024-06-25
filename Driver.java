@@ -352,7 +352,7 @@ public class Driver {
 			System.out.print("Enter the number of the reservation you want to view, or '0' to exit: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.println("[*]: Enter a positive integer from 1 to " + room.getReservationCount() + ", Or enter 0 to exit.");
+				System.out.println("[*]: Enter a positive integer from 1 to " + room.getReservationCount() + ", or enter 0 to exit.");
 				scanner.nextLine();
 			}
 
@@ -1006,7 +1006,7 @@ public class Driver {
 			System.out.print("Enter your check-in date: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.println("[*]: Enter a valid unbooked day from 1 - 30.");
+				System.out.println("[*]: Enter a valid day from 1 - 30.");
 				scanner.nextLine();
 				System.out.print("Enter your check-in date: ");
 			}
@@ -1018,7 +1018,7 @@ public class Driver {
 				date.setHour(14);
 				date.setMinute(0);
 			} else {
-				System.out.println("[*]: Enter a valid unbooked day from 1 - 30.");
+				System.out.println("[*]: Enter a valid day from 1 - 30.");
 			}
 		} while (date == null);
 		return date;
@@ -1039,7 +1039,7 @@ public class Driver {
 			System.out.print("Enter your check-out date: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.print("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date:");
+				System.out.print("[*]: Enter a valid day from 2 - 31 after your check-in date:");
 				scanner.nextLine();
 				System.out.print("Enter your check-out date: ");
 			}
@@ -1052,10 +1052,10 @@ public class Driver {
 				date.setMinute(0);
 				if(date.isBefore(checkInDate)) {
 					date = null;
-					System.out.println("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date. ");
+					System.out.println("[*]: Enter a valid day from 2 - 31 after your check-in date. ");
 				}
 			} else {
-				System.out.println("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date. ");
+				System.out.println("[*]: Enter a valid day from 2 - 31 after your check-in date. ");
 			}
 		} while (date == null);
 		return date;
@@ -1086,6 +1086,11 @@ public class Driver {
 	 */
 	private void displayCalendar(Date date) {
 		Date currentDate;
+		if (date.getDay() < 1 || date.getDay() > 31) {
+			System.out.println("[*]: Invalid date provided.");
+			return;
+		}
+
 		System.out.print("| ");
 		for (int i = 1; i <= 31; i++) {
 			currentDate = new Date(i);
