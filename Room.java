@@ -72,6 +72,29 @@ public class Room {
 	}
 
 	/**
+	 * isFull() checks if the room is completely booked (from day 1 - 31).
+	 * @return True if the room is booked for all days. False otherwise.
+	 */
+	public boolean isFull() {
+		Date checkIn;
+		Date checkOut;
+		int dayDifference = 0;
+
+		for (int i = 0; i < reservations.size(); i++) {
+			checkIn = getReservation(i).getCheckIn();
+			checkOut = getReservation(i).getCheckOut();
+
+			dayDifference += checkIn.getDayDifference(checkOut);
+		}
+
+		if (dayDifference == 30) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Sets the occupation state of the Room. Happens when the reservation list contains Reservation instances.
 	 * @param occupied True or false depending on whether or not the room is occupied.
 	 */

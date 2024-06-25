@@ -834,8 +834,13 @@ public class Driver {
 				case 1:
 					printHeader("Choose a hotel");
 					hotel = setHotel();
-					step += 1;
-					break;
+
+					if (hotel == null) {
+						return;
+					} else {
+						step += 1;
+						break;
+					}
 				case 2:
 					printHeader("Choose a check-in date");
 					checkInDate = setCheckInDate();
@@ -865,7 +870,6 @@ public class Driver {
 					break;
 			}
 		} while (!finishBooking);
-
 	}
 
 	/**
@@ -901,22 +905,27 @@ public class Driver {
 				System.out.println("Name: " + hotel.getName());
 				System.out.println("      Rooms: " + hotel.getRoomCount());
 				System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
-				System.out.println("      Base price: " + hotel.getFormattedBasePrice() + "\n");
+				System.out.println("      Base price: " + hotel.getFormattedBasePrice());
+				if (hotel.isFull()) {
+					System.out.println("[*]: This hotel is full for the month.\n");
+				} else {
+					System.out.println("\n");
+				}
 			}
 
-			System.out.print("Enter the name of a hotel to book: ");
+			System.out.print("Enter the name of a hotel to book, or '0' to cancel: ");
 			hotelName = scanner.nextLine();
 
 			hotel = rSystem.getHotel(hotelName);
 
-			if (hotel != null) {
+			if (hotel != null && !hotel.isFull()) {
 				return hotel;
-			} else {
-				System.out.println("[*]: No hotel with that name was found.");
+			} else if (!hotelName.equals("0")) {
+				System.out.println("[*]: No valid hotel found.");
 			}
-		} while (hotel == null || hotel.getAvailableRoomCount() == 0);
+		} while ((hotel == null || hotel.getAvailableRoomCount() == 0) && !hotelName.equals("0"));
 
-		return hotel;
+		return null;
 	}
 
 	/**

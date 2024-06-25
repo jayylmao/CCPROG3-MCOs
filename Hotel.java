@@ -256,4 +256,18 @@ public class Hotel {
 
 		return total;
 	}
+
+	/**
+	 * isFull() checks if all of the rooms in the hotel are completely booked (from day 1 - 31).
+	 * @return True if all rooms are completely booked. False otherwise.
+	 */
+	public boolean isFull() {
+		for (int i = 0; i < getRoomCount(); i++) {
+			if (!getRoom(i).isFull()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
