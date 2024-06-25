@@ -48,8 +48,8 @@ public class HotelReservationSystem {
 
 		for (int i = 0; i < hotels.size(); i++) {
 			currentHotelName = hotels.get(i).getName();
-
-			if (currentHotelName == name) {
+			
+			if (currentHotelName.equals(name)) {
 				return true; // Duplicate was found if this is returned
 			}
 		}
@@ -138,7 +138,7 @@ public class HotelReservationSystem {
 	 */
 	public boolean removeHotel(String name) {
 		for(int i = 0; i < getHotelCount(); i++) {
-			if(getHotels().get(i).getName() == name) {
+			if(getHotels().get(i).getName().equals(name)) {
 				this.hotels.remove(i);
 				return true;
 			}
