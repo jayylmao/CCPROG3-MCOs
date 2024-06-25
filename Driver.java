@@ -955,19 +955,19 @@ public class Driver {
 			System.out.print("Enter your check-in date: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.println("[*]: Enter a valid unbooked day from 0 - 31.");
+				System.out.println("[*]: Enter a valid unbooked day from 1 - 30.");
 				scanner.nextLine();
 				System.out.print("Enter your check-in date: ");
 			}
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
 
-			if (dateNumber > 1 || dateNumber < 31) {
+			if (dateNumber > 0 || dateNumber < 31) {
 				date = new Date(dateNumber);
 				date.setHour(14);
 				date.setMinute(0);
 			} else {
-				System.out.println("[*]: Enter a valid unbooked day from 0 - 31.");
+				System.out.println("[*]: Enter a valid unbooked day from 1 - 30.");
 			}
 		} while (date == null);
 		return date;
@@ -988,19 +988,19 @@ public class Driver {
 			System.out.print("Enter your check-out date: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.print("[*]: Enter a valid unbooked day from 1 - 31 after your check-in date:");
+				System.out.print("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date:");
 				scanner.nextLine();
 				System.out.print("Enter your check-out date: ");
 			}
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
 
-			if ((dateNumber > 1 || dateNumber < 31) && new Date(dateNumber).isAfter(checkInDate)) {
+			if ((dateNumber > 1 || dateNumber <= 31) && new Date(dateNumber).isAfter(checkInDate)) {
 				date = new Date(dateNumber);
 				date.setHour(12);
 				date.setMinute(0);
 			} else {
-				System.out.println("[*]: Enter a valid unbooked day from 1 - 31 after your check-in date. ");
+				System.out.println("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date. ");
 			}
 		} while (date == null);
 		return date;
