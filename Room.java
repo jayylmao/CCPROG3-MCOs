@@ -53,11 +53,18 @@ public class Room {
 	}
 
 	/**
-	 * Sets the name of the Room. It is assumed that the new name will be unique compared to the other room objects prior to calling this function.
-	 * @param name New name for the room.
+	 * isOccupied() checks if the room is occupied on a given date.
+	 * @param date Given date to check for occupancy status.
+	 * @return True if the given date has an existing booking. False otherwise.
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public boolean isOccupied(Date date) {
+		for (int i = 0; i < reservations.size(); i++) {
+			if (date.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -138,14 +145,6 @@ public class Room {
 
 	public Reservation getReservation(int i) {
 		return reservations.get(i);
-	}
-
-	/**
-	 * Gets the list of Reservations that the Room has.
-	 * @return List of Reservations.
-	 */
-	public ArrayList<Reservation> getReservations() {
-		return this.reservations;
 	}
 
 	/**

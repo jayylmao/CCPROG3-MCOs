@@ -206,9 +206,9 @@ public class Driver {
 					System.out.println("      Rooms: " + hotel.getRoomCount());
 					System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
 					System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
-					
+
 					printHeader("Select Option");
-				
+
 					System.out.println("[0.] Exit");
 
 					System.out.println("[1.] View available rooms in a specific timeframe");
@@ -272,6 +272,8 @@ public class Driver {
 					System.out.print(" | ");
 				}
 			}
+			System.out.print("\n");
+
 			System.out.print("Enter the name of the room you want to view, or '0' to exit: ");
 
 			input = scanner.nextLine();
@@ -290,20 +292,14 @@ public class Driver {
 				if(room.isOccupied()) {
 					do {
 						System.out.print("Do you want to diplay reservation info? (Y/N): ");
-						option = scanner.nextLine();
-						switch(option) {
-							case "y":
-							case "Y":
-								option = "Y";
-								break;
-							case "n":
-							case "N":
-								option = "N";
-								break;
-							default: System.out.println("[*]: Invalid input.");
+						option = scanner.nextLine().toUpperCase();
+
+						if (!option.equals("Y") &&
+							!option.equals("N")) {
+							System.out.println("[*]: Enter y or n.");
 						}
-					} while(!option.equals("Y") || !option.equals("N"));
-					
+					} while(!option.equals("Y") && !option.equals("N"));
+
 					if(option.equals("N")) {
 						input = "0";
 					}
@@ -325,7 +321,7 @@ public class Driver {
 
 		do {
 			printHeader(String.format("Select a Reservation for Room %s", room.getName()));
-			
+
 			for (int i = 0; i < room.getReservationCount(); i++) {
 				System.out.println(String.format("[%02d.] , Check in: %s, Check out: %s",
 												i + 1, room.getReservation(i).getCheckIn().getFormattedDate(),
@@ -341,7 +337,7 @@ public class Driver {
 
 			input = scanner.nextLine();
 			index = Integer.parseInt(input);
-			
+
 			index -= 1;
 
 			if(index >= 0 && index < room.getReservationCount()) {
@@ -1053,7 +1049,7 @@ public class Driver {
 			else {
 				System.out.print("| " + i + " ");
 			}
-			
+
 		}
 		System.out.print("|\n");
 	}
