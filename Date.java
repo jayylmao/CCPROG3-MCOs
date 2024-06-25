@@ -19,13 +19,13 @@ public class Date {
 	public Date(int day) {
 		if (day < 1 || day > 31) {
 			throw new IllegalArgumentException("Invalid date entered: " + day);
+		} else {
+			this.day = day;
+			this.month = 6;
+			this.year = 2024;
+			this.hour = 15;
+			this.minute = 0;
 		}
-
-		this.day = day;
-		this.month = 6;
-		this.year = 2024;
-		this.hour = 15;
-		this.minute = 0;
 	}
 
 	/**
@@ -89,7 +89,11 @@ public class Date {
 	 * @param hour Hour number that the hour variable will be set to.
 	 */
 	public void setHour(int hour) {
-		this.hour = hour;
+		if (hour < 0 || hour > 23) {
+			throw new IllegalArgumentException("Invalid hour entered: " + hour);
+		} else {
+			this.hour = hour;
+		}
 	}
 
 	/**
@@ -97,7 +101,11 @@ public class Date {
 	 * @param minute Minute number that the minute variable will be set to.
 	 */
 	public void setMinute(int minute) {
-		this.minute = minute;
+		if (minute < 0 || minute > 59) {
+			throw new IllegalArgumentException("Invalid minute entered: " + minute);
+		} else {
+			this.minute = minute;
+		}
 	}
 
 	/**
