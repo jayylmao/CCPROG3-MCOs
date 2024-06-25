@@ -47,8 +47,7 @@ public class Reservation {
 	 */
 	public Reservation(Date checkIn, Date checkOut, double reservedPrice, ArrayList<Guest> guestList) {
 		if (checkOut.isBefore(checkIn)) {
-			this.checkIn = null;
-			this.checkOut = null;
+			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		} else {
 			this.checkIn = checkIn;
 			this.checkOut = checkOut;
