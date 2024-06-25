@@ -1018,10 +1018,13 @@ public class Driver {
 
 			dateNumber = Integer.parseInt(scanner.nextLine());
 
-			if ((dateNumber > 1 || dateNumber <= 31) && new Date(dateNumber).isAfter(checkInDate)) {
+			if ((dateNumber > 1 || dateNumber <= 31)) {
 				date = new Date(dateNumber);
 				date.setHour(12);
 				date.setMinute(0);
+				if(date.isAfter(checkInDate)) {
+					date = null;
+				}
 			} else {
 				System.out.println("[*]: Enter a valid unbooked day from 2 - 31 after your check-in date. ");
 			}
