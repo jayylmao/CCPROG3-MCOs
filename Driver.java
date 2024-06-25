@@ -5,7 +5,7 @@ import java.util.Scanner;
  */
 public class Driver {
 	/** Create instance of reservation system. */
-	private HotelReservationSystem rSystem = new HotelReservationSystem();
+	private HotelReservationSystem rSystem;
 
 	private Scanner scanner;
 
@@ -22,6 +22,7 @@ public class Driver {
 	 * The main menu that the user interacts with.
 	 */
 	private void mainMenu() {
+		rSystem = new HotelReservationSystem();
 		scanner = new Scanner(System.in);
 		int menuOption;
 
@@ -165,7 +166,6 @@ public class Driver {
 						System.out.print("[/]: Input '0' to exit: ");
 
 						while (!scanner.hasNextInt()) {
-							System.out.println("[*]: Enter a '0' or one of the menu options.");
 							scanner.nextLine();
 							System.out.print("[/]: Input '0' to exit: ");
 						}
@@ -190,6 +190,12 @@ public class Driver {
 		String input;
 		Hotel hotel;
 		Date checkIn, checkOut;
+
+		// Return to main menu if no hotels are in the list.
+		if (rSystem.getHotelCount() < 1) {
+			System.out.println("[*]: There are no hotels registered in the system. Add one from the 'Create Hotel' menu. ");
+			return;
+		}
 
 		do {
 			printHeader("View a hotel");
@@ -824,6 +830,12 @@ public class Driver {
 		int step = 0;
 
 		boolean finishBooking = false;
+
+		// Return to main menu if no hotels are in the list.
+		if (rSystem.getHotelCount() < 1) {
+			System.out.println("[*]: There are no hotels registered in the system. Add one from the 'Create Hotel' menu. ");
+			return;
+		}
 
 		do {
 			switch (step) {

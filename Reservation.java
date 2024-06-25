@@ -16,7 +16,7 @@ public class Reservation {
 	private double totalPrice;
 
 	/** The list of Guests that have reserved a room (it may be a group of people that want to reserve a room together) */
-	private ArrayList<Guest> guests = new ArrayList<Guest>();
+	private ArrayList<Guest> guests;
 
 	/**
 	 * Constructor that creates a Reservation instance.
@@ -29,6 +29,7 @@ public class Reservation {
 		if (checkOut.isBefore(checkIn)) {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		} else {
+			guests = new ArrayList<Guest>();
 			this.checkIn = checkIn;
 			this.checkOut = checkOut;
 			this.reservedPrice = reservedPrice;
