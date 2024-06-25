@@ -134,7 +134,6 @@ public class Reservation {
 		return checkIn;
 	}
 
-
 	/**
 	 * Gets the check out time.
 	 * @return Date object representing the check out time.
