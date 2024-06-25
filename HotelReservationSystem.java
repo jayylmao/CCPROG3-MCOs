@@ -61,9 +61,15 @@ public class HotelReservationSystem {
 	 * changeHotelName() changes a given hotel's name.
 	 * @param hotel Hotel to change name of.
 	 * @param name Name to set.
+	 * @return True if hotel name was changed. False otherwise.
 	 */
-	public void changeHotelName(Hotel hotel, String name) {
-		hotel.setName(name);
+	public boolean changeHotelName(Hotel hotel, String name) {
+		if (!isDuplicate(name)) {
+			hotel.setName(name);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -106,28 +112,6 @@ public class HotelReservationSystem {
 		successfullyRemovedRoom = hotel.removeRoom(name);
 
 		return successfullyRemovedRoom;
-	}
-
-	/**
-	 * updateBasePrice() changes the base price of a given hotel,
-	 * so long as there are no reservations in the hotel and that the new price is >= 100.
-	 * @param hotel Hotel to change base price of.
-	 * @param newBasePrice New price to set base price of hotel to.
-	 * @return Success condition.
-	 */
-	public boolean updateBasePrice(Hotel hotel, double newBasePrice) {
-		for (int i = 0; i < hotel.getRoomCount(); i++) {
-			if (hotel.getRoom(i).getReservationCount() != 0) {
-				return false;
-			}
-		}
-
-		if (newBasePrice >= 100.0) {
-			hotel.setBasePrice(newBasePrice);
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

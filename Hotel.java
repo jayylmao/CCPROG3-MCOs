@@ -245,8 +245,19 @@ public class Hotel {
 	 * @param basePrice New base price of the Hotel.
 	 * Precondition: No reservations are in the hotel.
 	 */
-	public void setBasePrice(double basePrice) {
-		this.basePrice = basePrice;
+	public boolean setBasePrice(double basePrice) {
+		for (int i = 0; i < getRoomCount(); i++) {
+			if (getRoom(i).getReservationCount() != 0) {
+				return false;
+			}
+		}
+
+		if (basePrice >= 100.0) {
+			setBasePrice(basePrice);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

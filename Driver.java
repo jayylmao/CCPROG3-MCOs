@@ -214,7 +214,7 @@ public class Driver {
 					System.out.println("Rooms                            : " + hotel.getRoomCount());
 					System.out.println("Booked rooms throughout the month: " + hotel.getBookedRoomCount() + "    Available: " + hotel.getAvailableRoomCount());
 					System.out.println("Base price                       : " + hotel.getFormattedBasePrice());
-					System.out.println("Monthly earnings                 : " + hotel.getFormattedBasePrice() + "\n");
+					System.out.println("Monthly earnings                 : " + hotel.getTotalEarnings() + "\n");
 
 					printHeader("View hotel information");
 
@@ -386,7 +386,7 @@ public class Driver {
 	 * Shows the submenu that lets the user manage individual hotels.
 	 */
 	private void manageHotelMenu() {
-		Hotel currentHotel = new Hotel(null, 0);
+		Hotel currentHotel = null;
 		String input;
 		int input2;
 		boolean hotelRemoved = false;
@@ -568,19 +568,25 @@ public class Driver {
 	 */
 	private void changeHotelName(Hotel hotel) {
 		String name;
-		boolean changeConfirmed;
+		boolean changeConfirmed = false;
 
-		printHeader("Change hotel name");
-		System.out.println("Current name: " + hotel.getName());
-		System.out.print("Enter new name or enter '0' to go back: ");
+		do {
+			printHeader("Change hotel name");
+			System.out.println("Current name: " + hotel.getName());
+			System.out.print("Enter new name or enter '0' to go back: ");
 
-		name = scanner.nextLine();
+			name = scanner.nextLine();
 
-		changeConfirmed = confirmChange(hotel.getName(), name);
+			if (rSystem.isDuplicate(name)) {
+				System.out.println("[*]: There is already a hotel with this name.");
+			} else {
+				changeConfirmed = confirmChange(hotel.getName(), name);
+				if (!name.equals("0") && changeConfirmed) {
+					rSystem.changeHotelName(hotel, name);
+				}
+			}
 
-		if (!name.equals("0") && changeConfirmed) {
-			rSystem.changeHotelName(hotel, name);
-		}
+		} while (!changeConfirmed);
 	}
 
 	/**
@@ -682,7 +688,7 @@ public class Driver {
 					break;
 				}
 
-				successfullyChangedBasePrice = rSystem.updateBasePrice(hotel, basePrice);
+				successfullyChangedBasePrice = hotel.setBasePrice(basePrice);
 
 				if (!successfullyChangedBasePrice && basePrice != 0) {
 					System.out.println("[*]: Enter a valid positive integer greater than 100.");
