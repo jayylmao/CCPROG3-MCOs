@@ -59,7 +59,9 @@ public class Room {
 	 */
 	public boolean isOccupied(Date date) {
 		for (int i = 0; i < reservations.size(); i++) {
-			if (date.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut())) {
+			if (date.isBetween(reservations.get(i).getCheckIn(), reservations.get(i).getCheckOut()) ||
+				reservations.get(i).getCheckIn().isBetween(date, reservations.get(i).getCheckOut()) ||
+				reservations.get(i).getCheckOut().isBetween(reservations.get(i).getCheckIn(), date)) {
 				return true;
 			}
 		}
