@@ -19,22 +19,6 @@ public class Guest {
     }
 
     /**
-	 * Sets the first name of the Guest.
-	 * @param firstName First name of the Guest.
-	 */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-	 * Sets the last name of the Guest.
-	 * @param lastName Last name of the Guest.
-	 */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
 	 * Gets the first name of the Guest.
 	 * @return Guest's first name.
 	 */

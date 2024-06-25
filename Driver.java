@@ -321,7 +321,7 @@ public class Driver {
 
 		do {
 			printHeader(String.format("Select a Reservation for Room %s", room.getName()));
-			
+
 			room.sortReservations();
 
 			for (int i = 0; i < room.getReservationCount(); i++) {
@@ -931,7 +931,7 @@ public class Driver {
 			} else if (room == null) {
 				System.out.println("[*]: Invalid room name.");
 			} else if (!hotel.isRoomAvailable(roomName, checkInDate, checkOutDate)) {
-				System.out.println("[*]: Room + " + roomName + " is not available on your selected dates.");
+				System.out.println("[*]: Room " + roomName + " is not available on your selected dates.");
 			}
 		} while (!successfullySetRoom);
 		return room;
@@ -951,7 +951,7 @@ public class Driver {
 			System.out.print("Enter your check-in date: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.print("[*]: Enter a valid unbooked day from 0 - 31:");
+				System.out.println("[*]: Enter a valid unbooked day from 0 - 31.");
 				scanner.nextLine();
 				System.out.print("Enter your check-in date: ");
 			}
@@ -963,7 +963,7 @@ public class Driver {
 				date.setHour(14);
 				date.setMinute(0);
 			} else {
-				System.out.print("[*]: Enter a valid unbooked day from 0 - 31: ");
+				System.out.println("[*]: Enter a valid unbooked day from 0 - 31.");
 			}
 		} while (date == null);
 		return date;

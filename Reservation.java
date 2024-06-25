@@ -89,15 +89,6 @@ public class Reservation {
 	}
 
 	/**
-	 * Sets the price per night. It also recalculates the total price.
-	 * @param reservedPrice New price per night.
-	 */
-	public void setReservedPrice(double reservedPrice) {
-		this.reservedPrice = reservedPrice;
-		this.totalPrice = calculateTotalPrice(this.checkIn, this.checkOut);
-	}
-
-	/**
 	 * Gets the price per night.
 	 * @return Price per night.
 	 */
@@ -118,7 +109,7 @@ public class Reservation {
 	 * @return Total price as a String.
 	 */
 	public String getFormattedTotalPrice() {
-		return String.format("%.2f", String.valueOf(this.totalPrice));
+		return String.format("%.2f", this.totalPrice);
 	}
 
 	/**
