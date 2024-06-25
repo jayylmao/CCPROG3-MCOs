@@ -207,7 +207,7 @@ public class Driver {
 					System.out.println("Name: " + hotel.getName());
 					System.out.println("      Rooms: " + hotel.getRoomCount());
 					System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + "    Available: " + hotel.getAvailableRoomCount());
-					System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
+					System.out.println("      Base price: " + hotel.getFormattedBasePrice() + "\n");
 
 					printHeader("View hotel information");
 
@@ -297,7 +297,7 @@ public class Driver {
 			}
 			else {
 				System.out.println("Name: " + room.getName());
-				System.out.println("      Price per night: ₱" + hotel.getFormattedBasePrice() + "\n");
+				System.out.println("      Price per night: " + hotel.getFormattedBasePrice() + "\n");
 				System.out.println("Availability");
 				displayCalendar(room);
 
@@ -367,7 +367,7 @@ public class Driver {
 				System.out.println("      Check-in date : " + room.getReservation(index).getCheckIn().getFormattedDate());
 				System.out.println("      Check-out date: " + room.getReservation(index).getCheckOut().getFormattedDate());
 				System.out.println("      Reserved price: " + room.getReservation(index).getReservedPrice());
-				System.out.println("      Total price   : ₱" + room.getReservation(index).getFormattedTotalPrice());
+				System.out.println("      Total price   : " + room.getReservation(index).getFormattedTotalPrice());
 			}
 			else if ((index < 0 || index >= room.getReservationCount()) && !input.equals("0")) {
 				System.out.println("[*]: Error. Enter a positive integer from 1 to " + room.getReservationCount() + ", Or enter 0 to exit.");
@@ -397,7 +397,7 @@ public class Driver {
 			System.out.println("Name: " + currentHotel.getName());
 			System.out.println("      Rooms: " + currentHotel.getRoomCount());
 			System.out.println("      Booked rooms throughout the month: " + currentHotel.getBookedRoomCount() + "    Available: " + currentHotel.getAvailableRoomCount());
-			System.out.println("      Base price: ₱" + currentHotel.getFormattedBasePrice() + "\n");
+			System.out.println("      Base price: " + currentHotel.getFormattedBasePrice() + "\n");
 		}
 
 		do {
@@ -659,13 +659,13 @@ public class Driver {
 		if (hotel.getBookedRoomCount() == 0) {
 			do {
 				printHeader("Update base price");
-				System.out.println("Current price: ₱" + hotel.getFormattedBasePrice());
-				System.out.print("Enter the new base price, or enter '0' to exit: ₱");
+				System.out.println("Current price: " + hotel.getFormattedBasePrice());
+				System.out.print("Enter the new base price, or enter '0' to exit: ");
 				// Input validation.
 				while (!scanner.hasNextInt()) {
 					System.out.println("[*]: Enter a valid positive integer greater than 100.");
 					scanner.nextLine();
-					System.out.print("Enter the new base price: ₱");
+					System.out.print("Enter the new base price: ");
 				}
 
 				basePrice = Double.parseDouble(scanner.nextLine());
@@ -736,7 +736,7 @@ public class Driver {
 					System.out.println("      Check-in date : " + room.getReservation(i).getCheckIn().getFormattedDate());
 					System.out.println("      Check-out date: " + room.getReservation(i).getCheckOut().getFormattedDate());
 					System.out.println("      Reserved price: " + room.getReservation(i).getReservedPrice());
-					System.out.println("      Total price   : ₱" + room.getReservation(i).getFormattedTotalPrice());
+					System.out.println("      Total price   : " + room.getReservation(i).getFormattedTotalPrice());
 				}
 
 				do {
@@ -795,7 +795,7 @@ public class Driver {
 			System.out.println("Name: " + currentHotel.getName());
 			System.out.println("      Rooms: " + currentHotel.getRoomCount());
 			System.out.println("      Booked rooms throughout the month: " + currentHotel.getBookedRoomCount() + "    Available: " + currentHotel.getAvailableRoomCount());
-			System.out.println("      Base price: ₱" + currentHotel.getFormattedBasePrice() + "\n");
+			System.out.println("      Base price: " + currentHotel.getFormattedBasePrice() + "\n");
 		}
 
 		do {
@@ -859,7 +859,7 @@ public class Driver {
 					System.out.println("Room          : " + room.getName());
 					System.out.println("Check-in date : " + checkInDate.getFormattedDate());
 					System.out.println("Check-out date: " + checkOutDate.getFormattedDate());
-					System.out.println("Total price   : ₱" + room.getReservation(room.getReservationCount() - 1).getFormattedTotalPrice());
+					System.out.println("Total price   : " + room.getReservation(room.getReservationCount() - 1).getFormattedTotalPrice());
 					finishBooking = true;
 				default:
 					break;
@@ -901,7 +901,7 @@ public class Driver {
 				System.out.println("Name: " + hotel.getName());
 				System.out.println("      Rooms: " + hotel.getRoomCount());
 				System.out.println("      Booked rooms throughout the month: " + hotel.getBookedRoomCount() + " Available: " + hotel.getAvailableRoomCount());
-				System.out.println("      Base price: ₱" + hotel.getFormattedBasePrice() + "\n");
+				System.out.println("      Base price: " + hotel.getFormattedBasePrice() + "\n");
 			}
 
 			System.out.print("Enter the name of a hotel to book: ");
