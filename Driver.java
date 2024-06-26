@@ -895,7 +895,7 @@ public class Driver {
 	 * setGuest() asks the user for their first and last names and returns a Guest instance with those details.
 	 * @return Instance of Guest with given details.
 	 */
-	private Guest setGuest(Date checkInDate, Date checkOutDate) {
+	private Guest setGuest() {
 		String firstName;
 		String lastName;
 
