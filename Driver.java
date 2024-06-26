@@ -612,10 +612,10 @@ public class Driver {
 
 			count = Integer.parseInt(scanner.nextLine());
 
-			if (hotel.getRoomCount() + count > 50) {
+			if (hotel.getRoomCount() + count > 50 || count < 1) {
 				System.out.println("[*]: Enter a valid positive integer. The total cannot exceed 50.");
 				System.out.print("How many rooms do you want to add? Enter '0' to go back: ");
-			} else if (hotel.getRoomCount() + count <= 50 && count != 0) {
+			} else if (hotel.getRoomCount() + count <= 50 && count > 0) {
 				changeConfirmed = confirmChange(hotel.getRoomCount(), hotel.getRoomCount() + count);
 
 				if (!changeConfirmed) {
@@ -623,7 +623,7 @@ public class Driver {
 				}
 				validInput = hotel.addRoom(count);
 			}
-		} while (!validInput && count != 0);
+		} while (!validInput || count < 0);
 	}
 
 	/**
