@@ -851,8 +851,18 @@ public class Driver {
 					step += 1;
 					break;
 				case 1:
+					printHeader("Choose a check-in date");
+					checkInDate = setCheckInDate();
+					step += 1;
+					break;
+				case 2:
+					printHeader("Choose a check-out date");
+					checkOutDate = setCheckOutDate(checkInDate);
+					step += 1;
+					break;
+				case 3:
 					printHeader("Choose a hotel");
-					hotel = setHotel();
+					hotel = setHotel(checkInDate, checkOutDate);
 
 					if (hotel == null) {
 						return;
@@ -860,16 +870,6 @@ public class Driver {
 						step += 1;
 						break;
 					}
-				case 2:
-					printHeader("Choose a check-in date");
-					checkInDate = setCheckInDate();
-					step += 1;
-					break;
-				case 3:
-					printHeader("Choose a check-out date");
-					checkOutDate = setCheckOutDate(checkInDate);
-					step += 1;
-					break;
 				case 4:
 					printHeader("Choose a room");
 					room = setRoom(hotel, checkInDate, checkOutDate);
@@ -895,7 +895,7 @@ public class Driver {
 	 * setGuest() asks the user for their first and last names and returns a Guest instance with those details.
 	 * @return Instance of Guest with given details.
 	 */
-	private Guest setGuest() {
+	private Guest setGuest(Date checkInDate, Date checkOutDate) {
 		String firstName;
 		String lastName;
 
@@ -912,7 +912,7 @@ public class Driver {
 	 * setHotel() asks the user for the name of a hotel and returns the corresponding hotel with that name.
 	 * @return Hotel with name entered by user.
 	 */
-	private Hotel setHotel() {
+	private Hotel setHotel(Date checkInDate, Date checkOutDate) {
 		String hotelName;
 		Hotel hotel;
 
@@ -927,6 +927,8 @@ public class Driver {
 				System.out.println("      Base price: " + hotel.getFormattedBasePrice());
 				if (hotel.isFull()) {
 					System.out.println("[*]: This hotel is full for the month.\n");
+				} else if (hotel.getAvailableRoomCount(checkInDate, checkOutDate) < 1) {
+					System.out.println("[*]: This hotel is full on your specified dates.\n");
 				} else {
 					System.out.println("\n");
 				}
@@ -937,7 +939,7 @@ public class Driver {
 
 			hotel = rSystem.getHotel(hotelName);
 
-			if (hotel != null && !hotel.isFull()) {
+			if (hotel != null && !hotel.isFull() && hotel.getAvailableRoomCount(checkInDate, checkOutDate) > 0) {
 				return hotel;
 			} else if (!hotelName.equals("0")) {
 				System.out.println("[*]: No valid hotel found.");
