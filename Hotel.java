@@ -180,7 +180,6 @@ public class Hotel {
 	/**
 	 * addRoom() adds a specified number of rooms to the hotel.
 	 * @param count Number of rooms to add.
-	 * Precondition: getRoomCount() + count <= 50
 	 * @return True if rooms were added. False otherwise.
 	 */
 	public boolean addRoom(int count) {
@@ -243,7 +242,7 @@ public class Hotel {
 	/**
 	 * Sets the new base price of the Hotel.
 	 * @param basePrice New base price of the Hotel.
-	 * Precondition: No reservations are in the hotel.
+	 * @return True if base price is greater than 100. False otherwise.
 	 */
 	public boolean setBasePrice(double basePrice) {
 		for (int i = 0; i < getRoomCount(); i++) {

@@ -910,6 +910,8 @@ public class Driver {
 
 	/**
 	 * setHotel() asks the user for the name of a hotel and returns the corresponding hotel with that name.
+	 * @param checkInDate User's check-in date.
+	 * @param checkOutDate User's check-out date.
 	 * @return Hotel with name entered by user.
 	 */
 	private Hotel setHotel(Date checkInDate, Date checkOutDate) {
