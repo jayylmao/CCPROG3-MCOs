@@ -253,7 +253,7 @@ public class Hotel {
 		}
 
 		if (basePrice >= 100.0) {
-			setBasePrice(basePrice);
+			this.basePrice = basePrice;
 			return true;
 		} else {
 			return false;
