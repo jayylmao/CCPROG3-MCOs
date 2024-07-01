@@ -1,2 +1,2 @@
 # Hotel Reservation System
-The first major course output for CCPROG3.
+Our major course outputs for CCPROG3.
