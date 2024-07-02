@@ -37,7 +37,7 @@ public class Hotel {
 
 			// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
 			for (int i = 0; i < roomCount; i++) {
-				rooms.add(new Room(String.format("%03d", i + 1)));
+				rooms.add(new StandardRoom(String.format("%03d", i + 1), basePrice));
 			}
 		} else {
 			throw new IllegalArgumentException("Rooms must be from 1 - 50.");
@@ -190,7 +190,7 @@ public class Hotel {
 
 			for (int i = 0; i < count; i++) {
 				lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
-				rooms.add(new Room(String.format("%03d", lastRoomName + 1)));
+				rooms.add(new StandardRoom(String.format("%03d", lastRoomName + 1), basePrice));
 			}
 			return true;
 		}

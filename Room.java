@@ -2,7 +2,7 @@ import java.util.ArrayList;
 /**
  * The Room class defines a Room in a hotel, with its corresponding details.
  */
-public class Room {
+public abstract class Room {
 	/**
 	 * The room number/name.
 	 */
@@ -19,13 +19,19 @@ public class Room {
 	private ArrayList<Reservation> reservations;
 
 	/**
+	 * The actual price of the room. Some room types differ.
+	 */
+	private double roomPrice;
+
+	/**
 	 * Regular Constructor that creates a Room instance.
 	 * @param roomName The name of the Room. Should be unique compared to other Room instances.
 	 */
-	public Room(String roomName) {
+	public Room(String roomName, double roomPrice) {
 		this.name = roomName;
 		this.occupied = false;
 		this.reservations = new ArrayList<Reservation>();
+		this.roomPrice = roomPrice;
 	}
 
 	/**
@@ -34,6 +40,30 @@ public class Room {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * Gets the price of the Room.
+	 * @return Price of the Room.
+	 */
+	public double getRoomPrice() {
+		return roomPrice;
+	}
+
+	/**
+	 * Gets the list of reservations for the Room.
+	 * @return List of reservations for the Room.
+	 */
+	public ArrayList<Reservation> getReservations() {
+		return reservations;
+	}
+
+	/**
+	 * Gets the occupancy status of the Room.
+	 * @return True if occupied. False otherwise.
+	 */
+	public boolean getOccupancyStatus() {
+		return occupied;
 	}
 
 	/**
