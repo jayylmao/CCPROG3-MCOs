@@ -8,6 +8,7 @@ public class UI {
 	// Color palette by ecletica branding digital on Pinterest: https://ph.pinterest.com/pin/1132866481254858739/.
 	public final Color FG_MAIN = new Color(40, 33, 25);
 	public final Color BG_MAIN = new Color(255, 240, 210);
+	public final Color BG_SECONDARY = new Color(245, 230, 200);
 	public final Color BUTTON_BG = new Color(250, 235, 205);
 	public final Color ACCENT = new Color(40, 65, 35);
 	public final Color ACCENT2 = new Color(22, 33, 20);
