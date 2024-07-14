@@ -5,13 +5,29 @@ import java.awt.Font;
  * UI contains constants such as color and font for the GUI.
  */
 public class UI {
-	// Color palette by ecletica branding digital on Pinterest: https://ph.pinterest.com/pin/1132866481254858739/.
-	public final Color FG_MAIN = new Color(40, 33, 25);
-	public final Color BG_MAIN = new Color(255, 240, 210);
-	public final Color BG_SECONDARY = new Color(245, 230, 200);
-	public final Color BUTTON_BG = new Color(250, 235, 205);
-	public final Color ACCENT = new Color(40, 65, 35);
-	public final Color ACCENT2 = new Color(22, 33, 20);
+	// Color palette by Martin Maderic at https://dribbble.com/shots/17996668-Color-Palette
+	
+	// Cod Gray
+	public final Color FG_MAIN = new Color(21, 21, 21);
+	
+	// Linen
+	public final Color BG_MAIN = new Color(247, 241, 224);
+
+	// Bone
+	public final Color BG_SECONDARY = new Color(227, 219, 199);
+
+	// Plantation
+	public final Color BUTTON_BG = new Color(54, 79, 77);
+
+	// Sulu
+	public final Color BUTTON_CLICKED = new Color(216, 237, 126);
+
+	// Spectra
+	public final Color ACCENT = new Color(64, 98, 94);
+
+	// Te Papa Green
+	public final Color ACCENT2 = new Color(45, 67, 64);
+	
 	public final Color ERROR = new Color(235, 60, 0);
 
 	public final Font HEADER_FONT = new Font("Helvetica", Font.PLAIN, 30);
