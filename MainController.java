@@ -1,7 +1,11 @@
+import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -9,43 +13,36 @@ import java.util.Iterator;
  */
 public class MainController {
 	private MainView view;
-	private MenuModel model;
+	private HotelReservationSystem rSystem;
+	private TopBarView topBar;
+	private JPanel contentPanel;
+	private CardLayout mainLayout;
 
-	public MainController(MainView view, MenuModel model) {
+	ArrayList<String> viewNames = new ArrayList<String>();
+
+	public MainController(MainView view, HotelReservationSystem rSystem) {
 		this.view = view;
-		this.model = model;
+		this.rSystem = rSystem;
+		this.topBar = view.getTopBarView();
+		this.contentPanel = view.getContentPanel();
+		this.mainLayout = view.getMainLayout();
 
-		Iterator<JButton> i = model.getMenuButtons().iterator();
+		viewNames.add("CreateHotel");
+		viewNames.add("ViewHotel");
+		viewNames.add("ManageHotel");
+		viewNames.add("BookRoom");
 
-		while (i.hasNext()) {
-			JButton button = i.next();
-			ActionListener al;
-
-			switch (button.getText()) {
-				case "Create Hotel" -> al = new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("create hotel");
-					}
-				};
-				case "View Hotel" -> al = new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("view hotel");
-					}
-				};
-				case "Manage Hotel" -> al = new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("manage hotel");
-					}
-				};
-				case "Book Room" -> al = new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("book room");
-					}
-				};
-				default -> al = null;
-			}
-
-			view.setMenuButton(button, al);
+		// Add ActionListener to each button that switches
+		// views for each view name in the list.
+		for (int i = 0; i < viewNames.size(); i++) {
+			// Fixes error: Local variable i defined in an enclosing scope must
+			// be final or effectively final
+			final int idx = i;
+			view.getTopBarView().getButton(i).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainLayout.show(contentPanel, viewNames.get(idx));
+				}
+			});
 		}
 	}
 }

@@ -10,11 +10,9 @@ public class UI {
 	// Cod Gray
 	public final Color FG_MAIN = new Color(21, 21, 21);
 	
-	// Linen
-	public final Color BG_MAIN = new Color(247, 241, 224);
+	public final Color BG_MAIN = new Color(245, 245, 245);
 
-	// Bone
-	public final Color BG_SECONDARY = new Color(227, 219, 199);
+	public final Color BG_SECONDARY = new Color(255, 255, 255);
 
 	// Plantation
 	public final Color BUTTON_BG = new Color(54, 79, 77);
@@ -31,5 +29,5 @@ public class UI {
 	public final Color ERROR = new Color(235, 60, 0);
 
 	public final Font HEADER_FONT = new Font("Helvetica", Font.PLAIN, 30);
-	public final Font TEXT_FONT = new Font("Helvetica", Font.PLAIN, 18);
+	public final Font TEXT_FONT = new Font("Helvetica", Font.PLAIN, 14);
 }

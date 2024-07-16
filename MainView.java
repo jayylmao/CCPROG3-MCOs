@@ -1,71 +1,48 @@
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * MainView contains the UI code for the main menu.
  */
-public class MainView {
-	private JFrame mainFrame;
+public class MainView extends JPanel {
+	private TopBarView topBar;
 	private JPanel contentPanel;
-	private JPanel topBar;
-	private JLabel title;
-	UI ui = new UI();
+	private CardLayout mainLayout;
+	private UI ui = new UI();
 
-	/**
-	 * This constructor initializes the window with defaults,
-	 * and calls the main menu method.
-	 */
 	public MainView() {
-		this.mainFrame = new JFrame("Hotel Reservation System");
+		topBar = new TopBarView();
+		contentPanel = new JPanel();
+		mainLayout = new CardLayout(10, 10);
 
-		this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.mainFrame.setLayout(new FlowLayout(FlowLayout.CENTER));
-		this.mainFrame.setSize(870, 720);
-		this.mainFrame.setBackground(ui.BG_MAIN);
+		contentPanel.setLayout(mainLayout);
 
-		this.topBar = new JPanel();
-		this.topBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.topBar.setBackground(ui.BG_SECONDARY);
+		setBackground(ui.BG_MAIN);
+		setLayout(new BorderLayout());
+		add(topBar, BorderLayout.NORTH);
+		add(contentPanel, BorderLayout.CENTER);
 
-		this.title = new JLabel("Hotel Reservation System");
-		this.title.setFont(ui.HEADER_FONT);
-
-		this.mainFrame.add(topBar);
-		this.topBar.add(title);
-
-		this.contentPanel = new JPanel();
-		this.contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.contentPanel.setBackground(ui.BG_MAIN);
-		this.contentPanel.setSize(900, 600);
-		this.mainFrame.add(contentPanel);
-
-		this.mainFrame.setVisible(true);
+		contentPanel.add(new CreateHotelView(), "CreateHotel");
+		contentPanel.add(new ViewHotelView(), "ViewHotel");
+		contentPanel.add(new ManageHotelView(), "ManageHotel");
+		contentPanel.add(new BookRoomView(), "BookRoom");
 	}
 
-	/**
-	 * Adds a given button to the main menu and repaints the screen to display
-	 * the new button without having to resize the window.
-	 * @param button Button to add to main menu.
-	 */
-	public void setMenuButton(JButton button, ActionListener al) {
-		this.topBar.add(button, al);
-		this.topBar.revalidate();
-		this.topBar.repaint();
+	public TopBarView getTopBarView() {
+		return topBar;
 	}
 
-	/**
-	 * Displays a view in the main window where content is displayed, such as
-	 * for creating a hotel, booking a room, etc.
-	 * @param model Menu model to display.
-	 */
-	public void displaySubView(MenuModel model) {
+	public JPanel getContentPanel() {
+		return contentPanel;
+	}
 
+	public CardLayout getMainLayout() {
+		return mainLayout;
 	}
 }
