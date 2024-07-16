@@ -1,12 +1,9 @@
-import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * MainController controls the logic of the main menu.
@@ -38,7 +35,7 @@ public class MainController {
 			// Fixes error: Local variable i defined in an enclosing scope must
 			// be final or effectively final
 			final int idx = i;
-			view.getTopBarView().getButton(i).addActionListener(new ActionListener() {
+			topBar.getButton(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					mainLayout.show(contentPanel, viewNames.get(idx));
 				}
@@ -48,6 +45,9 @@ public class MainController {
 		addCreateHotelListener();
 	}
 
+	/**
+	 * Connect the "Create hotel" button in the Create Hotel screen to the model.
+	 */
 	private void addCreateHotelListener() {
 		CreateHotelView createHotelView = (CreateHotelView) view.getViews().get(0);
 

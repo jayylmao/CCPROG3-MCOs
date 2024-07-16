@@ -13,6 +13,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * CreateHotelView contains the layout for the "Create Hotel" screen.
+ */
 public class CreateHotelView extends JPanel {
 	private UI ui = new UI();
 	private JLabel header;
