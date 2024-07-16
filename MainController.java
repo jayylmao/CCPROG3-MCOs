@@ -44,5 +44,27 @@ public class MainController {
 				}
 			});
 		}
+
+		addCreateHotelListener();
+	}
+
+	private void addCreateHotelListener() {
+		CreateHotelView createHotelView = (CreateHotelView) view.getViews().get(0);
+
+		createHotelView.getAddButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String hotelName = createHotelView.getHotelNameInput().getText();
+				int roomCount = (int) createHotelView.getRoomCountInput().getValue();
+				boolean success = rSystem.addHotel(hotelName, roomCount);
+				
+				ArrayList<Hotel> hotels = rSystem.getHotels();
+
+				for (Hotel hotel : hotels) {
+					System.out.println(hotel.getName());
+				}
+
+				createHotelView.showResult(success);
+			}
+		});
 	}
 }

@@ -24,8 +24,9 @@ public class Hotel {
 	 * Constructor that creates an empty hotel with only its name.
 	 * @param name Name of hotel.
 	 * @param roomCount How many rooms are in the hotel.
+	 * @throws InvalidRoomCountException 
 	 */
-	public Hotel(String name, int roomCount) {
+	public Hotel(String name, int roomCount) throws InvalidRoomCountException {
 		if (roomCount > 0 && roomCount < 51) {
 			this.name = name;
 
@@ -40,7 +41,7 @@ public class Hotel {
 				rooms.add(new StandardRoom(String.format("%03d", i + 1), basePrice));
 			}
 		} else {
-			throw new IllegalArgumentException("Rooms must be from 1 - 50.");
+			throw new InvalidRoomCountException("Rooms must be from 1 - 50.");
 		}
 	}
 

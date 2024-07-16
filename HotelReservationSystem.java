@@ -18,8 +18,21 @@ public class HotelReservationSystem {
 	 * Adds a hotel and stores it in the list.
 	 * @param hotel Hotel object to add to the list.
 	 */
-	public void addHotel(Hotel hotel) {
-		hotels.add(hotel);
+	public boolean addHotel(String name, int roomCount) {
+		Hotel newHotel;
+		try {
+			newHotel = new Hotel(name, roomCount);
+		} catch (InvalidRoomCountException e) {
+			return false;
+		}
+
+		if (!isDuplicate(name) &&
+			!name.equals("")) {
+			hotels.add(newHotel);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -43,7 +56,7 @@ public class HotelReservationSystem {
 	 * @param name String to check against list of hotel names to check for duplicate.
 	 * @return Boolean that indicates if a duplicate was found or not.
 	 */
-	public boolean isDuplicate(String name) {
+	private boolean isDuplicate(String name) {
 		String currentHotelName;
 
 		for (int i = 0; i < hotels.size(); i++) {
