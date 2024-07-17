@@ -44,10 +44,12 @@ public class MainController {
 
 		addCreateHotelListener();
 		addSearchHotelListener();
+		addManageHotelListener();
+		addBookRoomListener();
 	}
 
 	/**
-	 * Connect the "Create hotel" button in the Create Hotel screen to the model.
+	 * Connects the "Create hotel" button in the Create Hotel screen to the model.
 	 */
 	private void addCreateHotelListener() {
 		CreateHotelView createHotelView = (CreateHotelView) view.getViews().get(0);
@@ -69,6 +71,10 @@ public class MainController {
 		});
 	}
 
+	/**
+	 * Connects the "Search hotel" button found in the "View hotel"
+	 * screen to the model.
+	 */
 	private void addSearchHotelListener() {
 		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
 
@@ -78,6 +84,47 @@ public class MainController {
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
 
 				viewHotelView.showResult(foundHotel);
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Search hotel" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
+	private void addManageHotelListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getSearchButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String searchQuery = manageHotelView.getInput().getText();
+				Hotel foundHotel = rSystem.getHotel(searchQuery);
+
+				manageHotelView.showResult(foundHotel);
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Search hotel" button found in the "Book room"
+	 * screen to the model.
+	 */
+	private void addBookRoomListener() {
+		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
+
+		bookRoomView.getSearchButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String searchQuery = bookRoomView.getInput().getText();
+				Hotel foundHotel = rSystem.getHotel(searchQuery);
+				ArrayList<Room> rooms;
+
+				if (foundHotel != null) {
+					rooms = foundHotel.getRooms();
+				} else {
+					rooms = null;
+				}
+
+				bookRoomView.showResult(rooms);
 			}
 		});
 	}

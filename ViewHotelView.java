@@ -1,6 +1,8 @@
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,7 +26,7 @@ public class ViewHotelView extends JPanel {
 	private JLabel estimateEarnings;
 
 	public ViewHotelView() {
-		header = new JLabel("View Hotel");
+		header = new JLabel("View hotel");
 		header.setFont(UI.HEADER_FONT);
 		header.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -78,6 +80,13 @@ public class ViewHotelView extends JPanel {
 		add(inputWrapper);
 		add(outputWrapper);
 
+		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+		try {
+			hotels.add(new Hotel("test", 1));
+		} catch (InvalidRoomCountException e) {
+			System.out.println("fail");
+		}
+
 		setBackground(UI.BG_MAIN);
 	}
 
@@ -108,7 +117,8 @@ public class ViewHotelView extends JPanel {
 			roomCount.setText(String.valueOf(hotel.getRoomCount()));
 			estimateEarnings.setText(String.valueOf(hotel.getTotalEarnings()));
 		} else {
-			JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.");
+			Toolkit.getDefaultToolkit().beep();
+			JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
 		}
 	}
 }

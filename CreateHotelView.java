@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,7 +28,7 @@ public class CreateHotelView extends JPanel {
 	 * Constructor creates the layout of the "Create hotel" screen.
 	 */
 	public CreateHotelView() {
-		header = new JLabel("Create Hotel");
+		header = new JLabel("Create hotel");
 		header.setFont(UI.HEADER_FONT);
 		header.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -96,8 +97,9 @@ public class CreateHotelView extends JPanel {
 	 */
 	public void showResult(boolean success) {
 		if (success) {
-			JOptionPane.showMessageDialog(this, "Your hotel has been added to the system.", "Hotel successfully added", 3);
+			JOptionPane.showMessageDialog(this, "Your hotel has been added to the system.", "Hotel successfully added", 0);
 		} else {
+			Toolkit.getDefaultToolkit().beep();
 			JOptionPane.showMessageDialog(this, "Your hotel could not be created.\nCheck that there are no duplicates in the system and that you have entered a room count from 1 - 50.", "Error", 2);
 		}
 	}

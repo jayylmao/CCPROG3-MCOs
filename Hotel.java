@@ -53,6 +53,10 @@ public class Hotel {
 		return name;
 	}
 
+	public ArrayList<Room> getRooms() {
+		return rooms;
+	}
+
 	/**
 	 * getRoom() takes a room name and searches the hotel for a room with that name.
 	 * @param inputRoomName Name to search for.
