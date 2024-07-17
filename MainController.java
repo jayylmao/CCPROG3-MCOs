@@ -43,6 +43,7 @@ public class MainController {
 		}
 
 		addCreateHotelListener();
+		addSearchHotelListener();
 	}
 
 	/**
@@ -64,6 +65,19 @@ public class MainController {
 				}
 
 				createHotelView.showResult(success);
+			}
+		});
+	}
+
+	private void addSearchHotelListener() {
+		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
+
+		viewHotelView.getSearchButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String searchQuery = viewHotelView.getInput().getText();
+				Hotel foundHotel = rSystem.getHotel(searchQuery);
+
+				viewHotelView.showResult(foundHotel);
 			}
 		});
 	}

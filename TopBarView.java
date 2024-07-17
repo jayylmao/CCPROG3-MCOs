@@ -9,8 +9,6 @@ public class TopBarView extends JPanel {
 	private ArrayList<JButton> buttons;
 	private ArrayList<JLabel> labels;
 
-	private UI ui = new UI();
-
 	public TopBarView() {
 		buttons = new ArrayList<JButton>();
 		labels = new ArrayList<JLabel>();
@@ -23,15 +21,15 @@ public class TopBarView extends JPanel {
 		labels.add(new JLabel("Hotel Reservation System"));
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
-		setBackground(ui.BG_SECONDARY);
+		setBackground(UI.BG_SECONDARY);
 
 		for (JLabel label : labels) {
-			label.setFont(ui.HEADER_FONT);
+			label.setFont(UI.HEADER_FONT);
 			this.add(label);
 		}
 
 		for (JButton button : buttons) {
-			button.setFont(ui.TEXT_FONT);
+			button.setFont(UI.BUTTON_FONT);
 			this.add(button);
 		}
 	}

@@ -16,7 +16,9 @@ public class HotelReservationSystem {
 
 	/**
 	 * Adds a hotel and stores it in the list.
-	 * @param hotel Hotel object to add to the list.
+	 * @param name Name of hotel.
+	 * @param roomCount Number of rooms.
+	 * @return True if hotel was added. False otherwise.
 	 */
 	public boolean addHotel(String name, int roomCount) {
 		Hotel newHotel;

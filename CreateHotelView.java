@@ -1,11 +1,9 @@
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,7 +15,6 @@ import javax.swing.SpinnerNumberModel;
  * CreateHotelView contains the layout for the "Create Hotel" screen.
  */
 public class CreateHotelView extends JPanel {
-	private UI ui = new UI();
 	private JLabel header;
 	private JLabel description;
 	private JPanel inputWrapper;
@@ -31,12 +28,15 @@ public class CreateHotelView extends JPanel {
 	 */
 	public CreateHotelView() {
 		header = new JLabel("Create Hotel");
-		header.setFont(ui.HEADER_FONT);
+		header.setFont(UI.HEADER_FONT);
+		header.setAlignmentX(LEFT_ALIGNMENT);
 
 		description = new JLabel("Enter a name and a room count to add a hotel to the system. You cannot create a hotel if its name has already been taken.");
-		description.setFont(ui.TEXT_FONT);
+		description.setFont(UI.TEXT_FONT);
+		description.setAlignmentX(LEFT_ALIGNMENT);
 
 		inputWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		inputWrapper.setAlignmentX(LEFT_ALIGNMENT);
 
 		hotelNameInput = new JTextField();
 		hotelNameInput.setPreferredSize(new Dimension(400, 30));
@@ -45,27 +45,24 @@ public class CreateHotelView extends JPanel {
 		roomCountInput = new JSpinner(roomCountBounds);
 		roomCountInput.setPreferredSize(new Dimension(50, 30));
 
-		inputWrapper.setBackground(ui.BG_MAIN);
+		inputWrapper.setBackground(UI.BG_MAIN);
 		inputWrapper.add(hotelNameInput);
 		inputWrapper.add(roomCountInput);
 
 		addButton = new JButton("Create hotel");
-
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(ui.BG_MAIN);
-
-		for (Component component : this.getComponents()) {
-			((JComponent) component).setAlignmentX(LEFT_ALIGNMENT);
-		}
+		addButton.setFont(UI.BUTTON_FONT);
+		addButton.setAlignmentX(LEFT_ALIGNMENT);
+		inputWrapper.add(addButton);
 		
-		add(Box.createRigidArea(new Dimension(0, 20)));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setBackground(UI.BG_MAIN);
+		
+		add(Box.createRigidArea(new Dimension(40, 20)));
 		add(header);
 		add(Box.createRigidArea(new Dimension(0, 10)));
 		add(description);
 		add(Box.createRigidArea(new Dimension(0, 10)));
 		add(inputWrapper);
-		add(Box.createRigidArea(new Dimension(0, 10)));
-		add(addButton);
 	}
 
 	/**
