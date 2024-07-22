@@ -112,13 +112,16 @@ public class ManageHotelView extends JPanel {
 	 * @param hotel Hotel to display information of.
 	 */
 	public void showResult(Hotel hotel) {
-		if (hotel != null) {
-			hotelName.setText(hotel.getName());
-			roomCount.setText(String.valueOf(hotel.getRoomCount()));
-			estimateEarnings.setText(String.valueOf(hotel.getTotalEarnings()));
-		} else {
-			Toolkit.getDefaultToolkit().beep();
-			JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
-		}
+		hotelName.setText(hotel.getName());
+		roomCount.setText(String.valueOf(hotel.getRoomCount()));
+		estimateEarnings.setText(String.valueOf(hotel.getTotalEarnings()));
+	}
+
+	/**
+	 * Shows a dialog error when the user enters an invalid search query.
+	 */
+	public void showSearchError() {
+		Toolkit.getDefaultToolkit().beep();
+		JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
 	}
 }

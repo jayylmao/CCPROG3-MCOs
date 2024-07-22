@@ -29,6 +29,7 @@ public class BookRoomView extends JPanel {
 	private JLabel roomCount;
 	private JLabel estimateEarnings;
 
+	JScrollPane listContainer;
 	JList<String> hotelList;
 
 	public BookRoomView() {
@@ -73,6 +74,13 @@ public class BookRoomView extends JPanel {
 		estimateEarnings = new JLabel();
 		estimateEarnings.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.add(estimateEarnings);
+
+		// Add list of rooms to view.
+		hotelList = new JList<>();
+
+		listContainer = new JScrollPane(hotelList);
+		listContainer.setAlignmentX(LEFT_ALIGNMENT);
+		outputWrapper.add(listContainer);
 
 		for (Component component : outputWrapper.getComponents()) {
 			component.setFont(UI.TEXT_FONT);
@@ -120,17 +128,15 @@ public class BookRoomView extends JPanel {
 	 */
 	public void showResult(ArrayList<Room> rooms) {
 		DefaultListModel<String> listModel = new DefaultListModel<>();
-		JScrollPane listContainer;
 
 		if (rooms != null) {
 			for (Room room : rooms) {
 				listModel.addElement(room.getName());
 			}
-			hotelList = new JList<>(listModel);
-			listContainer = new JScrollPane(hotelList);
-			listContainer.setAlignmentX(LEFT_ALIGNMENT);
-			outputWrapper.add(listContainer);
+
+			hotelList.setModel(listModel);
 		} else {
+			Toolkit.getDefaultToolkit().beep();
 			JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
 		}
 

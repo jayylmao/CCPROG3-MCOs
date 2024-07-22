@@ -22,8 +22,26 @@ public class ViewHotelView extends JPanel {
 	
 	private JPanel outputWrapper;
 	private JLabel hotelName;
+	private JLabel roomCountHeader;
 	private JLabel roomCount;
+	private JLabel estimateEarningsHeader;
 	private JLabel estimateEarnings;
+
+	private JPanel lowLevelInfoWrapper;
+	private JLabel availableRoomsHeader;
+	private JPanel availableRoomsInputWrapper;
+	private JTextField availableRoomsInput;
+	private JButton availableRoomsButton;
+	
+	private JLabel roomsAvailabilityHeader;
+	private JPanel roomsAvailabilityInputWrapper;
+	private JTextField roomsAvailabilityInput;
+	private JButton roomsAvailabilityButton;
+
+	private JLabel roomInfoHeader;
+	private JPanel roomInfoInputWrapper;
+	private JTextField roomInfoInput;
+	private JButton roomInfoButton;
 
 	public ViewHotelView() {
 		header = new JLabel("View hotel");
@@ -54,22 +72,96 @@ public class ViewHotelView extends JPanel {
 		outputWrapper = new JPanel();
 		outputWrapper.setBackground(UI.BG_MAIN);
 		outputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		outputWrapper.setLayout(new BoxLayout(outputWrapper, BoxLayout.Y_AXIS));
 
 		hotelName = new JLabel();
+		hotelName.setFont(UI.HEADER_FONT);
 		hotelName.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.add(hotelName);
+
+		outputWrapper.add(Box.createRigidArea(new Dimension(20, 20)));
+
+		roomCountHeader = new JLabel();
+		roomCountHeader.setAlignmentX(LEFT_ALIGNMENT);
+		outputWrapper.add(roomCountHeader);
 		
-		roomCount = new JLabel();
+		roomCount = new JLabel("Number of rooms");
 		roomCount.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.add(roomCount);
+
+		outputWrapper.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		estimateEarningsHeader = new JLabel("Estimate earnings");
+		estimateEarningsHeader.setAlignmentX(LEFT_ALIGNMENT);
+		outputWrapper.add(estimateEarningsHeader);
 
 		estimateEarnings = new JLabel();
 		estimateEarnings.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.add(estimateEarnings);
 
-		for (Component component : outputWrapper.getComponents()) {
-			component.setFont(UI.TEXT_FONT);
-		}
+		outputWrapper.setVisible(false);
+
+		// Add low level info.
+		lowLevelInfoWrapper = new JPanel();
+		lowLevelInfoWrapper.setBackground(UI.BG_MAIN);
+		lowLevelInfoWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		lowLevelInfoWrapper.setLayout(new BoxLayout(lowLevelInfoWrapper, BoxLayout.Y_AXIS));
+
+		// Add wrapper for checking available rooms on given date and its components.
+		availableRoomsInputWrapper = new JPanel();
+		availableRoomsInputWrapper.setBackground(UI.BG_MAIN);
+		availableRoomsInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		
+		availableRoomsHeader = new JLabel("Check available rooms on date");
+		availableRoomsHeader.setAlignmentX(LEFT_ALIGNMENT);
+		availableRoomsInputWrapper.add(availableRoomsHeader);
+		
+		availableRoomsInput = new JTextField();
+		availableRoomsInput.setPreferredSize(new Dimension(30, 30));
+		availableRoomsInputWrapper.add(availableRoomsInput);
+
+		availableRoomsButton = new JButton("Check available rooms");
+		availableRoomsInputWrapper.add(availableRoomsButton);
+
+		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
+		
+		// Add wrapper for checking specific room availability on all dates and its components.
+		roomsAvailabilityInputWrapper = new JPanel();
+		roomsAvailabilityInputWrapper.setBackground(UI.BG_MAIN);
+		roomsAvailabilityInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+
+		roomsAvailabilityHeader = new JLabel("Check room availability on date");
+		roomsAvailabilityHeader.setAlignmentX(LEFT_ALIGNMENT);
+		roomsAvailabilityInputWrapper.add(roomsAvailabilityHeader);
+
+		roomsAvailabilityInput = new JTextField();
+		roomsAvailabilityInput.setPreferredSize(new Dimension(30, 30));
+		roomsAvailabilityInputWrapper.add(roomsAvailabilityInput);
+
+		roomsAvailabilityButton = new JButton("Check room availability");
+		roomsAvailabilityInputWrapper.add(roomsAvailabilityButton);
+		
+		lowLevelInfoWrapper.add(roomsAvailabilityInputWrapper);
+		
+		// Add wrapper for getting room info and its components.
+		roomInfoInputWrapper = new JPanel();
+		roomInfoInputWrapper.setBackground(UI.BG_MAIN);
+		roomInfoInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		
+		roomInfoHeader = new JLabel("Get information on room");
+		roomInfoHeader.setAlignmentX(LEFT_ALIGNMENT);
+		roomInfoInputWrapper.add(roomInfoHeader);
+		
+		roomInfoInput = new JTextField();
+		roomInfoInput.setPreferredSize(new Dimension(60, 30));
+		roomInfoInputWrapper.add(roomInfoInput);
+		
+		roomInfoButton = new JButton("Get room info");
+		roomInfoInputWrapper.add(roomInfoButton);
+
+		lowLevelInfoWrapper.add(roomInfoInputWrapper);
+		
+		lowLevelInfoWrapper.setVisible(false);
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
 		add(header);
@@ -79,6 +171,7 @@ public class ViewHotelView extends JPanel {
 
 		add(inputWrapper);
 		add(outputWrapper);
+		add(lowLevelInfoWrapper);
 
 		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
 		try {
@@ -112,13 +205,20 @@ public class ViewHotelView extends JPanel {
 	 * @param hotel Hotel to display information of.
 	 */
 	public void showResult(Hotel hotel) {
-		if (!(hotel == null)) {
-			hotelName.setText(hotel.getName());
-			roomCount.setText(String.valueOf(hotel.getRoomCount()));
-			estimateEarnings.setText(String.valueOf(hotel.getTotalEarnings()));
-		} else {
-			Toolkit.getDefaultToolkit().beep();
-			JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
-		}
+		hotelName.setText(hotel.getName());
+
+		roomCount.setText(String.valueOf(hotel.getRoomCount()));
+		estimateEarnings.setText(String.valueOf(String.format("%.2f", hotel.getTotalEarnings())));
+
+		outputWrapper.setVisible(true);
+		lowLevelInfoWrapper.setVisible(true);
+	}
+
+	/**
+	 * Shows an error dialog when a user enters an invalid search query.
+	 */
+	public void showSearchError() {
+		Toolkit.getDefaultToolkit().beep();
+		JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
 	}
 }

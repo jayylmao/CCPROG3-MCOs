@@ -83,7 +83,11 @@ public class MainController {
 				String searchQuery = viewHotelView.getInput().getText();
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
 
-				viewHotelView.showResult(foundHotel);
+				if (foundHotel != null) {
+					viewHotelView.showResult(foundHotel);
+				} else {
+					viewHotelView.showSearchError();
+				}
 			}
 		});
 	}
@@ -100,7 +104,11 @@ public class MainController {
 				String searchQuery = manageHotelView.getInput().getText();
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
 
-				manageHotelView.showResult(foundHotel);
+				if (foundHotel != null) {
+					manageHotelView.showResult(foundHotel);
+				} else {
+					manageHotelView.showSearchError();
+				}
 			}
 		});
 	}
