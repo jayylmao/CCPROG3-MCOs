@@ -91,16 +91,19 @@ public class CreateHotelView extends JPanel {
 	}
 
 	/**
-	 * Displays a dialog box alerting the user whether the
-	 * hotel was successfully created or not.
-	 * @param success Success condition from hotel model.
+	 * Displays a dialog box alerting the user if the
+	 * hotel was successfully created.
 	 */
-	public void showResult(boolean success) {
-		if (success) {
-			JOptionPane.showMessageDialog(this, "Your hotel has been added to the system.", "Hotel successfully added", 0);
-		} else {
-			Toolkit.getDefaultToolkit().beep();
-			JOptionPane.showMessageDialog(this, "Your hotel could not be created.\nCheck that there are no duplicates in the system and that you have entered a room count from 1 - 50.", "Error", 2);
-		}
+	public void showSuccess() {
+		JOptionPane.showMessageDialog(this, "Your hotel has been added to the system.", "Hotel successfully added", JOptionPane.PLAIN_MESSAGE);
+	}
+
+	/**
+	 * Displays a dialog box alerting the user if the
+	 * hotel was not successfully created.
+	 */
+	public void showError() {
+		Toolkit.getDefaultToolkit().beep();
+		JOptionPane.showMessageDialog(this, "Your hotel could not be created.\nCheck that there are no duplicates in the system and that you have entered a room count from 1 - 50.", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

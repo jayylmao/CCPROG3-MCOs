@@ -1,4 +1,3 @@
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -22,28 +21,33 @@ public class ViewHotelView extends JPanel {
 	
 	private JPanel outputWrapper;
 	private JLabel hotelName;
-	private JLabel roomCountHeader;
 	private JLabel roomCount;
-	private JLabel estimateEarningsHeader;
 	private JLabel estimateEarnings;
 
 	private JPanel lowLevelInfoWrapper;
+
 	private JLabel availableRoomsHeader;
 	private JPanel availableRoomsInputWrapper;
 	private JTextField availableRoomsInput;
 	private JButton availableRoomsButton;
+	private JLabel availableRoomsResult;
 	
-	private JLabel roomsAvailabilityHeader;
-	private JPanel roomsAvailabilityInputWrapper;
-	private JTextField roomsAvailabilityInput;
-	private JButton roomsAvailabilityButton;
+	private JLabel reservationInfoHeader;
+	private JPanel reservationInfoInputWrapper;
+	private JTextField reservationInfoInput;
+	private JButton reservationInfoButton;
 
 	private JLabel roomInfoHeader;
 	private JPanel roomInfoInputWrapper;
 	private JTextField roomInfoInput;
 	private JButton roomInfoButton;
+	private JLabel roomInfoResult;
+
+	private Hotel currentHotel;
 
 	public ViewHotelView() {
+		currentHotel = null;
+
 		header = new JLabel("View hotel");
 		header.setFont(UI.HEADER_FONT);
 		header.setAlignmentX(LEFT_ALIGNMENT);
@@ -80,10 +84,6 @@ public class ViewHotelView extends JPanel {
 		outputWrapper.add(hotelName);
 
 		outputWrapper.add(Box.createRigidArea(new Dimension(20, 20)));
-
-		roomCountHeader = new JLabel();
-		roomCountHeader.setAlignmentX(LEFT_ALIGNMENT);
-		outputWrapper.add(roomCountHeader);
 		
 		roomCount = new JLabel("Number of rooms");
 		roomCount.setAlignmentX(LEFT_ALIGNMENT);
@@ -91,77 +91,13 @@ public class ViewHotelView extends JPanel {
 
 		outputWrapper.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		estimateEarningsHeader = new JLabel("Estimate earnings");
-		estimateEarningsHeader.setAlignmentX(LEFT_ALIGNMENT);
-		outputWrapper.add(estimateEarningsHeader);
-
 		estimateEarnings = new JLabel();
 		estimateEarnings.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.add(estimateEarnings);
 
 		outputWrapper.setVisible(false);
 
-		// Add low level info.
-		lowLevelInfoWrapper = new JPanel();
-		lowLevelInfoWrapper.setBackground(UI.BG_MAIN);
-		lowLevelInfoWrapper.setAlignmentX(LEFT_ALIGNMENT);
-		lowLevelInfoWrapper.setLayout(new BoxLayout(lowLevelInfoWrapper, BoxLayout.Y_AXIS));
-
-		// Add wrapper for checking available rooms on given date and its components.
-		availableRoomsInputWrapper = new JPanel();
-		availableRoomsInputWrapper.setBackground(UI.BG_MAIN);
-		availableRoomsInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
-		
-		availableRoomsHeader = new JLabel("Check available rooms on date");
-		availableRoomsHeader.setAlignmentX(LEFT_ALIGNMENT);
-		availableRoomsInputWrapper.add(availableRoomsHeader);
-		
-		availableRoomsInput = new JTextField();
-		availableRoomsInput.setPreferredSize(new Dimension(30, 30));
-		availableRoomsInputWrapper.add(availableRoomsInput);
-
-		availableRoomsButton = new JButton("Check available rooms");
-		availableRoomsInputWrapper.add(availableRoomsButton);
-
-		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
-		
-		// Add wrapper for checking specific room availability on all dates and its components.
-		roomsAvailabilityInputWrapper = new JPanel();
-		roomsAvailabilityInputWrapper.setBackground(UI.BG_MAIN);
-		roomsAvailabilityInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
-
-		roomsAvailabilityHeader = new JLabel("Check room availability on date");
-		roomsAvailabilityHeader.setAlignmentX(LEFT_ALIGNMENT);
-		roomsAvailabilityInputWrapper.add(roomsAvailabilityHeader);
-
-		roomsAvailabilityInput = new JTextField();
-		roomsAvailabilityInput.setPreferredSize(new Dimension(30, 30));
-		roomsAvailabilityInputWrapper.add(roomsAvailabilityInput);
-
-		roomsAvailabilityButton = new JButton("Check room availability");
-		roomsAvailabilityInputWrapper.add(roomsAvailabilityButton);
-		
-		lowLevelInfoWrapper.add(roomsAvailabilityInputWrapper);
-		
-		// Add wrapper for getting room info and its components.
-		roomInfoInputWrapper = new JPanel();
-		roomInfoInputWrapper.setBackground(UI.BG_MAIN);
-		roomInfoInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
-		
-		roomInfoHeader = new JLabel("Get information on room");
-		roomInfoHeader.setAlignmentX(LEFT_ALIGNMENT);
-		roomInfoInputWrapper.add(roomInfoHeader);
-		
-		roomInfoInput = new JTextField();
-		roomInfoInput.setPreferredSize(new Dimension(60, 30));
-		roomInfoInputWrapper.add(roomInfoInput);
-		
-		roomInfoButton = new JButton("Get room info");
-		roomInfoInputWrapper.add(roomInfoButton);
-
-		lowLevelInfoWrapper.add(roomInfoInputWrapper);
-		
-		lowLevelInfoWrapper.setVisible(false);
+		setupLowLevelView();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
 		add(header);
@@ -184,10 +120,74 @@ public class ViewHotelView extends JPanel {
 	}
 
 	/**
+	 * Sets up the components needed to view a hotel's low-level information.
+	 */
+	private void setupLowLevelView() {
+		lowLevelInfoWrapper = new JPanel();
+		lowLevelInfoWrapper.setBackground(UI.BG_MAIN);
+		lowLevelInfoWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		lowLevelInfoWrapper.setLayout(new BoxLayout(lowLevelInfoWrapper, BoxLayout.Y_AXIS));
+
+		// Add wrapper for checking available rooms on given date and its components.
+		availableRoomsInputWrapper = new JPanel();
+		availableRoomsInputWrapper.setBackground(UI.BG_MAIN);
+		availableRoomsInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		
+		availableRoomsHeader = new JLabel("Check available rooms on date");
+		availableRoomsHeader.setAlignmentX(LEFT_ALIGNMENT);
+		availableRoomsInputWrapper.add(availableRoomsHeader);
+		
+		availableRoomsInput = new JTextField();
+		availableRoomsInput.setPreferredSize(new Dimension(30, 30));
+		availableRoomsInputWrapper.add(availableRoomsInput);
+
+		availableRoomsButton = new JButton("Check available rooms");
+		availableRoomsInputWrapper.add(availableRoomsButton);
+
+		availableRoomsResult = new JLabel();
+		availableRoomsInputWrapper.add(availableRoomsResult);
+
+		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
+		
+		// Add wrapper for getting room info and its components.
+		roomInfoInputWrapper = new JPanel();
+		roomInfoInputWrapper.setBackground(UI.BG_MAIN);
+		roomInfoInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		
+		roomInfoHeader = new JLabel("Get information on room");
+		roomInfoHeader.setAlignmentX(LEFT_ALIGNMENT);
+		roomInfoInputWrapper.add(roomInfoHeader);
+		
+		roomInfoInput = new JTextField();
+		roomInfoInput.setPreferredSize(new Dimension(60, 30));
+		roomInfoInputWrapper.add(roomInfoInput);
+		
+		roomInfoButton = new JButton("Get room info");
+		roomInfoInputWrapper.add(roomInfoButton);
+
+		roomInfoResult = new JLabel();
+		roomInfoInputWrapper.add(roomInfoResult);
+
+		// Add wrapper for checking reservation info.
+		reservationInfoInputWrapper = new JPanel();
+		reservationInfoInputWrapper.setBackground(UI.BG_MAIN);
+		reservationInfoInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+
+		reservationInfoHeader = new JLabel("Check reservation info");
+		reservationInfoHeader.setAlignmentX(LEFT_ALIGNMENT);
+		reservationInfoInputWrapper.add(reservationInfoHeader);
+		
+		lowLevelInfoWrapper.add(roomInfoInputWrapper);
+		lowLevelInfoWrapper.add(reservationInfoInputWrapper);
+		
+		lowLevelInfoWrapper.setVisible(false);
+	}
+
+	/**
 	 * Returns the input field where search queries are entered by the user.
 	 * @return Input text field for search queries.
 	 */
-	public JTextField getInput() {
+	public JTextField getSearchInput() {
 		return input;
 	}
 
@@ -200,15 +200,94 @@ public class ViewHotelView extends JPanel {
 	}
 
 	/**
+	 * Returns the input field where a date is entered by the user 
+	 * to check what rooms are available on that date.
+	 * @return Input field for date.
+	 */
+	public JTextField getCheckAvailableRoomsInput() {
+		return availableRoomsInput;
+	}
+
+	/**
+	 * Returns the button that checks for the available rooms on a date
+	 * specified by the user.
+	 * @return Button for checking available rooms on a date.
+	 */
+	public JButton getCheckAvailableRoomsButton() {
+		return availableRoomsButton;
+	}
+
+	/**
+	 * Updates the available rooms label with the given value.
+	 * @param availableRooms Value to set available rooms part of label to.
+	 * @param bookedRooms Value to set booked rooms part of label to.
+	 */
+	public void setAvailableRooms(int availableRooms, int bookedRooms) {
+		availableRoomsResult.setText("Available rooms: " + String.valueOf(availableRooms) + "Booked rooms: " + String.valueOf(bookedRooms));
+	}
+
+	/**
+	 * Returns the input field where a room name is entered by the user
+	 * to check when the room is available throughout the month.
+	 * @return Input field for a room name.
+	 */
+	public JTextField getCheckRoomsAvailabilityInput() {
+		return reservationInfoInput;
+	}
+
+	/**
+	 * Returns the button that checks for a room's availability throughout
+	 * the month.
+	 * @return Button for checking a room's availability on a date.
+	 */
+	public JButton getCheckRoomsAvailabilityButton() {
+		return reservationInfoButton;
+	}
+
+	/**
+	 * Updates the label with the dates when the room is available.
+	 */
+	public void setRoomAvailability() {
+		availableRoomsResult.setText("");
+	}
+
+	/**
+	 * Returns the input field where a room name is entered by the user
+	 * to check the room's information.
+	 * @return Input field for a room name.
+	 */
+	public JTextField getCheckRoomInfoInput() {
+		return roomInfoInput;
+	}
+
+	/**
+	 * Returns the button that checks for a room's info.
+	 * @return Button for checking a room's info.
+	 */
+	public JButton getCheckRoomInfoButton() {
+		return roomInfoButton;
+	}
+
+	/**
+	 * Returns the hotel whose information is being viewed in the interface.
+	 * @return Hotel instance being viewed in the interface.
+	 */
+	public Hotel getCurrentHotel() {
+		return currentHotel;
+	}
+
+	/**
 	 * Updates the output labels with the corresponding values upon
 	 * receiving data from the model.
 	 * @param hotel Hotel to display information of.
 	 */
 	public void showResult(Hotel hotel) {
+		currentHotel = hotel;
+
 		hotelName.setText(hotel.getName());
 
-		roomCount.setText(String.valueOf(hotel.getRoomCount()));
-		estimateEarnings.setText(String.valueOf(String.format("%.2f", hotel.getTotalEarnings())));
+		roomCount.setText("Rooms in hotel: " + String.valueOf(hotel.getRoomCount()));
+		estimateEarnings.setText("Estimate earnings: " + String.valueOf(String.format("%.2f", hotel.getTotalEarnings())));
 
 		outputWrapper.setVisible(true);
 		lowLevelInfoWrapper.setVisible(true);
@@ -217,8 +296,8 @@ public class ViewHotelView extends JPanel {
 	/**
 	 * Shows an error dialog when a user enters an invalid search query.
 	 */
-	public void showSearchError() {
+	public void showError(String message) {
 		Toolkit.getDefaultToolkit().beep();
-		JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
+		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

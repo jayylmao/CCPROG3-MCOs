@@ -44,6 +44,7 @@ public class MainController {
 
 		addCreateHotelListener();
 		addSearchHotelListener();
+		addGetAvailableRoomsListener();
 		addManageHotelListener();
 		addBookRoomListener();
 	}
@@ -66,7 +67,11 @@ public class MainController {
 					System.out.println(hotel.getName());
 				}
 
-				createHotelView.showResult(success);
+				if (success) {
+					createHotelView.showSuccess();
+				} else {
+					createHotelView.showError();
+				}
 			}
 		});
 	}
@@ -80,13 +85,46 @@ public class MainController {
 
 		viewHotelView.getSearchButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String searchQuery = viewHotelView.getInput().getText();
+				String searchQuery = viewHotelView.getSearchInput().getText();
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
 
 				if (foundHotel != null) {
 					viewHotelView.showResult(foundHotel);
 				} else {
-					viewHotelView.showSearchError();
+					viewHotelView.showError("A hotel matching your search query could not be found.");
+				}
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Check available rooms on date" button found in the
+	 * "View hotel" screen to the model.
+	 */
+	private void addGetAvailableRoomsListener() {
+		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
+
+		viewHotelView.getCheckAvailableRoomsButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = viewHotelView.getCurrentHotel();
+				Date checkInDate;
+				Date checkOutDate;
+
+				int availableRoomCount;
+				int bookedRoomCount;
+
+				try {
+					checkInDate = new Date(Integer.parseInt(viewHotelView.getCheckAvailableRoomsInput().getText()));
+					checkOutDate = new Date(Integer.parseInt(viewHotelView.getCheckAvailableRoomsInput().getText()) + 1);
+
+					if (currentHotel != null) {
+						availableRoomCount = currentHotel.getAvailableRoomCount(checkInDate, checkOutDate);
+						bookedRoomCount = currentHotel.getBookedRoomCount(checkInDate, checkOutDate);
+						viewHotelView.setAvailableRooms(availableRoomCount, bookedRoomCount);
+					}
+
+				} catch (IllegalArgumentException exception) {
+					System.err.println(exception);
 				}
 			}
 		});
