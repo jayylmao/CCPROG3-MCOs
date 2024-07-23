@@ -149,6 +149,16 @@ public class ViewHotelView extends View {
 	}
 
 	/**
+	 * Hides the output container for hiding current information
+	 * when a hotel is deleted.
+	 */
+	public void hideOutput() {
+		outputWrapper.setVisible(false);
+		lowLevelInfoWrapper.setVisible(false);
+		input.setText("");
+	}
+
+	/**
 	 * Returns the input field where search queries are entered by the user.
 	 * @return Input text field for search queries.
 	 */

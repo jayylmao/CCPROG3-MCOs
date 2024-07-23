@@ -102,15 +102,16 @@ public class HotelReservationSystem {
 	/**
 	 * Removes a Hotel instance using a name.
 	 * @param name Name of the Hotel to be removed.
-	 * @return True if a Hotel is successfully removed. False otherwise.
+	 * @throws InvalidHotelNameException Exception when a hotel with the given name cannot be found.
 	 */
-	public boolean removeHotel(String name) {
-		for(int i = 0; i < getHotelCount(); i++) {
-			if(getHotels().get(i).getName().equals(name)) {
+	public void removeHotel(String name) throws InvalidHotelNameException {
+		for (int i = 0; i < getHotelCount(); i++) {
+			if (getHotels().get(i).getName().equals(name)) {
 				this.hotels.remove(i);
-				return true;
+				return;
 			}
 		}
-		return false;
+		
+		throw new InvalidHotelNameException();
 	}
 }

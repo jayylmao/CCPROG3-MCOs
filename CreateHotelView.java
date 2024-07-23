@@ -54,6 +54,14 @@ public class CreateHotelView extends View {
 	}
 
 	/**
+	 * Resets the input fields when a hotel is created.
+	 */
+	public void resetFields() {
+		hotelNameInput.setText("");
+		roomCountInput.setValue((int) 1);
+	}
+
+	/**
 	 * Returns the button that the user clicks to add a hotel.
 	 * @return Button to add a hotel.
 	 */

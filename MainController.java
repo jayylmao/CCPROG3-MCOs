@@ -52,6 +52,7 @@ public class MainController {
 		addAddRoomsListener();
 		addRemoveRoomsListener();
 		addUpdateBasePriceListener();
+		addDeleteHotelListener();
 
 		addBookRoomListener();
 	}
@@ -68,7 +69,13 @@ public class MainController {
 				int roomCount = (int) createHotelView.getRoomCountInput().getValue();
 				try {
 					rSystem.addHotel(hotelName, roomCount);
-					createHotelView.showMessageDialog("Your hotel was created successfully.");
+
+					if (roomCount == 1) {
+						createHotelView.showMessageDialog(String.format("Your hotel %s was created successfully with %d room.", hotelName, roomCount));
+					} else {
+						createHotelView.showMessageDialog(String.format("Your hotel %s was created successfully with %d rooms.", hotelName, roomCount));
+					}
+					createHotelView.resetFields();
 				} catch (InvalidRoomCountException exception) {
 					createHotelView.showError("There must be 1 - 50 rooms.\nYour hotel could not be created.");
 				} catch (DuplicateNameException exception) {
@@ -191,7 +198,7 @@ public class MainController {
 
 				try {
 					currentHotel.addRoom(roomCount);
-					
+
 					if (roomCount == 1) {
 						manageHotelView.showMessageDialog("Room was added successfully.");
 					} else {
@@ -230,6 +237,10 @@ public class MainController {
 		});
 	}
 
+	/**
+	 * Connects the "Update base price" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
 	private void addUpdateBasePriceListener() {
 		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
 
@@ -250,6 +261,34 @@ public class MainController {
 					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
 				}
 
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Delete hotel" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
+	private void addDeleteHotelListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
+
+		manageHotelView.getDeleteHotelButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				
+				try {
+					rSystem.removeHotel(currentHotel.getName());
+					manageHotelView.hideOutput();
+					manageHotelView.getInput().setText("");
+					manageHotelView.showMessageDialog("Hotel was successfully removed.");
+
+					if (viewHotelView.getCurrentHotel().equals(currentHotel)) {
+						viewHotelView.hideOutput();
+					}
+				} catch (InvalidHotelNameException exception) {
+					manageHotelView.showError("Invalid hotel name provided.");
+				}
 			}
 		});
 	}

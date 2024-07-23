@@ -42,6 +42,8 @@ public class ManageHotelView extends View {
 	private JTextField updateBasePriceInput;
 	private JButton updateBasePriceButton;
 
+	private JButton deleteHotelButton;
+
 	public ManageHotelView() {
 		currentHotel = null;
 		header = new Header("Manage hotel");
@@ -67,6 +69,7 @@ public class ManageHotelView extends View {
 		setupAddRoomsView();
 		setupRemoveRoomsView();
 		setupUpdateBasePriceView();
+		setupDeleteHotelButton();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
 		add(header);
@@ -159,6 +162,24 @@ public class ManageHotelView extends View {
 		updateBasePriceWrapper.add(updateBasePriceButton);
 	}
 
+	private void setupDeleteHotelButton() {
+		deleteHotelButton = new JButton("Delete hotel");
+		deleteHotelButton.setOpaque(true);
+		deleteHotelButton.setBorderPainted(false);
+		deleteHotelButton.setBackground(UI.ERROR);
+		deleteHotelButton.setForeground(UI.BG_MAIN);
+
+		outputWrapper.add(deleteHotelButton);
+	}
+
+	/**
+	 * Hides the output container for hiding current information
+	 * when a hotel is deleted.
+	 */
+	public void hideOutput() {
+		outputWrapper.setVisible(false);
+	}
+
 	/**
 	 * Returns the button to trigger a hotel name change.
 	 * @return Button to trigger hotel name change.
@@ -228,6 +249,14 @@ public class ManageHotelView extends View {
 	 */
 	public JTextField getUpdateBasePriceInput() {
 		return updateBasePriceInput;
+	}
+
+	/**
+	 * Returns the button that triggers deletion of a hotel.
+	 * @return Button that triggers deletion of a hotel.
+	 */
+	public JButton getDeleteHotelButton() {
+		return deleteHotelButton;
 	}
 
 	/**
