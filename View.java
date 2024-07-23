@@ -1,11 +1,18 @@
 import java.awt.Toolkit;
 
+import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * View contains common methods for displaying message dialogs to the user,
+ * as well as setting a common layout and background.
+ */
 public class View extends JPanel {
 	public View() {
 		super();
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setBackground(UI.BG_MAIN);
 	}
 	
 	/**

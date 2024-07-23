@@ -1,10 +1,7 @@
 import java.awt.Dimension;
-import java.awt.Toolkit;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -47,9 +44,6 @@ public class CreateHotelView extends View {
 		addButton.setFont(UI.BUTTON_FONT);
 		addButton.setAlignmentX(LEFT_ALIGNMENT);
 		inputWrapper.add(addButton);
-		
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(UI.BG_MAIN);
 		
 		add(Box.createRigidArea(new Dimension(40, 20)));
 		add(header);

@@ -49,6 +49,7 @@ public class MainController {
 
 		addManageHotelListener();
 		addChangeHotelNameListener();
+		addAddRoomsListener();
 
 		addBookRoomListener();
 	}
@@ -169,6 +170,35 @@ public class MainController {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Connects the "Add rooms" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
+	private void addAddRoomsListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getAddRoomsButton().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				int roomCount = (int) manageHotelView.getAddRoomsInput().getValue();
+
+				try {
+					currentHotel.addRoom(roomCount);
+				} catch (InvalidRoomCountException exception) {
+					manageHotelView.showError("The maximum number of rooms is 50.");
+				}
+			}
+		}));
+	}
+
+	/**
+	 * Connects the "Remove rooms" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
+	private void addRemoveRoomsListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
 	}
 
 	/**

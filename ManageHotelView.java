@@ -32,13 +32,15 @@ public class ManageHotelView extends View {
 	private SpinnerNumberModel roomsInputModel;
 	private JButton addRoomsButton;
 
+	private InputWrapper removeRoomsWrapper;
+	private SubHeader removeRoomsLabel;
+	private JTextField removeRoomsInput;
+	private JButton removeRoomsButton;
+
 	public ManageHotelView() {
 		currentHotel = null;
 		header = new Header("Manage hotel");
 		description = new JLabel("Enter the name of a hotel registered in the system to edit its properties.");
-
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(UI.BG_MAIN);
 		
 		// Add controls for user input.
 		inputWrapper = new InputWrapper();
@@ -58,6 +60,7 @@ public class ManageHotelView extends View {
 
 		setupChangeHotelNameView();
 		setupAddRoomsView();
+		setupRemoveRoomsView();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
 		add(header);
@@ -68,10 +71,11 @@ public class ManageHotelView extends View {
 		add(inputWrapper);
 		add(outputWrapper);
 		outputWrapper.setVisible(false);
-
-		setBackground(UI.BG_MAIN);
 	}
 
+	/**
+	 * Adds the necessary components for changing the hotel name.
+	 */
 	private void setupChangeHotelNameView() {
 		changeHotelNameWrapper = new InputWrapper();
 
@@ -90,6 +94,9 @@ public class ManageHotelView extends View {
 		changeHotelNameWrapper.add(changeHotelNameButton);
 	}
 
+	/**
+	 * Adds the necessary components for adding rooms to the hotel.
+	 */
 	private void setupAddRoomsView() {
 		addRoomsWrapper = new InputWrapper();
 
@@ -108,11 +115,57 @@ public class ManageHotelView extends View {
 	}
 
 	/**
+	 * Adds the necessary components for removing rooms for the hotel.
+	 */
+	private void setupRemoveRoomsView() {
+		removeRoomsWrapper = new InputWrapper();
+
+		removeRoomsLabel = new SubHeader("Remove rooms");
+
+		removeRoomsInput = new JTextField();
+		removeRoomsInput.setPreferredSize(new Dimension(60, 30));
+
+		removeRoomsButton = new JButton("Remove room");
+
+		outputWrapper.add(removeRoomsWrapper);
+		removeRoomsWrapper.add(removeRoomsLabel);
+		removeRoomsWrapper.add(removeRoomsInput);
+		removeRoomsWrapper.add(removeRoomsButton);
+	}
+
+	/**
 	 * Returns the button to trigger a hotel name change.
 	 * @return Button to trigger hotel name change.
 	 */
 	public JButton getChangeHotelNameButton() {
 		return changeHotelNameButton;
+	}
+
+	/**
+	 * Returns the input field that lets the user input a new name for the
+	 * current hotel.
+	 * @return Text field for changing the name of the current hotel.
+	 */
+	public JTextField getChangeHotelNameInput() {
+		return changeHotelNameInput;
+	}
+
+	/**
+	 * Returns the button to trigger the add room operation for the
+	 * current hotel.
+	 * @return Button to trigger add room.
+	 */
+	public JButton getAddRoomsButton() {
+		return addRoomsButton;
+	}
+	
+	/**
+	 * Returns the spinner for editing the number of rooms in the
+	 * current hotel.
+	 * @return Spinner to edit number of rooms.
+	 */
+	public JSpinner getAddRoomsInput() {
+		return addRoomsInput;
 	}
 
 	/**
@@ -137,15 +190,6 @@ public class ManageHotelView extends View {
 	 */
 	public Hotel getCurrentHotel() {
 		return currentHotel;
-	}
-
-	/**
-	 * Returns the input field that lets the user input a new name for the
-	 * current hotel.
-	 * @return Text field for changing the name of the current hotel.
-	 */
-	public JTextField getChangeHotelNameInput() {
-		return changeHotelNameInput;
 	}
 
 	/**

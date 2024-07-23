@@ -1,4 +1,3 @@
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -40,9 +39,6 @@ public class BookRoomView extends View {
 		description = new JLabel("Enter the name of a hotel to book a room in.");
 		description.setFont(UI.TEXT_FONT);
 		description.setAlignmentX(LEFT_ALIGNMENT);
-
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(UI.BG_MAIN);
 		
 		// Add controls for user input.
 		inputWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -82,10 +78,6 @@ public class BookRoomView extends View {
 		listContainer.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.add(listContainer);
 
-		for (Component component : outputWrapper.getComponents()) {
-			component.setFont(UI.TEXT_FONT);
-		}
-
 		add(Box.createRigidArea(new Dimension(10, 20)));
 		add(header);
 		add(Box.createRigidArea(new Dimension(0, 10)));
@@ -101,8 +93,6 @@ public class BookRoomView extends View {
 		} catch (InvalidRoomCountException e) {
 			System.out.println("fail");
 		}
-
-		setBackground(UI.BG_MAIN);
 	}
 
 	/**

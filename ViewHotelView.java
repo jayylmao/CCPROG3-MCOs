@@ -1,12 +1,9 @@
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ViewHotelView extends View {
@@ -49,9 +46,6 @@ public class ViewHotelView extends View {
 		header = new Header("View hotel");
 
 		description = new Text("Enter the name of a hotel registered in the system to search for it.");
-
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(UI.BG_MAIN);
 		
 		// Add controls for user input.
 		inputWrapper = new InputWrapper();
@@ -97,15 +91,6 @@ public class ViewHotelView extends View {
 		add(inputWrapper);
 		add(outputWrapper);
 		add(lowLevelInfoWrapper);
-
-		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-		try {
-			hotels.add(new Hotel("test", 1));
-		} catch (InvalidRoomCountException e) {
-			System.out.println("fail");
-		}
-
-		setBackground(UI.BG_MAIN);
 	}
 
 	/**

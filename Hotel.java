@@ -185,11 +185,11 @@ public class Hotel {
 	/**
 	 * addRoom() adds a specified number of rooms to the hotel.
 	 * @param count Number of rooms to add.
-	 * @return True if rooms were added. False otherwise.
+	 * @throws InvalidRoomCountException Exception for invalid number of rooms. Hotels can have a maximum of 50 rooms as per specifications.
 	 */
-	public boolean addRoom(int count) {
+	public void addRoom(int count) throws InvalidRoomCountException {
 		if (getRoomCount() + count > 50 || count < 1) {
-			return false;
+			throw new InvalidRoomCountException("Rooms must be between 1 and 50.");
 		} else {
 			int lastRoomName;
 
@@ -197,7 +197,6 @@ public class Hotel {
 				lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
 				rooms.add(new StandardRoom(String.format("%03d", lastRoomName + 1), basePrice));
 			}
-			return true;
 		}
 	}
 
