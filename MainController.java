@@ -51,6 +51,7 @@ public class MainController {
 		addChangeHotelNameListener();
 		addAddRoomsListener();
 		addRemoveRoomsListener();
+		addUpdateBasePriceListener();
 
 		addBookRoomListener();
 	}
@@ -190,6 +191,12 @@ public class MainController {
 
 				try {
 					currentHotel.addRoom(roomCount);
+					
+					if (roomCount == 1) {
+						manageHotelView.showMessageDialog("Room was added successfully.");
+					} else {
+						manageHotelView.showMessageDialog("Rooms were added successfully.");
+					}
 				} catch (InvalidRoomCountException exception) {
 					manageHotelView.showError("The maximum number of rooms is 50.");
 				}
@@ -211,6 +218,7 @@ public class MainController {
 
 				try {
 					currentHotel.removeRoom(roomName);
+					manageHotelView.showMessageDialog("Room was removed successfully.");
 				} catch (RoomNotFoundException exception) {
 					manageHotelView.showError("A room with that name was not found.");
 				} catch (InvalidRoomCountException exception) {
@@ -218,6 +226,30 @@ public class MainController {
 				} catch (RoomHasBookingsException exception) {
 					manageHotelView.showError("This room has bookings and cannot be removed.");
 				}
+			}
+		});
+	}
+
+	private void addUpdateBasePriceListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getUpdateBasePriceButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				double newBasePrice;
+				
+				try {
+					newBasePrice = Double.valueOf(manageHotelView.getUpdateBasePriceInput().getText());
+					currentHotel.setBasePrice(newBasePrice);
+					manageHotelView.showMessageDialog("Base price was updated successfully.");
+				} catch (NumberFormatException exception) {
+					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
+				} catch (RoomHasBookingsException exception) {
+					manageHotelView.showError("You cannot modify the base room price of a hotel with bookings.");
+				} catch (InvalidBasePriceException exception) {
+					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
+				}
+
 			}
 		});
 	}

@@ -253,20 +253,24 @@ public class Hotel {
 	/**
 	 * Sets the new base price of the Hotel.
 	 * @param basePrice New base price of the Hotel.
-	 * @return True if base price is greater than 100. False otherwise.
+	 * @throws RoomHasBookingsException Exception when attempting to modify a hotel with bookings.
+	 * @throws InvalidBasePriceException Exception when attempting tot set a base price of less than 100.
 	 */
-	public boolean setBasePrice(double basePrice) {
+	public void setBasePrice(double basePrice) throws RoomHasBookingsException, InvalidBasePriceException {
 		for (int i = 0; i < getRoomCount(); i++) {
 			if (getRoom(i).getReservationCount() != 0) {
-				return false;
+				throw new RoomHasBookingsException();
 			}
 		}
 
 		if (basePrice >= 100.0) {
 			this.basePrice = basePrice;
-			return true;
+
+			for (Room room : rooms) {
+				room.setRoomPrice(basePrice);
+			}
 		} else {
-			return false;
+			throw new InvalidBasePriceException();
 		}
 	}
 

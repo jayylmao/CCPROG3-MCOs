@@ -133,6 +133,14 @@ public abstract class Room {
 	}
 
 	/**
+	 * Sets the price of the Room.
+	 * @param roomPrice Price to set Room to.
+	 */
+	public void setRoomPrice(double roomPrice) {
+		this.roomPrice = roomPrice;
+	}
+
+	/**
 	 * Creates a Reservation instance and stores it in a list of reservations, given that it does not conflict with any prior reservations.
 	 * @param guest Guest object that is reserving the room.
 	 * @param checkIn Date object describing the check in time.

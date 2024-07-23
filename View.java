@@ -20,7 +20,7 @@ public class View extends JPanel {
 	 * hotel was successfully created.
 	 */
 	public void showMessageDialog(String message) {
-		JOptionPane.showMessageDialog(this, message, "Hotel successfully added", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**

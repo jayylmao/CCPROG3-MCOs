@@ -37,6 +37,11 @@ public class ManageHotelView extends View {
 	private JTextField removeRoomsInput;
 	private JButton removeRoomsButton;
 
+	private InputWrapper updateBasePriceWrapper;
+	private SubHeader updateBasePriceLabel;
+	private JTextField updateBasePriceInput;
+	private JButton updateBasePriceButton;
+
 	public ManageHotelView() {
 		currentHotel = null;
 		header = new Header("Manage hotel");
@@ -61,6 +66,7 @@ public class ManageHotelView extends View {
 		setupChangeHotelNameView();
 		setupAddRoomsView();
 		setupRemoveRoomsView();
+		setupUpdateBasePriceView();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
 		add(header);
@@ -134,6 +140,26 @@ public class ManageHotelView extends View {
 	}
 
 	/**
+	 * Adds the necessary components for updating the base price of rooms
+	 * in the hotel.
+	 */
+	private void setupUpdateBasePriceView() {
+		updateBasePriceWrapper = new InputWrapper();
+
+		updateBasePriceLabel = new SubHeader("Update base price for rooms");
+
+		updateBasePriceInput = new JTextField();
+		updateBasePriceInput.setPreferredSize(new Dimension(60, 30));
+
+		updateBasePriceButton = new JButton("Update base price");
+
+		outputWrapper.add(updateBasePriceWrapper);
+		updateBasePriceWrapper.add(updateBasePriceLabel);
+		updateBasePriceWrapper.add(updateBasePriceInput);
+		updateBasePriceWrapper.add(updateBasePriceButton);
+	}
+
+	/**
 	 * Returns the button to trigger a hotel name change.
 	 * @return Button to trigger hotel name change.
 	 */
@@ -170,7 +196,7 @@ public class ManageHotelView extends View {
 
 	/**
 	 * Returns the button to trigger the remove room operation for the
-	 * curren hotel.
+	 * current hotel.
 	 * @return Button to trigger remove room.
 	 */
 	public JButton getRemoveRoomsButton() {
@@ -184,6 +210,24 @@ public class ManageHotelView extends View {
 	 */
 	public JTextField getRemoveRoomsInput() {
 		return removeRoomsInput;
+	}
+
+	/**
+	 * Returns the button to trigger the update base price operation for the
+	 * current hotel.
+	 * @return Button to trigger update base price.
+	 */
+	public JButton getUpdateBasePriceButton() {
+		return updateBasePriceButton;
+	}
+
+	/**
+	 * Returns the input field where the new base room price for the
+	 * current hotel is entered by the user.
+	 * @return Input text field for new base price of room.
+	 */
+	public JTextField getUpdateBasePriceInput() {
+		return updateBasePriceInput;
 	}
 
 	/**
