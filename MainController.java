@@ -50,6 +50,7 @@ public class MainController {
 		addManageHotelListener();
 		addChangeHotelNameListener();
 		addAddRoomsListener();
+		addRemoveRoomsListener();
 
 		addBookRoomListener();
 	}
@@ -121,8 +122,8 @@ public class MainController {
 						bookedRoomCount = currentHotel.getBookedRoomCount(checkInDate, checkOutDate);
 						viewHotelView.setAvailableRooms(availableRoomCount, bookedRoomCount);
 					}
-				} catch (IllegalArgumentException exception) {
-					viewHotelView.showError("Invalid date entered. Enter a date from 0 - 31.");
+				} catch (IllegalDateException exception) {
+					viewHotelView.showError("Invalid date entered. Enter a date from 1 - 30.");
 				}
 			}
 		});
@@ -179,7 +180,7 @@ public class MainController {
 	private void addAddRoomsListener() {
 		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
 
-		manageHotelView.getAddRoomsButton().addActionListener((new ActionListener() {
+		manageHotelView.getAddRoomsButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Hotel currentHotel = manageHotelView.getCurrentHotel();
 				int roomCount = (int) manageHotelView.getAddRoomsInput().getValue();
@@ -190,7 +191,7 @@ public class MainController {
 					manageHotelView.showError("The maximum number of rooms is 50.");
 				}
 			}
-		}));
+		});
 	}
 
 	/**
@@ -199,6 +200,23 @@ public class MainController {
 	 */
 	private void addRemoveRoomsListener() {
 		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+		
+		manageHotelView.getRemoveRoomsButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				String roomName = manageHotelView.getRemoveRoomsInput().getText();
+
+				try {
+					currentHotel.removeRoom(roomName);
+				} catch (RoomNotFoundException exception) {
+					manageHotelView.showError("A room with that name was not found.");
+				} catch (InvalidRoomCountException exception) {
+					manageHotelView.showError("You cannot remove the last room in a hotel.");
+				} catch (RoomHasBookingsException exception) {
+					manageHotelView.showError("This room has bookings and cannot be removed.");
+				}
+			}
+		});
 	}
 
 	/**

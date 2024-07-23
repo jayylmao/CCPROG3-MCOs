@@ -1,5 +1,5 @@
 public class InvalidRoomCountException extends Exception {
-	public InvalidRoomCountException(String message) {
-		super(message);
+	public InvalidRoomCountException() {
+		super("Rooms must be between 1 and 50.");
 	}
 }

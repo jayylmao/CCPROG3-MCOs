@@ -41,7 +41,7 @@ public class Hotel {
 				rooms.add(new StandardRoom(String.format("%03d", i + 1), basePrice));
 			}
 		} else {
-			throw new InvalidRoomCountException("Rooms must be from 1 - 50.");
+			throw new InvalidRoomCountException();
 		}
 	}
 
@@ -189,7 +189,7 @@ public class Hotel {
 	 */
 	public void addRoom(int count) throws InvalidRoomCountException {
 		if (getRoomCount() + count > 50 || count < 1) {
-			throw new InvalidRoomCountException("Rooms must be between 1 and 50.");
+			throw new InvalidRoomCountException();
 		} else {
 			int lastRoomName;
 
@@ -203,18 +203,25 @@ public class Hotel {
 	/**
 	 * removeRoom() removes a room from the hotel.
 	 * @param name Name of room to remove.
-	 * @return Success condition.
+	 * @throws RoomNotFoundException Exception when a room with a given name is not found in the hotel.
+	 * @throws InvalidRoomCountException Exceprtion when the room being removed is the last in a hotel.
 	 */
-	public boolean removeRoom(String name) {
+	public void removeRoom(String name) throws RoomNotFoundException, InvalidRoomCountException, RoomHasBookingsException {
+		if (rooms.size() == 1) {
+			throw new InvalidRoomCountException();
+		}
+		
 		for (int i = 0; i < rooms.size(); i++) {
-			if (rooms.get(i).getName().equals(name) &&
-				rooms.get(i).getReservationCount() == 0) {
-				rooms.remove(i);
-				return true;
+			if (rooms.get(i).getName().equals(name)) {
+				if (rooms.get(i).getReservationCount() == 0) {
+					rooms.remove(i);
+				} else {
+					throw new RoomHasBookingsException();
+				}
 			}
 		}
 
-		return false;
+		throw new RoomNotFoundException("A room with that name was not found.");
 	}
 
 	/**

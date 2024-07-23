@@ -169,6 +169,24 @@ public class ManageHotelView extends View {
 	}
 
 	/**
+	 * Returns the button to trigger the remove room operation for the
+	 * curren hotel.
+	 * @return Button to trigger remove room.
+	 */
+	public JButton getRemoveRoomsButton() {
+		return removeRoomsButton;
+	}
+
+	/**
+	 * Returns the input field where the name of a room to remove is
+	 * entered by the user.
+	 * @return Input text field for room name to remove.
+	 */
+	public JTextField getRemoveRoomsInput() {
+		return removeRoomsInput;
+	}
+
+	/**
 	 * Returns the input field where search queries are entered by the user.
 	 * @return Input text field for search queries.
 	 */
