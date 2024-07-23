@@ -43,9 +43,13 @@ public class MainController {
 		}
 
 		addCreateHotelListener();
+		
 		addSearchHotelListener();
 		addGetAvailableRoomsListener();
+
 		addManageHotelListener();
+		addChangeHotelNameListener();
+
 		addBookRoomListener();
 	}
 
@@ -60,17 +64,11 @@ public class MainController {
 				String hotelName = createHotelView.getHotelNameInput().getText();
 				int roomCount = (int) createHotelView.getRoomCountInput().getValue();
 				boolean success = rSystem.addHotel(hotelName, roomCount);
-				
-				ArrayList<Hotel> hotels = rSystem.getHotels();
-
-				for (Hotel hotel : hotels) {
-					System.out.println(hotel.getName());
-				}
 
 				if (success) {
-					createHotelView.showSuccess();
+					createHotelView.showMessageDialog("Your hotel was created successfully.");
 				} else {
-					createHotelView.showError();
+					createHotelView.showError("Your hotel could not be created.\nCheck that there are no duplicates in the system and that you have entered a room count from 1 - 50.");
 				}
 			}
 		});
@@ -122,9 +120,8 @@ public class MainController {
 						bookedRoomCount = currentHotel.getBookedRoomCount(checkInDate, checkOutDate);
 						viewHotelView.setAvailableRooms(availableRoomCount, bookedRoomCount);
 					}
-
 				} catch (IllegalArgumentException exception) {
-					System.err.println(exception);
+					viewHotelView.showError("Invalid date entered. Enter a date from 0 - 31.");
 				}
 			}
 		});
@@ -145,7 +142,30 @@ public class MainController {
 				if (foundHotel != null) {
 					manageHotelView.showResult(foundHotel);
 				} else {
-					manageHotelView.showSearchError();
+					manageHotelView.showError("A hotel matching your search query could not be found.");
+				}
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Change hotel name" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
+	private void addChangeHotelNameListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getChangeHotelNameButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				String name = manageHotelView.getChangeHotelNameInput().getText();
+
+				try {
+					rSystem.changeHotelName(currentHotel, name);
+					manageHotelView.showResult(rSystem.getHotel(name));
+					manageHotelView.showMessageDialog("Your hotel name was changed successfully.");
+				} catch (DuplicateNameException exception) {
+					manageHotelView.showError("Duplicate hotel name. Your hotel name was not changed.");
 				}
 			}
 		});

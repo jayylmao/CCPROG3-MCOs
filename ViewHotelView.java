@@ -1,5 +1,4 @@
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
@@ -7,61 +6,55 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class ViewHotelView extends JPanel {
-	private JLabel header;
-	private JLabel description;
+public class ViewHotelView extends View {
+	private Header header;
+	private Text description;
 	
-	private JPanel inputWrapper;
+	private InputWrapper inputWrapper;
 	private JTextField input;
 	private JButton searchButton;
 	
 	private JPanel outputWrapper;
-	private JLabel hotelName;
-	private JLabel roomCount;
-	private JLabel estimateEarnings;
+	private Header hotelName;
+	private Text roomCount;
+	private Text estimateEarnings;
 
 	private JPanel lowLevelInfoWrapper;
 
-	private JLabel availableRoomsHeader;
-	private JPanel availableRoomsInputWrapper;
+	private SubHeader availableRoomsHeader;
+	private InputWrapper availableRoomsInputWrapper;
 	private JTextField availableRoomsInput;
 	private JButton availableRoomsButton;
-	private JLabel availableRoomsResult;
+	private Text availableRoomsResult;
 	
-	private JLabel reservationInfoHeader;
-	private JPanel reservationInfoInputWrapper;
+	private SubHeader reservationInfoHeader;
+	private InputWrapper reservationInfoInputWrapper;
 	private JTextField reservationInfoInput;
 	private JButton reservationInfoButton;
 
-	private JLabel roomInfoHeader;
-	private JPanel roomInfoInputWrapper;
+	private SubHeader roomInfoHeader;
+	private InputWrapper roomInfoInputWrapper;
 	private JTextField roomInfoInput;
 	private JButton roomInfoButton;
-	private JLabel roomInfoResult;
+	private Text roomInfoResult;
 
 	private Hotel currentHotel;
 
 	public ViewHotelView() {
 		currentHotel = null;
 
-		header = new JLabel("View hotel");
-		header.setFont(UI.HEADER_FONT);
-		header.setAlignmentX(LEFT_ALIGNMENT);
+		header = new Header("View hotel");
 
-		description = new JLabel("Enter the name of a hotel registered in the system to search for it.");
-		description.setFont(UI.TEXT_FONT);
-		description.setAlignmentX(LEFT_ALIGNMENT);
+		description = new Text("Enter the name of a hotel registered in the system to search for it.");
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(UI.BG_MAIN);
 		
 		// Add controls for user input.
-		inputWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		inputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		inputWrapper = new InputWrapper();
 
 		input = new JTextField();
 		input.setPreferredSize(new Dimension(400, 30));
@@ -78,21 +71,17 @@ public class ViewHotelView extends JPanel {
 		outputWrapper.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.setLayout(new BoxLayout(outputWrapper, BoxLayout.Y_AXIS));
 
-		hotelName = new JLabel();
-		hotelName.setFont(UI.HEADER_FONT);
-		hotelName.setAlignmentX(LEFT_ALIGNMENT);
+		hotelName = new Header();
 		outputWrapper.add(hotelName);
 
 		outputWrapper.add(Box.createRigidArea(new Dimension(20, 20)));
 		
-		roomCount = new JLabel("Number of rooms");
-		roomCount.setAlignmentX(LEFT_ALIGNMENT);
+		roomCount = new Text("Number of rooms");
 		outputWrapper.add(roomCount);
 
 		outputWrapper.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		estimateEarnings = new JLabel();
-		estimateEarnings.setAlignmentX(LEFT_ALIGNMENT);
+		estimateEarnings = new Text();
 		outputWrapper.add(estimateEarnings);
 
 		outputWrapper.setVisible(false);
@@ -129,12 +118,9 @@ public class ViewHotelView extends JPanel {
 		lowLevelInfoWrapper.setLayout(new BoxLayout(lowLevelInfoWrapper, BoxLayout.Y_AXIS));
 
 		// Add wrapper for checking available rooms on given date and its components.
-		availableRoomsInputWrapper = new JPanel();
-		availableRoomsInputWrapper.setBackground(UI.BG_MAIN);
-		availableRoomsInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		availableRoomsInputWrapper = new InputWrapper();
 		
-		availableRoomsHeader = new JLabel("Check available rooms on date");
-		availableRoomsHeader.setAlignmentX(LEFT_ALIGNMENT);
+		availableRoomsHeader = new SubHeader("Check available rooms on date");
 		availableRoomsInputWrapper.add(availableRoomsHeader);
 		
 		availableRoomsInput = new JTextField();
@@ -144,18 +130,15 @@ public class ViewHotelView extends JPanel {
 		availableRoomsButton = new JButton("Check available rooms");
 		availableRoomsInputWrapper.add(availableRoomsButton);
 
-		availableRoomsResult = new JLabel();
+		availableRoomsResult = new Text();
 		availableRoomsInputWrapper.add(availableRoomsResult);
 
 		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
 		
 		// Add wrapper for getting room info and its components.
-		roomInfoInputWrapper = new JPanel();
-		roomInfoInputWrapper.setBackground(UI.BG_MAIN);
-		roomInfoInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		roomInfoInputWrapper = new InputWrapper();
 		
-		roomInfoHeader = new JLabel("Get information on room");
-		roomInfoHeader.setAlignmentX(LEFT_ALIGNMENT);
+		roomInfoHeader = new SubHeader("Get information on room");
 		roomInfoInputWrapper.add(roomInfoHeader);
 		
 		roomInfoInput = new JTextField();
@@ -165,21 +148,18 @@ public class ViewHotelView extends JPanel {
 		roomInfoButton = new JButton("Get room info");
 		roomInfoInputWrapper.add(roomInfoButton);
 
-		roomInfoResult = new JLabel();
+		roomInfoResult = new Text();
 		roomInfoInputWrapper.add(roomInfoResult);
 
 		// Add wrapper for checking reservation info.
-		reservationInfoInputWrapper = new JPanel();
-		reservationInfoInputWrapper.setBackground(UI.BG_MAIN);
-		reservationInfoInputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		reservationInfoInputWrapper = new InputWrapper();
 
-		reservationInfoHeader = new JLabel("Check reservation info");
-		reservationInfoHeader.setAlignmentX(LEFT_ALIGNMENT);
+		reservationInfoHeader = new SubHeader("Check reservation info");
 		reservationInfoInputWrapper.add(reservationInfoHeader);
 		
 		lowLevelInfoWrapper.add(roomInfoInputWrapper);
 		lowLevelInfoWrapper.add(reservationInfoInputWrapper);
-		
+
 		lowLevelInfoWrapper.setVisible(false);
 	}
 
@@ -291,13 +271,5 @@ public class ViewHotelView extends JPanel {
 
 		outputWrapper.setVisible(true);
 		lowLevelInfoWrapper.setVisible(true);
-	}
-
-	/**
-	 * Shows an error dialog when a user enters an invalid search query.
-	 */
-	public void showError(String message) {
-		Toolkit.getDefaultToolkit().beep();
-		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

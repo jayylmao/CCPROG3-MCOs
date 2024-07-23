@@ -1,45 +1,47 @@
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
-public class ManageHotelView extends JPanel {
-	private JLabel header;
+public class ManageHotelView extends View {
+	private Hotel currentHotel;
+	
+	private Header header;
 	private JLabel description;
 	
-	private JPanel inputWrapper;
+	private InputWrapper inputWrapper;
 	private JTextField input;
 	private JButton searchButton;
 	
 	private JPanel outputWrapper;
-	private JLabel hotelName;
-	private JLabel roomCount;
-	private JLabel estimateEarnings;
+
+	private InputWrapper changeHotelNameWrapper;
+	private SubHeader changeHotelNameLabel;
+	private JTextField changeHotelNameInput;
+	private JButton changeHotelNameButton;
+
+	private InputWrapper addRoomsWrapper;
+	private SubHeader addRoomsLabel;
+	private JSpinner addRoomsInput;
+	private SpinnerNumberModel roomsInputModel;
+	private JButton addRoomsButton;
 
 	public ManageHotelView() {
-		header = new JLabel("Manage hotel");
-		header.setFont(UI.HEADER_FONT);
-		header.setAlignmentX(LEFT_ALIGNMENT);
-
+		currentHotel = null;
+		header = new Header("Manage hotel");
 		description = new JLabel("Enter the name of a hotel registered in the system to edit its properties.");
-		description.setFont(UI.TEXT_FONT);
-		description.setAlignmentX(LEFT_ALIGNMENT);
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(UI.BG_MAIN);
 		
 		// Add controls for user input.
-		inputWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		inputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		inputWrapper = new InputWrapper();
 
 		input = new JTextField();
 		input.setPreferredSize(new Dimension(400, 30));
@@ -50,26 +52,12 @@ public class ManageHotelView extends JPanel {
 		searchButton.setFont(UI.BUTTON_FONT);
 		inputWrapper.add(searchButton);
 
-		// Add labels for displaying output.
 		outputWrapper = new JPanel();
-		outputWrapper.setBackground(UI.BG_MAIN);
 		outputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		outputWrapper.setLayout(new BoxLayout(outputWrapper, BoxLayout.Y_AXIS));
 
-		hotelName = new JLabel();
-		hotelName.setAlignmentX(LEFT_ALIGNMENT);
-		outputWrapper.add(hotelName);
-		
-		roomCount = new JLabel();
-		roomCount.setAlignmentX(LEFT_ALIGNMENT);
-		outputWrapper.add(roomCount);
-
-		estimateEarnings = new JLabel();
-		estimateEarnings.setAlignmentX(LEFT_ALIGNMENT);
-		outputWrapper.add(estimateEarnings);
-
-		for (Component component : outputWrapper.getComponents()) {
-			component.setFont(UI.TEXT_FONT);
-		}
+		setupChangeHotelNameView();
+		setupAddRoomsView();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
 		add(header);
@@ -79,15 +67,52 @@ public class ManageHotelView extends JPanel {
 
 		add(inputWrapper);
 		add(outputWrapper);
-
-		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-		try {
-			hotels.add(new Hotel("test", 1));
-		} catch (InvalidRoomCountException e) {
-			System.out.println("fail");
-		}
+		outputWrapper.setVisible(false);
 
 		setBackground(UI.BG_MAIN);
+	}
+
+	private void setupChangeHotelNameView() {
+		changeHotelNameWrapper = new InputWrapper();
+
+		changeHotelNameLabel = new SubHeader("Change hotel name");
+
+		changeHotelNameInput = new JTextField();
+		changeHotelNameInput.setPreferredSize(new Dimension(100, 30));
+		changeHotelNameInput.setAlignmentX(LEFT_ALIGNMENT);
+
+		changeHotelNameButton = new JButton("Change hotel name");
+		changeHotelNameButton.setAlignmentX(LEFT_ALIGNMENT);
+
+		outputWrapper.add(changeHotelNameWrapper);
+		changeHotelNameWrapper.add(changeHotelNameLabel);
+		changeHotelNameWrapper.add(changeHotelNameInput);
+		changeHotelNameWrapper.add(changeHotelNameButton);
+	}
+
+	private void setupAddRoomsView() {
+		addRoomsWrapper = new InputWrapper();
+
+		addRoomsLabel = new SubHeader("Add rooms");
+
+		roomsInputModel = new SpinnerNumberModel(1, 1, 50, 1);
+		addRoomsInput = new JSpinner(roomsInputModel);
+		addRoomsInput.setPreferredSize(new Dimension(60, 30));
+
+		addRoomsButton = new JButton("Add rooms");
+
+		outputWrapper.add(addRoomsWrapper);
+		addRoomsWrapper.add(addRoomsLabel);
+		addRoomsWrapper.add(addRoomsInput);
+		addRoomsWrapper.add(addRoomsButton);
+	}
+
+	/**
+	 * Returns the button to trigger a hotel name change.
+	 * @return Button to trigger hotel name change.
+	 */
+	public JButton getChangeHotelNameButton() {
+		return changeHotelNameButton;
 	}
 
 	/**
@@ -107,21 +132,35 @@ public class ManageHotelView extends JPanel {
 	}
 
 	/**
+	 * Returns the hotel currently viewed in the interface.
+	 * @return Hotel being viewed in the interface.
+	 */
+	public Hotel getCurrentHotel() {
+		return currentHotel;
+	}
+
+	/**
+	 * Returns the input field that lets the user input a new name for the
+	 * current hotel.
+	 * @return Text field for changing the name of the current hotel.
+	 */
+	public JTextField getChangeHotelNameInput() {
+		return changeHotelNameInput;
+	}
+
+	/**
 	 * Updates the output labels with the corresponding values upon
 	 * receiving data from the model.
 	 * @param hotel Hotel to display information of.
 	 */
 	public void showResult(Hotel hotel) {
-		hotelName.setText(hotel.getName());
-		roomCount.setText(String.valueOf(hotel.getRoomCount()));
-		estimateEarnings.setText(String.valueOf(hotel.getTotalEarnings()));
+		currentHotel = hotel;
+		changeHotelNameInput.setText(currentHotel.getName());
+
+		outputWrapper.setVisible(true);
 	}
 
-	/**
-	 * Shows a dialog error when the user enters an invalid search query.
-	 */
-	public void showSearchError() {
-		Toolkit.getDefaultToolkit().beep();
-		JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
+	public void updateHotelName(Hotel hotel) {
+		currentHotel = hotel;
 	}
 }

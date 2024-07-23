@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class BookRoomView extends JPanel {
+public class BookRoomView extends View {
 
 	private JLabel header;
 	private JLabel description;
