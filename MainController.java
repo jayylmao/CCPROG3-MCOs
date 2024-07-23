@@ -65,12 +65,15 @@ public class MainController {
 			public void actionPerformed(ActionEvent e) {
 				String hotelName = createHotelView.getHotelNameInput().getText();
 				int roomCount = (int) createHotelView.getRoomCountInput().getValue();
-				boolean success = rSystem.addHotel(hotelName, roomCount);
-
-				if (success) {
+				try {
+					rSystem.addHotel(hotelName, roomCount);
 					createHotelView.showMessageDialog("Your hotel was created successfully.");
-				} else {
-					createHotelView.showError("Your hotel could not be created.\nCheck that there are no duplicates in the system and that you have entered a room count from 1 - 50.");
+				} catch (InvalidRoomCountException exception) {
+					createHotelView.showError("There must be 1 - 50 rooms.\nYour hotel could not be created.");
+				} catch (DuplicateNameException exception) {
+					createHotelView.showError("Another hotel with the same name was found.\nYour hotel could not be created.");
+				} catch (InvalidHotelNameException exception) {
+					createHotelView.showError("You must enter a name for the hotel.\nYour hotel could not be created.");
 				}
 			}
 		});

@@ -18,22 +18,20 @@ public class HotelReservationSystem {
 	 * Adds a hotel and stores it in the list.
 	 * @param name Name of hotel.
 	 * @param roomCount Number of rooms.
-	 * @return True if hotel was added. False otherwise.
+	 * @throws InvalidRoomCountException Exception when a hotel is initialized with an invalid number of rooms.
+	 * @throws DuplicateNameException Exception when a hotel is initialized with a duplicate name.
+	 * @throws InvalidHotelNameException Exception when a hotel is initialized with a blank string as a name.
 	 */
-	public boolean addHotel(String name, int roomCount) {
+	public void addHotel(String name, int roomCount) throws InvalidRoomCountException, DuplicateNameException, InvalidHotelNameException {
 		Hotel newHotel;
-		try {
-			newHotel = new Hotel(name, roomCount);
-		} catch (InvalidRoomCountException e) {
-			return false;
-		}
+		newHotel = new Hotel(name, roomCount);
 
-		if (!isDuplicate(name) &&
-			!name.equals("")) {
-			hotels.add(newHotel);
-			return true;
+		if (name.equals("")) {
+			throw new InvalidHotelNameException();
+		} else if (isDuplicate(name)) {
+			throw new DuplicateNameException();
 		} else {
-			return false;
+			hotels.add(newHotel);
 		}
 	}
 
@@ -82,7 +80,7 @@ public class HotelReservationSystem {
 		if (!isDuplicate(name)) {
 			hotel.setName(name);
 		} else {
-			throw new DuplicateNameException("Duplicate hotel name.");
+			throw new DuplicateNameException();
 		}
 	}
 

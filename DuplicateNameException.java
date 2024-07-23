@@ -1,5 +1,5 @@
 public class DuplicateNameException extends Exception {
-	public DuplicateNameException(String message) {
-		super(message);
+	public DuplicateNameException() {
+		super("A hotel with that name alreaady exists.");
 	}
 }
