@@ -299,21 +299,5 @@ public class MainController {
 	 */
 	private void addBookRoomListener() {
 		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
-
-		bookRoomView.getSearchButton().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String searchQuery = bookRoomView.getInput().getText();
-				Hotel foundHotel = rSystem.getHotel(searchQuery);
-				ArrayList<Room> rooms;
-
-				if (foundHotel != null) {
-					rooms = foundHotel.getRooms();
-				} else {
-					rooms = null;
-				}
-
-				bookRoomView.showResult(rooms);
-			}
-		});
 	}
 }
