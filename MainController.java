@@ -294,10 +294,15 @@ public class MainController {
 	}
 
 	/**
-	 * Connects the "Search hotel" button found in the "Book room"
+	 * Connects the "Submit name" button found in the "Book room"
 	 * screen to the model.
 	 */
-	private void addBookRoomListener() {
+	private void addBookRoomSubmitNameListener() {
 		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
+		bookRoomView.getSubmitNameButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 }

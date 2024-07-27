@@ -13,7 +13,7 @@ public class ManageHotelView extends View {
 	private Hotel currentHotel;
 	
 	private Header header;
-	private JLabel description;
+	private Text description;
 	
 	private InputWrapper inputWrapper;
 	private JTextField input;
@@ -47,7 +47,7 @@ public class ManageHotelView extends View {
 	public ManageHotelView() {
 		currentHotel = null;
 		header = new Header("Manage hotel");
-		description = new JLabel("Enter the name of a hotel registered in the system to edit its properties.");
+		description = new Text("Enter the name of a hotel registered in the system to edit its properties.");
 		
 		// Add controls for user input.
 		inputWrapper = new InputWrapper();

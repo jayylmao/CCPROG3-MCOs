@@ -51,20 +51,24 @@ public class BookRoomView extends View {
 		firstName = new JTextField();
 		firstName.setPreferredSize(new Dimension(120, 30));
 
-		lastNameHeader = new SubHeader("First name");
+		lastNameHeader = new SubHeader("Last name");
 		lastName = new JTextField();
 		lastName.setPreferredSize(new Dimension(120, 30));
+
+		submitNameButton = new JButton("Submit");
 
 		inputWrapper.add(firstNameHeader);
 		inputWrapper.add(firstName);
 		inputWrapper.add(lastNameHeader);
 		inputWrapper.add(lastName);
+		inputWrapper.add(submitNameButton);
 
 		// Add labels for displaying output.
 		outputWrapper = new JPanel();
 		outputWrapper.setLayout(new BoxLayout(outputWrapper, BoxLayout.X_AXIS));
 		outputWrapper.setBackground(UI.BG_MAIN);
 		outputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		outputWrapper.setVisible(false);
 
 		add(Box.createRigidArea(new Dimension(10, 20)));
 		add(header);
@@ -81,6 +85,14 @@ public class BookRoomView extends View {
 		} catch (InvalidRoomCountException e) {
 			System.out.println("fail");
 		}
+	}
+
+	/**
+	 * Returns the button to submit a customer's name.
+	 * @return Button to submit a customer's name.
+	 */
+	public JButton getSubmitNameButton() {
+		return submitNameButton;
 	}
 
 	/**
