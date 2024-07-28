@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * MainView contains the UI code for the main menu.
  */
-public class MainView extends JPanel {
+public class MainView extends View {
 	private TopBarView topBar;
 	private JPanel contentPanel;
 	private CardLayout mainLayout;

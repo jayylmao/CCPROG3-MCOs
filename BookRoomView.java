@@ -3,13 +3,13 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 
@@ -18,7 +18,7 @@ public class BookRoomView extends View {
 	private Header header;
 	private Text description;
 	
-	private InputWrapper inputWrapper;
+	private InputWrapper nameWrapper;
 
 	private SubHeader firstNameHeader;
 	private JTextField firstName;
@@ -26,18 +26,31 @@ public class BookRoomView extends View {
 	private SubHeader lastNameHeader;
 	private JTextField lastName;
 
-	private JButton submitNameButton;
-	
-	private JPanel outputWrapper;
-
+	private InputWrapper dateWrapper;
 	private SubHeader checkInDateHeader;
+	private SpinnerNumberModel checkInDateBounds;
 	private JSpinner checkInDate;
-
+	
 	private SubHeader checkOutDateHeader;
+	private SpinnerNumberModel checkOutDateBounds;
 	private JSpinner checkOutDate;
+	
+	private InputWrapper hotelsWrapper;
+	private SubHeader hotelsHeader;
+	private JComboBox<String> hotelsInput;
+	
+	private InputWrapper checkRoomsWrapper;
+	private SubHeader checkRoomsHeader;
+	private JComboBox<String> checkRoomsInput;
+
+	private InputWrapper discountWrapper;
+	private SubHeader discountHeader;
+	private JTextField discountInput;
 	
 	JScrollPane listContainer;
 	JList<String> hotelList;
+	
+	private JButton submitButton;
 
 	public BookRoomView() {
 		header = new Header("Book a room");
@@ -45,7 +58,7 @@ public class BookRoomView extends View {
 		description = new Text("Enter the name of the customer to get started.");
 		
 		// Add controls for user input.
-		inputWrapper = new InputWrapper();
+		nameWrapper = new InputWrapper();
 
 		firstNameHeader = new SubHeader("First name");
 		firstName = new JTextField();
@@ -55,44 +68,92 @@ public class BookRoomView extends View {
 		lastName = new JTextField();
 		lastName.setPreferredSize(new Dimension(120, 30));
 
-		submitNameButton = new JButton("Submit");
-
-		inputWrapper.add(firstNameHeader);
-		inputWrapper.add(firstName);
-		inputWrapper.add(lastNameHeader);
-		inputWrapper.add(lastName);
-		inputWrapper.add(submitNameButton);
-
-		// Add labels for displaying output.
-		outputWrapper = new JPanel();
-		outputWrapper.setLayout(new BoxLayout(outputWrapper, BoxLayout.X_AXIS));
-		outputWrapper.setBackground(UI.BG_MAIN);
-		outputWrapper.setAlignmentX(LEFT_ALIGNMENT);
-		outputWrapper.setVisible(false);
-
+		nameWrapper.add(firstNameHeader);
+		nameWrapper.add(firstName);
+		nameWrapper.add(lastNameHeader);
+		nameWrapper.add(lastName);
+		
+		dateWrapper = new InputWrapper();
+		checkInDateHeader = new SubHeader("Check-in date");
+		checkInDateBounds = new SpinnerNumberModel(1, 1, 30, 1);
+		checkInDate = new JSpinner(checkInDateBounds);
+		checkInDate.setPreferredSize(new Dimension(50, 30));
+		
+		dateWrapper = new InputWrapper();
+		checkOutDateHeader = new SubHeader("Check-out date");
+		checkOutDateBounds = new SpinnerNumberModel(2, 2, 31, 1);
+		checkOutDate = new JSpinner(checkOutDateBounds);
+		checkOutDate.setPreferredSize(new Dimension(50, 30));
+		
+		dateWrapper.add(checkInDateHeader);
+		dateWrapper.add(checkInDate);
+		dateWrapper.add(checkOutDateHeader);
+		dateWrapper.add(checkOutDate);
+		
+		hotelsWrapper = new InputWrapper();
+		hotelsHeader = new SubHeader("Choose a hotel");
+		hotelsInput = new JComboBox<>();
+		hotelsInput.addItem("Select a hotel");
+		hotelsInput.setPreferredSize(new Dimension(150, 30));
+		
+		hotelsWrapper.add(hotelsHeader);
+		hotelsWrapper.add(hotelsInput);
+		
+		checkRoomsWrapper = new InputWrapper();
+		checkRoomsHeader = new SubHeader("Choose a room");
+		checkRoomsInput = new JComboBox<String>();
+		checkRoomsInput.addItem("Select a room");
+		checkRoomsInput.setPreferredSize(new Dimension(150, 30));
+		
+		checkRoomsWrapper.add(checkRoomsHeader);
+		checkRoomsWrapper.add(checkRoomsInput);
+		
+		discountWrapper = new InputWrapper();
+		discountHeader = new SubHeader("Enter discount code");
+		discountInput = new JTextField();
+		discountInput.setPreferredSize(new Dimension(150, 30));
+		
+		discountWrapper.add(discountHeader);
+		discountWrapper.add(discountInput);
+		
+		submitButton = new JButton("Submit");
+		
 		add(Box.createRigidArea(new Dimension(10, 20)));
 		add(header);
 		add(Box.createRigidArea(new Dimension(0, 10)));
 		add(description);
 		add(Box.createRigidArea(new Dimension(0, 10)));
-
-		add(inputWrapper);
-		add(outputWrapper);
-
-		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-		try {
-			hotels.add(new Hotel("test", 1));
-		} catch (InvalidRoomCountException e) {
-			System.out.println("fail");
-		}
+		
+		add(nameWrapper);
+		add(dateWrapper);
+		add(hotelsWrapper);
+		add(checkRoomsWrapper);
+		add(discountWrapper);
+		add(submitButton);
 	}
 
 	/**
 	 * Returns the button to submit a customer's name.
 	 * @return Button to submit a customer's name.
 	 */
-	public JButton getSubmitNameButton() {
-		return submitNameButton;
+	public JButton getSubmitButton() {
+		return submitButton;
+	}
+
+	public JTextField getFirstNameField() {
+		return firstName;
+	}
+
+	public JTextField getLastNameField() {
+		return lastName;
+	}
+
+	public JComboBox<String> getHotelsInput() {
+		return hotelsInput;
+	}
+
+	public JComboBox<String> getRoomsInput() {
+		return checkRoomsInput;
 	}
 
 	/**
@@ -113,8 +174,5 @@ public class BookRoomView extends View {
 			Toolkit.getDefaultToolkit().beep();
 			JOptionPane.showMessageDialog(this, "A hotel matching your search query could not be found.", "Error", 2);
 		}
-
-		outputWrapper.revalidate();
-		outputWrapper.repaint();
 	}
 }

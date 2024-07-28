@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
@@ -62,6 +61,7 @@ public class ManageHotelView extends View {
 		inputWrapper.add(searchButton);
 
 		outputWrapper = new JPanel();
+		outputWrapper.setBackground(UI.BG_MAIN);
 		outputWrapper.setAlignmentX(LEFT_ALIGNMENT);
 		outputWrapper.setLayout(new BoxLayout(outputWrapper, BoxLayout.Y_AXIS));
 
