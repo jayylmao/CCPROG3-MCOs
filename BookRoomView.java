@@ -104,6 +104,7 @@ public class BookRoomView extends View {
 		checkRoomsInput = new JComboBox<String>();
 		checkRoomsInput.addItem("Select a room");
 		checkRoomsInput.setPreferredSize(new Dimension(150, 30));
+		checkRoomsInput.setEnabled(false);
 		
 		checkRoomsWrapper.add(checkRoomsHeader);
 		checkRoomsWrapper.add(checkRoomsInput);
@@ -112,11 +113,12 @@ public class BookRoomView extends View {
 		discountHeader = new SubHeader("Enter discount code");
 		discountInput = new JTextField();
 		discountInput.setPreferredSize(new Dimension(150, 30));
+		discountInput.setEnabled(false);
 		
 		discountWrapper.add(discountHeader);
 		discountWrapper.add(discountInput);
 		
-		submitButton = new JButton("Submit");
+		submitButton = new JButton("Reserve room");
 		
 		add(Box.createRigidArea(new Dimension(10, 20)));
 		add(header);
@@ -131,7 +133,7 @@ public class BookRoomView extends View {
 		add(discountWrapper);
 		add(submitButton);
 	}
-
+	
 	/**
 	 * Returns the button to submit a customer's name.
 	 * @return Button to submit a customer's name.
@@ -140,12 +142,20 @@ public class BookRoomView extends View {
 		return submitButton;
 	}
 
-	public JTextField getFirstNameField() {
-		return firstName;
+	public String getFirstName() {
+		return firstName.getText();
 	}
 
-	public JTextField getLastNameField() {
-		return lastName;
+	public String getLastName() {
+		return lastName.getText();
+	}
+
+	public Date getCheckInDate() throws IllegalDateException {
+		return new Date((int) checkInDate.getValue());
+	}
+
+	public Date getCheckOutDate() throws IllegalDateException {
+		return new Date((int) checkOutDate.getValue());
 	}
 
 	public JComboBox<String> getHotelsInput() {

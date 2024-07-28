@@ -1,3 +1,4 @@
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.CardLayout;
@@ -37,15 +38,54 @@ public class MainController {
 			// Fixes error: Local variable i defined in an enclosing scope must
 			// be final or effectively final
 			final int idx = i;
+			
+			JButton currentButton = topBar.getButton(i);
 
 			switch (i) {
 			case 0:
-				
-			}
-
-			if (i != 0) {
-				topBar.getButton(i).addActionListener(new ActionListener() {
+				currentButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						mainLayout.show(contentPanel, viewNames.get(idx));
+					}
+				});
+				break;
+			case 1:
+				ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(i);
+				currentButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (rSystem.getHotels().size() > 0) {
+							viewHotelView.hideOutput();
+							mainLayout.show(contentPanel, viewNames.get(idx));
+						} else {
+							view.showError("No hotels have been created yet.");
+						}
+					}
+				});
+				break;
+			case 2:
+				ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(i);
+				currentButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (rSystem.getHotels().size() > 0) {
+							manageHotelView.hideOutput();
+							mainLayout.show(contentPanel, viewNames.get(idx));
+						} else {
+							view.showError("No hotels have been created yet.");
+						}
+					}
+				});
+				break;
+			case 3:
+				BookRoomView bookRoomView = (BookRoomView) view.getViews().get(i);
+				currentButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						bookRoomView.getHotelsInput().removeAllItems();
+						bookRoomView.getHotelsInput().addItem("Select a hotel");
+
+						for (Hotel hotel : rSystem.getHotels()) {
+							bookRoomView.getHotelsInput().addItem(hotel.getName());
+						}
+						
 						if (rSystem.getHotels().size() > 0) {
 							mainLayout.show(contentPanel, viewNames.get(idx));
 						} else {
@@ -53,28 +93,20 @@ public class MainController {
 						}
 					}
 				});
-			} else {
-				topBar.getButton(i).addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						mainLayout.show(contentPanel, viewNames.get(idx));
-					}
-				});
+				break;
 			}
 		}
 
 		addCreateHotelListener();
-		
 		addSearchHotelListener();
 		addGetAvailableRoomsListener();
-
 		addManageHotelListener();
 		addChangeHotelNameListener();
 		addAddRoomsListener();
 		addRemoveRoomsListener();
 		addUpdateBasePriceListener();
 		addDeleteHotelListener();
-
-		addBookRoomSubmitNameListener();
+		addBookRoomReserveListener();
 		addGetHotelRoomsListener();
 	}
 
@@ -83,7 +115,6 @@ public class MainController {
 	 */
 	private void addCreateHotelListener() {
 		CreateHotelView createHotelView = (CreateHotelView) view.getViews().get(0);
-		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
 
 		createHotelView.getAddButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,7 +137,6 @@ public class MainController {
 					createHotelView.showError("You must enter a name for the hotel.\nYour hotel could not be created.");
 				}
 
-				bookRoomView.getHotelsInput().addItem(hotelName);
 			}
 		});
 	}
@@ -294,9 +324,7 @@ public class MainController {
 	 * screen to the model.
 	 */
 	private void addDeleteHotelListener() {
-		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
 		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
-		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
 
 		manageHotelView.getDeleteHotelButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -307,30 +335,51 @@ public class MainController {
 					manageHotelView.getInput().setText("");
 					manageHotelView.showMessageDialog("Hotel was successfully removed.");
 
-					viewHotelView.hideOutput();
 					rSystem.removeHotel(currentHotel.getName());
 				} catch (InvalidHotelNameException exception) {
 					manageHotelView.showError("Invalid hotel name provided.");
 				}
-
-				bookRoomView.getHotelsInput().removeItem(currentHotel.getName());
 			}
 		});
 	}
 
 	/**
-	 * Connects the "Submit name" button found in the "Book room"
+	 * Connects the "Reserve" button found in the "Book room"
 	 * screen to the model.
 	 */
-	private void addBookRoomSubmitNameListener() {
+	private void addBookRoomReserveListener() {
 		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
+
 		bookRoomView.getSubmitButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (bookRoomView.getLastNameField().getText().equals("") ||
-					bookRoomView.getFirstNameField().getText().equals("")) {
+				if (bookRoomView.getLastName().equals("") ||
+					bookRoomView.getFirstName().equals("")) {
 					bookRoomView.showError("You must enter both a first and last name.");
+				} else if (bookRoomView.getHotelsInput().getSelectedItem().equals("Select a hotel")) {
+					bookRoomView.showError("You must select a hotel.");
+				} else if (bookRoomView.getRoomsInput().getSelectedItem().equals("Select a room")) {
+					bookRoomView.showError("You must select a room.");
 				} else {
-					currentGuest = new Guest(bookRoomView.getFirstNameField().getText(), bookRoomView.getLastNameField().getText());
+					try {
+						// i might cry
+						// so you get the room from the hotel,
+						// then you reserve the room by creating a new guest instance
+						// from their name,
+						// their check in/out dates,
+						// and the room's price.
+						rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem())
+								.getRoom((String) bookRoomView.getRoomsInput().getSelectedItem())
+								.reserveRoom(new Guest(bookRoomView.getFirstName(), bookRoomView.getLastName()), 
+														bookRoomView.getCheckInDate(), bookRoomView.getCheckOutDate(),
+														rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getRoom((String) bookRoomView.getRoomsInput().getSelectedItem()).getRoomPrice());
+						bookRoomView.showMessageDialog("Your booking was successful.");
+					} catch (IllegalDateException exception) {
+						bookRoomView.showError("Invalid date selected.");
+					} catch (InvalidCheckInDateException exception) {
+						bookRoomView.showError("Your check out date must come after your check in date.");
+					} catch (RoomIsOccupiedException exception) {
+						bookRoomView.showError("This room is occupied on your given dates.");
+					}
 				}
 			}
 		});
@@ -342,14 +391,20 @@ public class MainController {
 	 */
 	private void addGetHotelRoomsListener() {
 		BookRoomView bookRoomView = (BookRoomView) view.getViews().get(3);
+
 		bookRoomView.getHotelsInput().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bookRoomView.getRoomsInput().removeAllItems();
 				bookRoomView.getRoomsInput().addItem("Select a room");
 
-				if (!bookRoomView.getHotelsInput().getSelectedItem().toString().equals("Select a hotel")) {
-					for (Room room : rSystem.getHotel(bookRoomView.getHotelsInput().getSelectedItem().toString()).getRooms()) {
-						bookRoomView.getRoomsInput().addItem(room.getName());
+				if (bookRoomView.getHotelsInput().getSelectedItem() != null) {
+					if (!bookRoomView.getHotelsInput().getSelectedItem().toString().equals("Select a hotel")) {
+						for (Room room : rSystem.getHotel(bookRoomView.getHotelsInput().getSelectedItem().toString()).getRooms()) {
+							bookRoomView.getRoomsInput().addItem(room.getName());
+						}
+						bookRoomView.getRoomsInput().setEnabled(true);
+					} else {
+						bookRoomView.getRoomsInput().setEnabled(false);
 					}
 				}
 			}

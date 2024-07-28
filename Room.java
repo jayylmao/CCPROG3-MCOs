@@ -146,27 +146,22 @@ public abstract class Room {
 	 * @param checkIn Date object describing the check in time.
 	 * @param checkOut Date object describing the check out time.
 	 * @param reservedPrice Price of the reservation per night.
-	 * @return True if a reservation is successful (i.e no overlap with previous reservations or the room is unoccupied). False otherwise.
 	 */
-	public boolean reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice) {
+	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice) throws InvalidCheckInDateException, RoomIsOccupiedException {
 		if (!occupied && !checkIn.isAfter(checkOut)) {
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
 			this.setOccupationState(true);
-			return true;
-		}
-		else if (checkIn.isAfter(checkOut)) {
-			return false;
+		} else if (checkIn.isAfter(checkOut)) {
+			throw new InvalidCheckInDateException();
 		}
 		else if (occupied) {
 			// Check for overlap between checkIn and checkOut times
 			if (isOccupied(checkIn, checkOut)) {
-				return false;
+				throw new RoomIsOccupiedException();
 			}
 			// If it passes the list without returning false, it for sure does not overlap with other reservations.
 			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
 		}
-
-		return true;
 	}
 
 	/**
