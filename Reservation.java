@@ -72,7 +72,7 @@ public class Reservation {
 				break;
 			case "STAY4_GET1":
 				if (checkIn.getDayDifference(checkOut) >= 5) {
-					reservePrice -= this.reservedPrice;
+					reservePrice -= this.reservedPrice * datePriceModifier.get(checkIn.getDay());
 				}
 				break;
 			case "PAYDAY":

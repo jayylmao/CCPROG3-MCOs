@@ -36,6 +36,9 @@ public class Hotel {
 	 */
 	private double basePrice;
 
+	/**
+	 * Date price modifier hashmap where the days are keys and the modifiers are the values
+	 */
 	private HashMap<Integer, Double> datePriceModifier;
 
 	/**
@@ -364,14 +367,26 @@ public class Hotel {
 		return true;
 	}
 
+	/**
+	 * Gets the HashMap for the price modifiers with days as keys
+	 * @return HashMap for the price modifiers with days as keys
+	 */
 	public HashMap<Integer, Double> getDatePriceModifiers() {
 		return this.datePriceModifier;
 	}
 
+	/**
+	 * Gets the specific price modifer for a given day
+	 * @return modifier which is a double
+	 */
 	public double getDatePriceModifier(int day) {
 		return this.datePriceModifier.get(day);
 	}
 
+	/**
+	 * Sets the price modifier for a given day
+	 * @return true if valid day was selected (1-31), false otherwise
+	 */
 	public boolean setDatePriceModifier(int day, double modifier) {
 		if(day >= 1 && day <= 31) {
 			this.datePriceModifier.put(day, modifier);
