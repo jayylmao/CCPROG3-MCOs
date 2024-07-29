@@ -262,6 +262,7 @@ public class ViewHotelView extends View {
 	 */
 	public void showRoomInfo() {
 		roomInfoOutputWrapper.setVisible(true);
+		roomInfoCalendar.setVisible(true);
 	}
 
 	/**
