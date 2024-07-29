@@ -25,7 +25,7 @@ public class Reservation {
 	 * @param reservedPrice Price of the reservation per night.
 	 * @param guest Guest object that is reserving the room.
 	 */
-	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest) {
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest, String discountCode) throws InvalidDiscountCodeException {
 		if (checkOut.isBefore(checkIn)) {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		} else {
@@ -34,29 +34,7 @@ public class Reservation {
 			this.checkOut = checkOut;
 			this.reservedPrice = reservedPrice;
 			this.guests.add(guest);
-			this.totalPrice = calculateTotalPrice(checkIn, checkOut);
-		}
-	}
-
-	/**
-	 * Secondary constructor that creates a Reservation instance that contains multiple guests.
-	 * @param checkIn Date object describing the check in time.
-	 * @param checkOut Date object describing the check out time.
-	 * @param reservedPrice Price of the reservation per night.
-	 * @param guestList ArrayList of Guest objects that are reserving the room together.
-	 */
-	public Reservation(Date checkIn, Date checkOut, double reservedPrice, ArrayList<Guest> guestList) {
-		if (checkOut.isBefore(checkIn)) {
-			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
-		} else {
-			this.checkIn = checkIn;
-			this.checkOut = checkOut;
-			this.reservedPrice = reservedPrice;
-
-			for (int i = 0; i < guestList.size(); i++) {
-				this.guests.add(guestList.get(i));
-			}
-			this.totalPrice = calculateTotalPrice(checkIn, checkOut);
+			this.totalPrice = calculateTotalPrice(checkIn, checkOut, discountCode);
 		}
 	}
 
@@ -66,11 +44,43 @@ public class Reservation {
 	 * @param checkOut Date object describing the check out time.
 	 * @return Total price of the booking.
 	 */
-	public double calculateTotalPrice(Date checkIn, Date checkOut) {
-		if(checkOut.getDay() == checkIn.getDay() || checkOut.isBefore(checkIn)) {
+	public double calculateTotalPrice(Date checkIn, Date checkOut, String discountCode) throws InvalidDiscountCodeException {
+		double reservePrice = this.reservedPrice * checkIn.getDayDifference(checkOut);
+		Date payday1;
+		Date payday2;
+		
+		if (checkOut.getDay() == checkIn.getDay() || checkOut.isBefore(checkIn)) {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		}
-		return this.reservedPrice * checkIn.getDayDifference(checkOut);
+
+		try {
+			payday1 = new Date(15);
+			payday2 = new Date(30);
+
+			switch (discountCode) {
+			case "I_WORK_HERE":
+				reservePrice -= reservePrice * 0.1;
+				break;
+			case "STAY4_GET1":
+				if (checkIn.getDayDifference(checkOut) >= 5) {
+					reservePrice -= this.reservedPrice;
+				}
+				break;
+			case "PAYDAY":
+				if (payday1.isBetween(checkIn, checkOut) || payday2.isBetween(checkIn, checkOut)) {
+					reservePrice -= reservePrice * 0.07;
+				}
+				break;
+			case "":
+				break;
+			default:
+				throw new InvalidDiscountCodeException();
+			}
+		} catch (IllegalDateException e) {
+			System.out.println("Invalid date.");
+		}
+
+		return reservePrice;
 	}
 
 	/**

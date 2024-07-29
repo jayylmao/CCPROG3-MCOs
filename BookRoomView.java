@@ -113,7 +113,6 @@ public class BookRoomView extends View {
 		discountHeader = new SubHeader("Enter discount code");
 		discountInput = new JTextField();
 		discountInput.setPreferredSize(new Dimension(150, 30));
-		discountInput.setEnabled(false);
 		
 		discountWrapper.add(discountHeader);
 		discountWrapper.add(discountInput);
@@ -164,6 +163,14 @@ public class BookRoomView extends View {
 
 	public JComboBox<String> getRoomsInput() {
 		return checkRoomsInput;
+	}
+
+	/**
+	 * Returns the discount code entered by the use.
+	 * @return
+	 */
+	public String getDiscountCode() {
+		return discountInput.getText();
 	}
 
 	/**

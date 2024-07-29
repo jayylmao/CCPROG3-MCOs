@@ -147,9 +147,9 @@ public abstract class Room {
 	 * @param checkOut Date object describing the check out time.
 	 * @param reservedPrice Price of the reservation per night.
 	 */
-	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice) throws InvalidCheckInDateException, RoomIsOccupiedException {
+	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice, String discountCode) throws InvalidCheckInDateException, RoomIsOccupiedException, InvalidDiscountCodeException {
 		if (!occupied && !checkIn.isAfter(checkOut)) {
-			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
+			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest, discountCode));
 			this.setOccupationState(true);
 		} else if (checkIn.isAfter(checkOut)) {
 			throw new InvalidCheckInDateException();
@@ -160,35 +160,8 @@ public abstract class Room {
 				throw new RoomIsOccupiedException();
 			}
 			// If it passes the list without returning false, it for sure does not overlap with other reservations.
-			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest));
+			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest, discountCode));
 		}
-	}
-
-	/**
-	 * Secondary function that creates a Reservation instance for a group of guests and stores it in a list of reservations, given that it does not conflict with any prior reservations.
-	 * @param guests ArrayList of Guest objects that are reserving the room together.
-	 * @param checkIn Date object describing the check in time.
-	 * @param checkOut Date object describing the check out time.
-	 * @param reservedPrice Price of the reservation per night.
-	 * @return True if a reservation is successful (i.e no overlap with previous reservations or the room is unoccupied). False otherwise.
-	 */
-	public boolean reserveRoom(ArrayList<Guest> guests, Date checkIn, Date checkOut, double reservedPrice) {
-		if(!occupied && !checkIn.isAfter(checkOut)) {
-			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guests));
-			this.setOccupationState(true);
-			return true;
-		}
-		else if(checkIn.isAfter(checkOut)) {
-			return false;
-		}
-		else if(occupied) {
-			// Check for overlap between checkIn and checkOut times
-			if (isOccupied(checkIn, checkOut)) {
-				return false;
-			}
-			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guests));
-		}
-		return true;
 	}
 
 	/**

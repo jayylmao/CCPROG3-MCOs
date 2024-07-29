@@ -370,13 +370,19 @@ public class MainController {
 						// then you reserve the room by creating a new guest instance
 						// from their name,
 						// their check in/out dates,
-						// and the room's price.
-						rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem())
-								.getRoom((String) bookRoomView.getRoomsInput().getSelectedItem())
-								.reserveRoom(new Guest(bookRoomView.getFirstName(), bookRoomView.getLastName()), 
-														bookRoomView.getCheckInDate(), bookRoomView.getCheckOutDate(),
-														rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getRoom((String) bookRoomView.getRoomsInput().getSelectedItem()).getRoomPrice());
-						bookRoomView.showMessageDialog("Your booking was successful.");
+						// the room's price,
+						// and the discount code.
+						try {
+							rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem())
+									.getRoom((String) bookRoomView.getRoomsInput().getSelectedItem())
+									.reserveRoom(new Guest(bookRoomView.getFirstName(), bookRoomView.getLastName()), 
+															bookRoomView.getCheckInDate(), bookRoomView.getCheckOutDate(),
+															rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getRoom((String) bookRoomView.getRoomsInput().getSelectedItem()).getRoomPrice(),
+															bookRoomView.getDiscountCode());
+							bookRoomView.showMessageDialog("Your booking was successful.");
+						} catch (InvalidDiscountCodeException exception) {
+							bookRoomView.showError("Invalid discount code entered.");
+						}
 					} catch (IllegalDateException exception) {
 						bookRoomView.showError("Invalid date selected.");
 					} catch (InvalidCheckInDateException exception) {
