@@ -58,8 +58,8 @@ public class Reservation {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		}
 		
-		for(int i = 0; i < checkIn.getDayDifference(checkOut); i++) {
-			reservePrice += this.reservedPrice * datePriceModifier.get(i+1);
+		for(int i = checkIn.getDay(); i < checkOut.getDay(); i++) {
+			reservePrice += this.reservedPrice * this.datePriceModifier.get(i);
 		}
 
 		try {
@@ -72,7 +72,7 @@ public class Reservation {
 				break;
 			case "STAY4_GET1":
 				if (checkIn.getDayDifference(checkOut) >= 5) {
-					reservePrice -= this.reservedPrice * datePriceModifier.get(checkIn.getDay());
+					reservePrice -= this.reservedPrice * this.datePriceModifier.get(checkIn.getDay());
 				}
 				break;
 			case "PAYDAY":
