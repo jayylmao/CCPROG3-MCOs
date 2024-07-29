@@ -209,6 +209,9 @@ public class MainController {
 		viewHotelView.getCheckRoomInfoButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Hotel currentHotel = viewHotelView.getCurrentHotel();
+				String roomName = viewHotelView.getCheckRoomInfoInput().getText();
+				
+				Room room = currentHotel.getRoom(roomName);
 			}
 		});
 	}
