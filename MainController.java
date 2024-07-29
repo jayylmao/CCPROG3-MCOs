@@ -222,7 +222,6 @@ public class MainController {
 				Room room = currentHotel.getRoom(roomName);
 
 				if (room != null) {
-					viewHotelView.setRoomInfoName(roomName);
 					try {
 						viewHotelView.setRoomInfoName(roomName);
 						for (int i = 1; i < 31; i++) {
