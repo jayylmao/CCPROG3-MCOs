@@ -220,9 +220,9 @@ public class MainController {
 				String roomName = (String) viewHotelView.getCheckRoomInfoInput().getSelectedItem();
 				
 				Room room = currentHotel.getRoom(roomName);
-				viewHotelView.setRoomInfoName(roomName);
-
+				
 				if (room != null) {
+					viewHotelView.setRoomInfoName(roomName);
 					try {
 						for (int i = 1; i < 31; i++) {
 							viewHotelView.getRoomInfoCalendar().updateTileInfo(i, i, currentHotel.getDatePriceModifier(i) * currentHotel.getRoom(roomName).getRoomPrice());
@@ -238,11 +238,7 @@ public class MainController {
 					}
 	
 					viewHotelView.showRoomInfo();
-				} 
-				else if(roomName.equals("Select a room")) {
-					//Do nothing
-				}
-				else {
+				} else {
 					viewHotelView.showError("A room with that name could not be found.");
 				}
 
