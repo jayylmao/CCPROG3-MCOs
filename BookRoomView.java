@@ -149,7 +149,7 @@ public class BookRoomView extends View {
 		return lastName.getText();
 	}
 
-	public Date getCheckInDate() throws IllegalDateException {
+	public Date getCheckInDate() throws IllegalDateException {	
 		return new Date((int) checkInDate.getValue());
 	}
 

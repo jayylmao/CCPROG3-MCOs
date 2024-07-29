@@ -220,10 +220,10 @@ public class MainController {
 				String roomName = (String) viewHotelView.getCheckRoomInfoInput().getSelectedItem();
 				
 				Room room = currentHotel.getRoom(roomName);
-				viewHotelView.setRoomInfoName(roomName);
 
 				if (room != null) {
 					try {
+						viewHotelView.setRoomInfoName(roomName);
 						for (int i = 1; i < 31; i++) {
 							viewHotelView.getRoomInfoCalendar().updateTileInfo(i, i, currentHotel.getDatePriceModifier(i) * currentHotel.getRoom(roomName).getRoomPrice());
 
@@ -460,10 +460,17 @@ public class MainController {
 						// the discount code,
 						// and the hashmap coresponding to date price modifiers.
 						try {
+							Date checkIn, checkOut;
+							checkIn = bookRoomView.getCheckInDate();
+							checkOut = bookRoomView.getCheckOutDate();
+
+							checkIn.setHour(14);
+							checkOut.setHour(12);
+
 							rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem())
 									.getRoom((String) bookRoomView.getRoomsInput().getSelectedItem())
 									.reserveRoom(new Guest(bookRoomView.getFirstName(), bookRoomView.getLastName()), 
-															bookRoomView.getCheckInDate(), bookRoomView.getCheckOutDate(),
+															checkIn, checkOut,
 															rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getRoom((String) bookRoomView.getRoomsInput().getSelectedItem()).getRoomPrice(),
 															bookRoomView.getDiscountCode(), rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getDatePriceModifiers());
 							bookRoomView.showMessageDialog("Your booking was successful.");
