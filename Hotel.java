@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +35,8 @@ public class Hotel {
 	 * Constraints: Must be >= 100.
 	 */
 	private double basePrice;
+
+	private HashMap<Integer, Double> datePriceModifier;
 
 	/**
 	 * Constructor that creates an empty hotel with only its name.
@@ -72,6 +75,12 @@ public class Hotel {
 			}
 
 			this.executiveRoomCount = executiveRoomCount;
+
+			datePriceModifier = new HashMap<Integer, Double>();
+
+			for(int i = 1; i <= 31; i++) {
+				datePriceModifier.put(i,1.0);
+			}
 		} else {
 			throw new InvalidRoomCountException();
 		}
@@ -353,5 +362,23 @@ public class Hotel {
 		}
 
 		return true;
+	}
+
+	public HashMap<Integer, Double> getDatePriceModifiers() {
+		return this.datePriceModifier;
+	}
+
+	public double getDatePriceModifier(int day) {
+		return this.datePriceModifier.get(day);
+	}
+
+	public boolean setDatePriceModifier(int day, double modifier) {
+		if(day >= 1 && day <= 31) {
+			this.datePriceModifier.put(day, modifier);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

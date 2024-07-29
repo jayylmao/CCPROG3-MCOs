@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 /**
  * The Reservation class defines a reservation and its corresponding details.
  */
@@ -18,6 +19,8 @@ public class Reservation {
 	/** The list of Guests that have reserved a room (it may be a group of people that want to reserve a room together) */
 	private ArrayList<Guest> guests;
 
+	private HashMap<Integer, Double> datePriceModifier;
+
 	/**
 	 * Constructor that creates a Reservation instance.
 	 * @param checkIn Date object describing the check in time.
@@ -25,7 +28,7 @@ public class Reservation {
 	 * @param reservedPrice Price of the reservation per night.
 	 * @param guest Guest object that is reserving the room.
 	 */
-	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest, String discountCode) throws InvalidDiscountCodeException {
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidDiscountCodeException {
 		if (checkOut.isBefore(checkIn)) {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		} else {
@@ -35,6 +38,7 @@ public class Reservation {
 			this.reservedPrice = reservedPrice;
 			this.guests.add(guest);
 			this.totalPrice = calculateTotalPrice(checkIn, checkOut, discountCode);
+			this.datePriceModifier = datePriceModifier;
 		}
 	}
 
@@ -45,12 +49,17 @@ public class Reservation {
 	 * @return Total price of the booking.
 	 */
 	public double calculateTotalPrice(Date checkIn, Date checkOut, String discountCode) throws InvalidDiscountCodeException {
-		double reservePrice = this.reservedPrice * checkIn.getDayDifference(checkOut);
+		// double reservePrice = this.reservedPrice * checkIn.getDayDifference(checkOut);
+		double reservePrice = 0;
 		Date payday1;
 		Date payday2;
 		
 		if (checkOut.getDay() == checkIn.getDay() || checkOut.isBefore(checkIn)) {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
+		}
+		
+		for(int i = 0; i < checkIn.getDayDifference(checkOut); i++) {
+			reservePrice += this.reservedPrice * datePriceModifier.get(i+1);
 		}
 
 		try {

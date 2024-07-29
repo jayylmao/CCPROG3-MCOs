@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 /**
  * The Room class defines a Room in a hotel, with its corresponding details.
  */
@@ -147,9 +148,9 @@ public abstract class Room {
 	 * @param checkOut Date object describing the check out time.
 	 * @param reservedPrice Price of the reservation per night.
 	 */
-	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice, String discountCode) throws InvalidCheckInDateException, RoomIsOccupiedException, InvalidDiscountCodeException {
+	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidCheckInDateException, RoomIsOccupiedException, InvalidDiscountCodeException {
 		if (!occupied && !checkIn.isAfter(checkOut)) {
-			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest, discountCode));
+			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest, discountCode, datePriceModifier));
 			this.setOccupationState(true);
 		} else if (checkIn.isAfter(checkOut)) {
 			throw new InvalidCheckInDateException();
@@ -160,7 +161,7 @@ public abstract class Room {
 				throw new RoomIsOccupiedException();
 			}
 			// If it passes the list without returning false, it for sure does not overlap with other reservations.
-			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest, discountCode));
+			this.reservations.add(new Reservation(checkIn, checkOut, reservedPrice, guest, discountCode, datePriceModifier));
 		}
 	}
 
