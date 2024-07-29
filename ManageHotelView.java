@@ -216,6 +216,7 @@ public class ManageHotelView extends View {
 	 * when a hotel is deleted.
 	 */
 	public void hideOutput() {
+		
 		outputWrapper.setVisible(false);
 	}
 
