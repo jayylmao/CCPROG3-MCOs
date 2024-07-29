@@ -222,6 +222,7 @@ public class MainController {
 				Room room = currentHotel.getRoom(roomName);
 
 				if (room != null) {
+					viewHotelView.setRoomInfoName(roomName);
 					try {
 						viewHotelView.setRoomInfoName(roomName);
 						for (int i = 1; i < 31; i++) {
@@ -238,11 +239,7 @@ public class MainController {
 					}
 	
 					viewHotelView.showRoomInfo();
-				} 
-				else if(roomName.equals("Select a room")) {
-					//Do nothing
-				}
-				else {
+				} else {
 					viewHotelView.showError("A room with that name could not be found.");
 				}
 
