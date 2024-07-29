@@ -298,6 +298,8 @@ public class ViewHotelView extends View {
 		estimateEarnings.setText("Estimate earnings: " + String.valueOf(String.format("%.2f", hotel.getTotalEarnings())));
 
 		outputWrapper.setVisible(true);
+		roomInfoInput.removeAllItems();
+		roomInfoInput.addItem("Select a room");
 		for(int i = 0; i < hotel.getRoomCount(); i++) {
 			roomInfoInput.addItem(hotel.getRoom(i).getName());
 		}
