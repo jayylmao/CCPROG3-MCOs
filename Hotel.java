@@ -14,6 +14,21 @@ public class Hotel {
 	private ArrayList<Room> rooms;
 
 	/**
+	 * Number of standard rooms in the hotel.
+	 */
+	private int standardRoomCount;
+
+	/**
+	 * Number of deluxe rooms in the hotel.
+	 */
+	private int deluxeRoomCount;
+
+	/**
+	 * Number of executive rooms in the hotel.
+	 */
+	private int executiveRoomCount;
+
+	/**
 	 * How much a room costs per night.
 	 * All rooms in the hotel cost the same.
 	 * Constraints: Must be >= 100.
@@ -23,7 +38,7 @@ public class Hotel {
 	/**
 	 * Constructor that creates an empty hotel with only its name.
 	 * @param name Name of hotel.
-	 * @param standarRroomCount How many standard rooms are in the hotel.
+	 * @param standardRoomCount How many standard rooms are in the hotel.
 	 * @param deluxeRoomCount How many deluxe rooms are in the hotel.
 	 * @param executiveRoomCount How many executive rooms are in the hotel.
 	 * @throws InvalidRoomCountException 
@@ -44,13 +59,19 @@ public class Hotel {
 				rooms.add(new StandardRoom(String.format("S%03d", i + 1), basePrice));
 			}
 
+			this.standardRoomCount = standardRoomCount;
+			
 			for (int i = 0; i < deluxeRoomCount; i++) {
 				rooms.add(new DeluxeRoom(String.format("D%03d", i + 1), basePrice));
 			}
-
+			
+			this.deluxeRoomCount = deluxeRoomCount;
+			
 			for (int i = 0; i < executiveRoomCount; i++) {
 				rooms.add(new ExecutiveRoom(String.format("E%03d", i + 1), basePrice));
 			}
+
+			this.executiveRoomCount = executiveRoomCount;
 		} else {
 			throw new InvalidRoomCountException();
 		}
@@ -198,15 +219,25 @@ public class Hotel {
 	 * @param count Number of rooms to add.
 	 * @throws InvalidRoomCountException Exception for invalid number of rooms. Hotels can have a maximum of 50 rooms as per specifications.
 	 */
-	public void addRoom(int count) throws InvalidRoomCountException {
+	public void addRoom(int count, String type) throws InvalidRoomCountException {
 		if (getRoomCount() + count > 50 || count < 1) {
 			throw new InvalidRoomCountException();
 		} else {
-			int lastRoomName;
-
 			for (int i = 0; i < count; i++) {
-				lastRoomName = Integer.parseInt(getRoom(getRoomCount() - 1).getName());
-				rooms.add(new StandardRoom(String.format("%03d", lastRoomName + 1), basePrice));
+				switch (type) {
+				case "Standard room":
+					standardRoomCount += 1;
+					rooms.add(new StandardRoom(String.format("S%03d", standardRoomCount), basePrice));
+					break;
+					case "Deluxe room":
+					deluxeRoomCount += 1;
+					rooms.add(new DeluxeRoom(String.format("D%03d", deluxeRoomCount), basePrice));
+					break;
+					case "Executive room":
+					executiveRoomCount += 1;
+					rooms.add(new ExecutiveRoom(String.format("E%03d", executiveRoomCount), basePrice));
+					break;
+				}
 			}
 		}
 	}
@@ -224,8 +255,17 @@ public class Hotel {
 		
 		for (int i = 0; i < rooms.size(); i++) {
 			if (rooms.get(i).getName().equals(name)) {
+				if (rooms.get(i) instanceof StandardRoom) {
+					standardRoomCount -= 1;
+				} else if (rooms.get(i) instanceof DeluxeRoom) {
+					deluxeRoomCount -= 1;
+				} else {
+					executiveRoomCount -= 1;
+				}
+
 				if (rooms.get(i).getReservationCount() == 0) {
 					rooms.remove(i);
+					return;
 				} else {
 					throw new RoomHasBookingsException();
 				}

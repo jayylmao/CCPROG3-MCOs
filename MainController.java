@@ -252,14 +252,15 @@ public class MainController {
 			public void actionPerformed(ActionEvent e) {
 				Hotel currentHotel = manageHotelView.getCurrentHotel();
 				int roomCount = (int) manageHotelView.getAddRoomsInput().getValue();
+				String roomType = manageHotelView.getRoomType();
 
 				try {
-					currentHotel.addRoom(roomCount);
+					currentHotel.addRoom(roomCount, roomType);
 
 					if (roomCount == 1) {
-						manageHotelView.showMessageDialog("Room was added successfully.");
+						manageHotelView.showMessageDialog(roomType + " was added successfully.");
 					} else {
-						manageHotelView.showMessageDialog("Rooms were added successfully.");
+						manageHotelView.showMessageDialog(roomType + "s were added successfully.");
 					}
 				} catch (InvalidRoomCountException exception) {
 					manageHotelView.showError("The maximum number of rooms is 50.");

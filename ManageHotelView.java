@@ -1,8 +1,10 @@
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
@@ -28,6 +30,7 @@ public class ManageHotelView extends View {
 	private InputWrapper addRoomsWrapper;
 	private SubHeader addRoomsLabel;
 	private JSpinner addRoomsInput;
+	private JComboBox<String> addRoomsType;
 	private SpinnerNumberModel roomsInputModel;
 	private JButton addRoomsButton;
 
@@ -114,12 +117,17 @@ public class ManageHotelView extends View {
 		roomsInputModel = new SpinnerNumberModel(1, 1, 50, 1);
 		addRoomsInput = new JSpinner(roomsInputModel);
 		addRoomsInput.setPreferredSize(new Dimension(60, 30));
+		addRoomsType = new JComboBox<>();
+		addRoomsType.addItem("Standard room");
+		addRoomsType.addItem("Deluxe room");
+		addRoomsType.addItem("Executive room");
 
 		addRoomsButton = new JButton("Add rooms");
 
 		outputWrapper.add(addRoomsWrapper);
 		addRoomsWrapper.add(addRoomsLabel);
 		addRoomsWrapper.add(addRoomsInput);
+		addRoomsWrapper.add(addRoomsType);
 		addRoomsWrapper.add(addRoomsButton);
 	}
 
@@ -195,6 +203,14 @@ public class ManageHotelView extends View {
 	 */
 	public JTextField getChangeHotelNameInput() {
 		return changeHotelNameInput;
+	}
+
+	/**
+	 * Returns the type of room selected in the dropdown box for adding rooms.
+	 * @return Room type selected by user when adding rooms.
+	 */
+	public String getRoomType() {
+		return (String) addRoomsType.getSelectedItem();
 	}
 
 	/**
