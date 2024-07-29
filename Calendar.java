@@ -34,11 +34,16 @@ public class Calendar extends JPanel {
 
 	/**
 	 * Mark a tile as occupied. (red)
+	 * @param tileIndex Tile to mark as occupied.
 	 */
 	public void markTileOccupied(int tileIndex) {
 		calendarTiles.get(tileIndex).setBackground(UI.ERROR);
 	}
 
+	/**
+	 * Mark a tile as free. (gray)
+	 * @param tileIndex Tile to mark as free.
+	 */
 	public void markTileFree(int tileIndex) {
 		calendarTiles.get(tileIndex).setBackground(UI.BG_SECONDARY);
 	}
