@@ -4,7 +4,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
 public class ViewHotelView extends View {
 	private Header header;
@@ -37,6 +39,15 @@ public class ViewHotelView extends View {
 	private JTextField roomInfoInput;
 	private JButton roomInfoButton;
 	private Text roomInfoResult;
+
+	private SubHeader datePriceModifierHeader;
+	private InputWrapper datePriceModifierWrapper;
+	private SpinnerNumberModel datePriceModifierDateModel;
+	private JSpinner datePriceModifierDateInput;
+
+	private SpinnerNumberModel datePriceModifierModifierModel;
+	private JSpinner datePriceModifierModifierInput;
+	private JButton datePriceModifierButton;
 
 	private Hotel currentHotel;
 
@@ -118,8 +129,6 @@ public class ViewHotelView extends View {
 		availableRoomsResult = new Text();
 		availableRoomsInputWrapper.add(availableRoomsResult);
 
-		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
-		
 		// Add wrapper for getting room info and its components.
 		roomInfoInputWrapper = new InputWrapper();
 		
@@ -132,18 +141,38 @@ public class ViewHotelView extends View {
 		
 		roomInfoButton = new JButton("Get room info");
 		roomInfoInputWrapper.add(roomInfoButton);
-
+		
 		roomInfoResult = new Text();
 		roomInfoInputWrapper.add(roomInfoResult);
-
+		
 		// Add wrapper for checking reservation info.
 		reservationInfoInputWrapper = new InputWrapper();
-
+		
 		reservationInfoHeader = new SubHeader("Check reservation info");
 		reservationInfoInputWrapper.add(reservationInfoHeader);
+
+		// Add wrapper for changing date price modifier.
+		datePriceModifierWrapper = new InputWrapper();
+
+		datePriceModifierHeader = new SubHeader("Edit date price modifier");
 		
+		datePriceModifierDateModel = new SpinnerNumberModel(1, 1, 31, 1);
+		datePriceModifierDateInput = new JSpinner(datePriceModifierDateModel);
+		
+		datePriceModifierModifierModel = new SpinnerNumberModel(1, 0.5, 1.5, 0.01);
+		datePriceModifierModifierInput = new JSpinner(datePriceModifierModifierModel);
+		
+		datePriceModifierButton = new JButton("Edit date price modifier");
+		
+		datePriceModifierWrapper.add(datePriceModifierHeader);
+		datePriceModifierWrapper.add(datePriceModifierDateInput);
+		datePriceModifierWrapper.add(datePriceModifierModifierInput);
+		datePriceModifierWrapper.add(datePriceModifierButton);
+		
+		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
 		lowLevelInfoWrapper.add(roomInfoInputWrapper);
 		lowLevelInfoWrapper.add(reservationInfoInputWrapper);
+		lowLevelInfoWrapper.add(datePriceModifierWrapper);
 
 		lowLevelInfoWrapper.setVisible(false);
 	}
