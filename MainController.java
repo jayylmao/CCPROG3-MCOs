@@ -54,8 +54,8 @@ public class MainController {
 				currentButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (rSystem.getHotels().size() > 0) {
-							viewHotelView.hideOutput();
 							mainLayout.show(contentPanel, viewNames.get(idx));
+							viewHotelView.hideOutput();
 						} else {
 							view.showError("No hotels have been created yet.");
 						}
@@ -67,8 +67,8 @@ public class MainController {
 				currentButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (rSystem.getHotels().size() > 0) {
-							manageHotelView.hideOutput();
 							mainLayout.show(contentPanel, viewNames.get(idx));
+							manageHotelView.hideOutput();
 						} else {
 							view.showError("No hotels have been created yet.");
 						}

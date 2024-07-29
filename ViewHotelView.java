@@ -169,7 +169,12 @@ public class ViewHotelView extends View {
 	public void hideOutput() {
 		outputWrapper.setVisible(false);
 		lowLevelInfoWrapper.setVisible(false);
+		roomInfoCalendar.setVisible(false);
+
 		input.setText("");
+		availableRoomsInput.setText("");
+		// reservationInfoInput.setText("");
+		roomInfoInput.setSelectedItem("Select a room");
 	}
 
 	/**
