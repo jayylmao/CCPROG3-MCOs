@@ -221,6 +221,8 @@ public class MainController {
 				if (room != null) {
 					try {
 						for (int i = 1; i < 31; i++) {
+							viewHotelView.getRoomInfoCalendar().updateTileInfo(i, i, currentHotel.getDatePriceModifier(i) * currentHotel.getRoom(roomName).getRoomPrice());
+
 							if (room.isOccupied(new Date(i), new Date(i + 1))) {
 								viewHotelView.getRoomInfoCalendar().markTileOccupied(i);
 							} else {
@@ -414,7 +416,8 @@ public class MainController {
 						// from their name,
 						// their check in/out dates,
 						// the room's price,
-						// and the discount code.
+						// the discount code,
+						// and the hashmap coresponding to date price modifiers.
 						try {
 							rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem())
 									.getRoom((String) bookRoomView.getRoomsInput().getSelectedItem())

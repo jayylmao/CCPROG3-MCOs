@@ -1,7 +1,9 @@
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -19,6 +21,14 @@ public class Calendar extends JPanel {
 		for (int i = 0; i < 31; i++) {
 			displayTile(i + 1);
 		}
+	}
+
+	/**
+	 * Displays a tile in the calendar.
+	 */
+	public void updateTileInfo(int index, int date, double price) {
+		JLabel tileLabel = (JLabel) calendarTiles.get(index).getComponent(0);
+		tileLabel.setText(String.valueOf(date) + " - " + String.valueOf(price));
 	}
 
 	/**

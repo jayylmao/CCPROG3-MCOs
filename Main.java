@@ -7,7 +7,8 @@ public class Main {
 	public static void main(String[] args) {
 		JFrame mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(970, 800);
+		mainFrame.setTitle("Hotel Reservation System");
+		mainFrame.setSize(970, 900);
 		
 		MainView view = new MainView();
 		HotelReservationSystem rSystem = new HotelReservationSystem();
