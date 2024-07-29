@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
@@ -36,7 +37,8 @@ public class ViewHotelView extends View {
 
 	private SubHeader roomInfoHeader;
 	private InputWrapper roomInfoInputWrapper;
-	private JTextField roomInfoInput;
+	// private JTextField roomInfoInput;
+	private JComboBox<String> roomInfoInput;
 	private JButton roomInfoButton;
 	private JPanel roomInfoOutputWrapper;
 	private SubHeader roomInfoResult;
@@ -137,8 +139,9 @@ public class ViewHotelView extends View {
 		roomInfoHeader = new SubHeader("Get information on room");
 		roomInfoInputWrapper.add(roomInfoHeader);
 		
-		roomInfoInput = new JTextField();
-		roomInfoInput.setPreferredSize(new Dimension(60, 30));
+		roomInfoInput = new JComboBox<String>();
+		roomInfoInput.addItem("Select a room");
+		roomInfoInput.setPreferredSize(new Dimension(150, 30));
 		roomInfoInputWrapper.add(roomInfoInput);
 		
 		roomInfoButton = new JButton("Get room info");
@@ -273,7 +276,7 @@ public class ViewHotelView extends View {
 	 * to check the room's information.
 	 * @return Input field for a room name.
 	 */
-	public JTextField getCheckRoomInfoInput() {
+	public JComboBox<String> getCheckRoomInfoInput() {
 		return roomInfoInput;
 	}
 
@@ -326,6 +329,10 @@ public class ViewHotelView extends View {
 		estimateEarnings.setText("Estimate earnings: " + String.valueOf(String.format("%.2f", hotel.getTotalEarnings())));
 
 		outputWrapper.setVisible(true);
+		for(int i = 0; i < hotel.getRoomCount(); i++) {
+			roomInfoInput.addItem(hotel.getRoom(i).getName());
+		}
+
 		lowLevelInfoWrapper.setVisible(true);
 	}
 }

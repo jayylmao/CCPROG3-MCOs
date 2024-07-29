@@ -217,7 +217,7 @@ public class MainController {
 		viewHotelView.getCheckRoomInfoButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Hotel currentHotel = viewHotelView.getCurrentHotel();
-				String roomName = viewHotelView.getCheckRoomInfoInput().getText();
+				String roomName = (String) viewHotelView.getCheckRoomInfoInput().getSelectedItem();
 				
 				Room room = currentHotel.getRoom(roomName);
 				viewHotelView.setRoomInfoName(roomName);
@@ -238,7 +238,11 @@ public class MainController {
 					}
 	
 					viewHotelView.showRoomInfo();
-				} else {
+				} 
+				else if(roomName.equals("Select a room")) {
+					//Do nothing
+				}
+				else {
 					viewHotelView.showError("A room with that name could not be found.");
 				}
 
