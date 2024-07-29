@@ -378,7 +378,7 @@ public class MainController {
 									.reserveRoom(new Guest(bookRoomView.getFirstName(), bookRoomView.getLastName()), 
 															bookRoomView.getCheckInDate(), bookRoomView.getCheckOutDate(),
 															rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getRoom((String) bookRoomView.getRoomsInput().getSelectedItem()).getRoomPrice(),
-															bookRoomView.getDiscountCode());
+															bookRoomView.getDiscountCode(), rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getDatePriceModifiers());
 							bookRoomView.showMessageDialog("Your booking was successful.");
 						} catch (InvalidDiscountCodeException exception) {
 							bookRoomView.showError("Invalid discount code entered.");
