@@ -18,7 +18,7 @@ public class Date {
 	 */
 	public Date(int day) throws IllegalDateException {
 		if (day < 1 || day > 31) {
-			throw new IllegalArgumentException("Invalid date entered: " + day);
+			throw new IllegalDateException();
 		} else {
 			this.day = day;
 			this.month = 6;

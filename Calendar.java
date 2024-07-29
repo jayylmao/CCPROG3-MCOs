@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+/**
+ * Calendar creates a visual calendar as a panel.
+ */
 public class Calendar extends JPanel {
-	ArrayList<JPanel> calendarTiles;
+	private ArrayList<JPanel> calendarTiles;
 	
 	public Calendar() {
 		calendarTiles = new ArrayList<JPanel>();
