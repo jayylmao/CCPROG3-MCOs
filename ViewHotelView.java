@@ -5,9 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 
 public class ViewHotelView extends View {
 	private Header header;
@@ -43,15 +41,6 @@ public class ViewHotelView extends View {
 	private JPanel roomInfoOutputWrapper;
 	private SubHeader roomInfoResult;
 	private Calendar roomInfoCalendar;
-
-	private SubHeader datePriceModifierHeader;
-	private InputWrapper datePriceModifierWrapper;
-	private SpinnerNumberModel datePriceModifierDateModel;
-	private JSpinner datePriceModifierDateInput;
-
-	private SpinnerNumberModel datePriceModifierModifierModel;
-	private JSpinner datePriceModifierModifierInput;
-	private JButton datePriceModifierButton;
 
 	private Hotel currentHotel;
 
@@ -165,30 +154,11 @@ public class ViewHotelView extends View {
 		
 		reservationInfoHeader = new SubHeader("Check reservation info");
 		reservationInfoInputWrapper.add(reservationInfoHeader);
-
-		// Add wrapper for changing date price modifier.
-		datePriceModifierWrapper = new InputWrapper();
-
-		datePriceModifierHeader = new SubHeader("Edit date price modifier");
-		
-		datePriceModifierDateModel = new SpinnerNumberModel(1, 1, 31, 1);
-		datePriceModifierDateInput = new JSpinner(datePriceModifierDateModel);
-		
-		datePriceModifierModifierModel = new SpinnerNumberModel(1, 0.5, 1.5, 0.01);
-		datePriceModifierModifierInput = new JSpinner(datePriceModifierModifierModel);
-		
-		datePriceModifierButton = new JButton("Edit date price modifier");
-		
-		datePriceModifierWrapper.add(datePriceModifierHeader);
-		datePriceModifierWrapper.add(datePriceModifierDateInput);
-		datePriceModifierWrapper.add(datePriceModifierModifierInput);
-		datePriceModifierWrapper.add(datePriceModifierButton);
 		
 		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
 		lowLevelInfoWrapper.add(roomInfoInputWrapper);
 		lowLevelInfoWrapper.add(roomInfoOutputWrapper);
 		lowLevelInfoWrapper.add(reservationInfoInputWrapper);
-		lowLevelInfoWrapper.add(datePriceModifierWrapper);
 
 		lowLevelInfoWrapper.setVisible(false);
 	}
