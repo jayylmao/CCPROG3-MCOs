@@ -35,7 +35,7 @@ public class ManageHotelView extends View {
 
 	private InputWrapper removeRoomsWrapper;
 	private SubHeader removeRoomsLabel;
-	private JTextField removeRoomsInput;
+	private JComboBox<String> removeRoomsInput;
 	private JButton removeRoomsButton;
 
 	private InputWrapper updateBasePriceWrapper;
@@ -148,8 +148,10 @@ public class ManageHotelView extends View {
 
 		removeRoomsLabel = new SubHeader("Remove rooms");
 
-		removeRoomsInput = new JTextField();
-		removeRoomsInput.setPreferredSize(new Dimension(60, 30));
+		removeRoomsInput = new JComboBox<String>();
+		removeRoomsInput.addItem("Select a room");
+		removeRoomsInput.setPreferredSize(new Dimension(150, 30));
+		// removeRoomsInput.setPreferredSize(new Dimension(60, 30));
 
 		removeRoomsButton = new JButton("Remove room");
 
@@ -216,7 +218,15 @@ public class ManageHotelView extends View {
 	 * when a hotel is deleted.
 	 */
 	public void hideOutput() {
-		
+		input.setText("");
+		addRoomsInput.setValue(1);
+		addRoomsType.setSelectedIndex(0);
+		updateBasePriceInput.setText("");
+		datePriceModifierDateInput.setValue(1);
+		datePriceModifierModifierInput.setValue(1);
+		removeRoomsInput.removeAllItems();
+		removeRoomsInput.addItem("Select a room");
+
 		outputWrapper.setVisible(false);
 	}
 
@@ -277,7 +287,7 @@ public class ManageHotelView extends View {
 	 * entered by the user.
 	 * @return Input text field for room name to remove.
 	 */
-	public JTextField getRemoveRoomsInput() {
+	public JComboBox<String> getRemoveRoomsInput() {
 		return removeRoomsInput;
 	}
 
@@ -364,12 +374,42 @@ public class ManageHotelView extends View {
 	 */
 	public void showResult(Hotel hotel) {
 		currentHotel = hotel;
+		hideOutput();
 		changeHotelNameInput.setText(currentHotel.getName());
 
+		for(int i = 0; i < hotel.getRoomCount(); i++) {
+			removeRoomsInput.addItem(hotel.getRoom(i).getName());
+		}
 		outputWrapper.setVisible(true);
 	}
 
 	public void updateHotelName(Hotel hotel) {
 		currentHotel = hotel;
+	}
+
+	/**
+	 * Updates the Room dropdown menu when deleting a room
+	 * @param roomName Room name to delete
+	 */
+	public void removeRoom(String roomName) {
+		for(int i = 0; i < removeRoomsInput.getItemCount(); i++) {
+			if(removeRoomsInput.getItemAt(i).toString().equals(roomName)) {
+				removeRoomsInput.removeItemAt(i);
+				break;
+			}
+		}
+		removeRoomsInput.setSelectedIndex(0);
+	}
+
+	/**
+	 * Updates the Room dropdown menu when adding a room/multiple rooms
+	 * @param hotel Hotel to get room information.
+	 */
+	public void updateRooms(Hotel hotel) {
+		removeRoomsInput.removeAllItems();
+		removeRoomsInput.addItem("Select a room");
+		for(int i = 0; i < hotel.getRoomCount(); i++) {
+			removeRoomsInput.addItem(hotel.getRoom(i).getName());
+		}
 	}
 }

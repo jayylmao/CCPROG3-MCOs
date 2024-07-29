@@ -263,6 +263,7 @@ public class ViewHotelView extends View {
 	public void showRoomInfo() {
 		roomInfoOutputWrapper.setVisible(true);
 		roomInfoCalendar.setVisible(true);
+		roomInfoResult.setVisible(true);
 	}
 
 	/**
@@ -300,7 +301,7 @@ public class ViewHotelView extends View {
 	 */
 	public void showResult(Hotel hotel) {
 		currentHotel = hotel;
-
+		hideOutput();
 		hotelName.setText(hotel.getName());
 
 		roomCount.setText("Rooms in hotel: " + String.valueOf(hotel.getRoomCount()));

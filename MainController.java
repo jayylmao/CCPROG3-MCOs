@@ -311,8 +311,10 @@ public class MainController {
 
 					if (roomCount == 1) {
 						manageHotelView.showMessageDialog(roomType + " was added successfully.");
+						manageHotelView.updateRooms(currentHotel);
 					} else {
 						manageHotelView.showMessageDialog(roomType + "s were added successfully.");
+						manageHotelView.updateRooms(currentHotel);
 					}
 				} catch (InvalidRoomCountException exception) {
 					manageHotelView.showError("The maximum number of rooms is 50.");
@@ -331,10 +333,11 @@ public class MainController {
 		manageHotelView.getRemoveRoomsButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Hotel currentHotel = manageHotelView.getCurrentHotel();
-				String roomName = manageHotelView.getRemoveRoomsInput().getText();
+				String roomName = (String) manageHotelView.getRemoveRoomsInput().getSelectedItem();
 
 				try {
 					currentHotel.removeRoom(roomName);
+					manageHotelView.removeRoom(roomName);
 					manageHotelView.showMessageDialog("Room was removed successfully.");
 				} catch (RoomNotFoundException exception) {
 					manageHotelView.showError("A room with that name was not found.");
