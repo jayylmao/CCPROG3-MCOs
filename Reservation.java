@@ -37,8 +37,8 @@ public class Reservation {
 			this.checkOut = checkOut;
 			this.reservedPrice = reservedPrice;
 			this.guests.add(guest);
-			this.totalPrice = calculateTotalPrice(checkIn, checkOut, discountCode);
 			this.datePriceModifier = datePriceModifier;
+			this.totalPrice = calculateTotalPrice(checkIn, checkOut, discountCode);
 		}
 	}
 

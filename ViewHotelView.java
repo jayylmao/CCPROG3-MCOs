@@ -39,6 +39,7 @@ public class ViewHotelView extends View {
 	private JTextField roomInfoInput;
 	private JButton roomInfoButton;
 	private Text roomInfoResult;
+	private Calendar roomInfoCalendar;
 
 	private SubHeader datePriceModifierHeader;
 	private InputWrapper datePriceModifierWrapper;
@@ -144,6 +145,9 @@ public class ViewHotelView extends View {
 		
 		roomInfoResult = new Text();
 		roomInfoInputWrapper.add(roomInfoResult);
+
+		roomInfoCalendar = new Calendar();
+		roomInfoInputWrapper.add(roomInfoCalendar);
 		
 		// Add wrapper for checking reservation info.
 		reservationInfoInputWrapper = new InputWrapper();
@@ -270,6 +274,18 @@ public class ViewHotelView extends View {
 	 */
 	public JButton getCheckRoomInfoButton() {
 		return roomInfoButton;
+	}
+
+	public Calendar getRoomInfoCalendar() {
+		return roomInfoCalendar;
+	}
+
+	/**
+	 * Sets the label for the room name under the "Get room info" section.
+	 * @param roomName Name to update label with.
+	 */
+	public void setRoomInfoName(String roomName) {
+		roomInfoResult.setText(roomName);
 	}
 
 	/**

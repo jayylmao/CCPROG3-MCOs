@@ -212,6 +212,19 @@ public class MainController {
 				String roomName = viewHotelView.getCheckRoomInfoInput().getText();
 				
 				Room room = currentHotel.getRoom(roomName);
+				viewHotelView.setRoomInfoName(roomName);
+
+				try {
+					for (int i = 0; i < 31; i++) {
+						if (room.isOccupied(new Date(i), new Date(i + 1))) {
+							viewHotelView.getRoomInfoCalendar().markTileOccupied(i);
+						} else {
+							viewHotelView.getRoomInfoCalendar().markTileFree(i);
+						}
+					}
+				} catch (IllegalDateException exception) {
+					viewHotelView.showError("Date out of bounds.");
+				}
 			}
 		});
 	}

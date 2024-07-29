@@ -28,7 +28,7 @@ public abstract class Room {
 	 * Regular Constructor that creates a Room instance.
 	 * @param roomName The name of the Room. Should be unique compared to other Room instances.
 	 */
-	public Room(String roomName, double roomPrice) {
+	public Room(String roomName, double roomPrice, HashMap<Integer, Double> datePriceModifier) {
 		this.name = roomName;
 		this.occupied = false;
 		this.reservations = new ArrayList<Reservation>();

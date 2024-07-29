@@ -51,6 +51,8 @@ public class Hotel {
 	 */
 	public Hotel(String name, int standardRoomCount, int deluxeRoomCount, int executiveRoomCount) throws InvalidRoomCountException {
 		int totalRoomCount = standardRoomCount + deluxeRoomCount + executiveRoomCount;
+		datePriceModifier = new HashMap<Integer, Double>();
+
 		if (totalRoomCount > 0 && totalRoomCount < 51) {
 			this.name = name;
 
@@ -62,24 +64,22 @@ public class Hotel {
 
 			// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
 			for (int i = 0; i < standardRoomCount; i++) {
-				rooms.add(new StandardRoom(String.format("S%03d", i + 1), basePrice));
+				rooms.add(new StandardRoom(String.format("S%03d", i + 1), basePrice, datePriceModifier));
 			}
 
 			this.standardRoomCount = standardRoomCount;
 			
 			for (int i = 0; i < deluxeRoomCount; i++) {
-				rooms.add(new DeluxeRoom(String.format("D%03d", i + 1), basePrice));
+				rooms.add(new DeluxeRoom(String.format("D%03d", i + 1), basePrice, datePriceModifier));
 			}
 			
 			this.deluxeRoomCount = deluxeRoomCount;
 			
 			for (int i = 0; i < executiveRoomCount; i++) {
-				rooms.add(new ExecutiveRoom(String.format("E%03d", i + 1), basePrice));
+				rooms.add(new ExecutiveRoom(String.format("E%03d", i + 1), basePrice, datePriceModifier));
 			}
 
 			this.executiveRoomCount = executiveRoomCount;
-
-			datePriceModifier = new HashMap<Integer, Double>();
 
 			for(int i = 1; i <= 31; i++) {
 				datePriceModifier.put(i,1.0);
@@ -239,15 +239,15 @@ public class Hotel {
 				switch (type) {
 				case "Standard room":
 					standardRoomCount += 1;
-					rooms.add(new StandardRoom(String.format("S%03d", standardRoomCount), basePrice));
+					rooms.add(new StandardRoom(String.format("S%03d", standardRoomCount), basePrice, datePriceModifier));
 					break;
 					case "Deluxe room":
 					deluxeRoomCount += 1;
-					rooms.add(new DeluxeRoom(String.format("D%03d", deluxeRoomCount), basePrice));
+					rooms.add(new DeluxeRoom(String.format("D%03d", deluxeRoomCount), basePrice, datePriceModifier));
 					break;
 					case "Executive room":
 					executiveRoomCount += 1;
-					rooms.add(new ExecutiveRoom(String.format("E%03d", executiveRoomCount), basePrice));
+					rooms.add(new ExecutiveRoom(String.format("E%03d", executiveRoomCount), basePrice, datePriceModifier));
 					break;
 				}
 			}
