@@ -35,7 +35,6 @@ public class ViewHotelView extends View {
 
 	private SubHeader roomInfoHeader;
 	private InputWrapper roomInfoInputWrapper;
-	// private JTextField roomInfoInput;
 	private JComboBox<String> roomInfoInput;
 	private JButton roomInfoButton;
 	private JPanel roomInfoOutputWrapper;
