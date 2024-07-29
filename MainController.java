@@ -96,14 +96,18 @@ public class MainController {
 		}
 
 		addCreateHotelListener();
+		
 		addSearchHotelListener();
 		addGetAvailableRoomsListener();
+		addGetCheckRoomInfoListener();
+		
 		addManageHotelListener();
 		addChangeHotelNameListener();
 		addAddRoomsListener();
 		addRemoveRoomsListener();
 		addUpdateBasePriceListener();
 		addDeleteHotelListener();
+		
 		addBookRoomReserveListener();
 		addGetHotelRoomsListener();
 	}
@@ -215,7 +219,7 @@ public class MainController {
 				viewHotelView.setRoomInfoName(roomName);
 
 				try {
-					for (int i = 0; i < 31; i++) {
+					for (int i = 1; i < 31; i++) {
 						if (room.isOccupied(new Date(i), new Date(i + 1))) {
 							viewHotelView.getRoomInfoCalendar().markTileOccupied(i);
 						} else {
