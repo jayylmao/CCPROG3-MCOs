@@ -200,6 +200,20 @@ public class MainController {
 	}
 
 	/**
+	 * Connects the "Check room info" found in the "View hotel" screen to
+	 * the model.
+	 */
+	private void addGetCheckRoomInfoListener() {
+		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
+
+		viewHotelView.getCheckRoomInfoButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = viewHotelView.getCurrentHotel();
+			}
+		});
+	}
+
+	/**
 	 * Connects the "Search hotel" button found in the "Manage hotel"
 	 * screen to the model.
 	 */

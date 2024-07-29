@@ -227,7 +227,7 @@ public class ViewHotelView extends View {
 	 * @param bookedRooms Value to set booked rooms part of label to.
 	 */
 	public void setAvailableRooms(int availableRooms, int bookedRooms) {
-		availableRoomsResult.setText("Available rooms: " + String.valueOf(availableRooms) + "Booked rooms: " + String.valueOf(bookedRooms));
+		availableRoomsResult.setText("Available rooms: " + String.valueOf(availableRooms) + " Booked rooms: " + String.valueOf(bookedRooms));
 	}
 
 	/**
