@@ -227,7 +227,10 @@ public class MainController {
 						for (int i = 1; i < 31; i++) {
 							viewHotelView.getRoomInfoCalendar().updateTileInfo(i, i, currentHotel.getDatePriceModifier(i) * currentHotel.getRoom(roomName).getRoomPrice());
 
-							if (room.isOccupied(new Date(i), new Date(i + 1))) {
+							Date checkOutDate = new Date(i + 1);
+							checkOutDate.setHour(12);
+
+							if (room.isOccupied(new Date(i), checkOutDate)) {
 								viewHotelView.getRoomInfoCalendar().markTileOccupied(i);
 							} else {
 								viewHotelView.getRoomInfoCalendar().markTileFree(i);
