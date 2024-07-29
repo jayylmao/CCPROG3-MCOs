@@ -23,22 +23,33 @@ public class Hotel {
 	/**
 	 * Constructor that creates an empty hotel with only its name.
 	 * @param name Name of hotel.
-	 * @param roomCount How many rooms are in the hotel.
+	 * @param standarRroomCount How many standard rooms are in the hotel.
+	 * @param deluxeRoomCount How many deluxe rooms are in the hotel.
+	 * @param executiveRoomCount How many executive rooms are in the hotel.
 	 * @throws InvalidRoomCountException 
 	 */
-	public Hotel(String name, int roomCount) throws InvalidRoomCountException {
-		if (roomCount > 0 && roomCount < 51) {
+	public Hotel(String name, int standardRoomCount, int deluxeRoomCount, int executiveRoomCount) throws InvalidRoomCountException {
+		int totalRoomCount = standardRoomCount + deluxeRoomCount + executiveRoomCount;
+		if (totalRoomCount > 0 && totalRoomCount < 51) {
 			this.name = name;
 
 			// Create new ArrayList instance rooms.
-			rooms = new ArrayList<Room>(roomCount);
+			rooms = new ArrayList<Room>(totalRoomCount);
 
 			// Default room base price is 1299 as per spec.
 			this.basePrice = 1299;
 
 			// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
-			for (int i = 0; i < roomCount; i++) {
-				rooms.add(new StandardRoom(String.format("%03d", i + 1), basePrice));
+			for (int i = 0; i < standardRoomCount; i++) {
+				rooms.add(new StandardRoom(String.format("S%03d", i + 1), basePrice));
+			}
+
+			for (int i = 0; i < deluxeRoomCount; i++) {
+				rooms.add(new DeluxeRoom(String.format("D%03d", i + 1), basePrice));
+			}
+
+			for (int i = 0; i < executiveRoomCount; i++) {
+				rooms.add(new ExecutiveRoom(String.format("E%03d", i + 1), basePrice));
 			}
 		} else {
 			throw new InvalidRoomCountException();

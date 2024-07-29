@@ -17,14 +17,16 @@ public class HotelReservationSystem {
 	/**
 	 * Adds a hotel and stores it in the list.
 	 * @param name Name of hotel.
-	 * @param roomCount Number of rooms.
+	 * @param standardRoomCount Number of standard rooms.
+	 * @param deluxeRoomCount Number of deluxe rooms.
+	 * @param executiveRoomCount Number of executive rooms.
 	 * @throws InvalidRoomCountException Exception when a hotel is initialized with an invalid number of rooms.
 	 * @throws DuplicateNameException Exception when a hotel is initialized with a duplicate name.
 	 * @throws InvalidHotelNameException Exception when a hotel is initialized with a blank string as a name.
 	 */
-	public void addHotel(String name, int roomCount) throws InvalidRoomCountException, DuplicateNameException, InvalidHotelNameException {
+	public void addHotel(String name, int standardRoomCount, int deluxeRoomCount, int executiveRoomCount) throws InvalidRoomCountException, DuplicateNameException, InvalidHotelNameException {
 		Hotel newHotel;
-		newHotel = new Hotel(name, roomCount);
+		newHotel = new Hotel(name, standardRoomCount, deluxeRoomCount, executiveRoomCount);
 
 		if (name.equals("")) {
 			throw new InvalidHotelNameException();

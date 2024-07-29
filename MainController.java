@@ -18,8 +18,6 @@ public class MainController {
 
 	ArrayList<String> viewNames = new ArrayList<String>();
 
-	private Guest currentGuest;
-
 	public MainController(MainView view, HotelReservationSystem rSystem) {
 		this.view = view;
 		this.rSystem = rSystem;
@@ -119,18 +117,23 @@ public class MainController {
 		createHotelView.getAddButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String hotelName = createHotelView.getHotelNameInput().getText();
-				int roomCount = (int) createHotelView.getRoomCountInput().getValue();
-				try {
-					rSystem.addHotel(hotelName, roomCount);
+				int standardRoomCount = (int) createHotelView.getStandardRoomInput().getValue();
+				int deluxeRoomCount = (int) createHotelView.getDeluxeRoomInput().getValue();
+				int executiveRoomCount = (int) createHotelView.getExecutiveRoomInput().getValue();
 
-					if (roomCount == 1) {
-						createHotelView.showMessageDialog(String.format("Your hotel %s was created successfully with %d room.", hotelName, roomCount));
+				int totalRoomCount = standardRoomCount + deluxeRoomCount + executiveRoomCount;
+
+				try {
+					rSystem.addHotel(hotelName, standardRoomCount, deluxeRoomCount, executiveRoomCount);
+
+					if (totalRoomCount == 1) {
+						createHotelView.showMessageDialog(String.format("Your hotel %s was created successfully with %d room.", hotelName, totalRoomCount));
 					} else {
-						createHotelView.showMessageDialog(String.format("Your hotel %s was created successfully with %d rooms.", hotelName, roomCount));
+						createHotelView.showMessageDialog(String.format("Your hotel %s was created successfully with %d standard rooms, %d deluxe rooms, and %d executive rooms.", hotelName, standardRoomCount, deluxeRoomCount, executiveRoomCount));
 					}
 					createHotelView.resetFields();
 				} catch (InvalidRoomCountException exception) {
-					createHotelView.showError("There must be 1 - 50 rooms.\nYour hotel could not be created.");
+					createHotelView.showError("There must be 1 - 50 rooms in total.\nYour hotel could not be created.");
 				} catch (DuplicateNameException exception) {
 					createHotelView.showError("Another hotel with the same name was found.\nYour hotel could not be created.");
 				} catch (InvalidHotelNameException exception) {
