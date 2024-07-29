@@ -192,6 +192,8 @@ public class MainController {
 					}
 				} catch (IllegalDateException exception) {
 					viewHotelView.showError("Invalid date entered. Enter a date from 1 - 30.");
+				} catch (NumberFormatException exception) {
+					viewHotelView.showError("Invalid date entered. Enter a date from 1 - 30.");
 				}
 			}
 		});
