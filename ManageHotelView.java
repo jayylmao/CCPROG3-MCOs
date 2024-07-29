@@ -43,6 +43,15 @@ public class ManageHotelView extends View {
 	private JTextField updateBasePriceInput;
 	private JButton updateBasePriceButton;
 
+	private SubHeader datePriceModifierHeader;
+	private InputWrapper datePriceModifierWrapper;
+	private SpinnerNumberModel datePriceModifierDateModel;
+	private JSpinner datePriceModifierDateInput;
+
+	private SpinnerNumberModel datePriceModifierModifierModel;
+	private JSpinner datePriceModifierModifierInput;
+	private JButton datePriceModifierButton;
+
 	private JButton deleteHotelButton;
 
 	public ManageHotelView() {
@@ -71,6 +80,7 @@ public class ManageHotelView extends View {
 		setupAddRoomsView();
 		setupRemoveRoomsView();
 		setupUpdateBasePriceView();
+		setupDatePriceModifier();
 		setupDeleteHotelButton();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
@@ -168,6 +178,27 @@ public class ManageHotelView extends View {
 		updateBasePriceWrapper.add(updateBasePriceInput);
 		updateBasePriceWrapper.add(updateBasePriceButton);
 	}
+	
+	private void setupDatePriceModifier() {
+		// Add wrapper for changing date price modifier.
+		datePriceModifierWrapper = new InputWrapper();
+
+		datePriceModifierHeader = new SubHeader("Edit date price modifier");
+		
+		datePriceModifierDateModel = new SpinnerNumberModel(1, 1, 31, 1);
+		datePriceModifierDateInput = new JSpinner(datePriceModifierDateModel);
+		
+		datePriceModifierModifierModel = new SpinnerNumberModel(1, 0.5, 1.5, 0.01);
+		datePriceModifierModifierInput = new JSpinner(datePriceModifierModifierModel);
+		
+		datePriceModifierButton = new JButton("Edit date price modifier");
+		
+		outputWrapper.add(datePriceModifierWrapper);
+		datePriceModifierWrapper.add(datePriceModifierHeader);
+		datePriceModifierWrapper.add(datePriceModifierDateInput);
+		datePriceModifierWrapper.add(datePriceModifierModifierInput);
+		datePriceModifierWrapper.add(datePriceModifierButton);
+	}
 
 	private void setupDeleteHotelButton() {
 		deleteHotelButton = new JButton("Delete hotel");
@@ -178,6 +209,7 @@ public class ManageHotelView extends View {
 
 		outputWrapper.add(deleteHotelButton);
 	}
+
 
 	/**
 	 * Hides the output container for hiding current information
@@ -264,6 +296,32 @@ public class ManageHotelView extends View {
 	 */
 	public JTextField getUpdateBasePriceInput() {
 		return updateBasePriceInput;
+	}
+
+	/**
+	 * Returns the field where the user enters the date to
+	 * edit the date price modifier.
+	 * @return Field for entering the date for editing the corresponding date price modifier.
+	 */
+	public JSpinner getDatePriceDate() {
+		return datePriceModifierDateInput;
+	}
+
+	/**
+	 * Returns the field where the user enters the modifier to
+	 * set a date to.
+	 * @return Field for entering the modifier to set a specified date to.
+	 */
+	public JSpinner getDatePriceModifier() {
+		return datePriceModifierModifierInput;
+	}
+
+	/**
+	 * Returns the button that triggers an update to the date price modifiers.
+	 * @return Button that triggers an update to the date price modifier.
+	 */
+	public JButton getDatePriceModifierButton() {
+		return datePriceModifierButton;
 	}
 
 	/**

@@ -1,5 +1,7 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -107,6 +109,8 @@ public class MainController {
 		addRemoveRoomsListener();
 		addUpdateBasePriceListener();
 		addDeleteHotelListener();
+		addDatePriceModifierListener();
+		addDatePriceModifierButtonListener();
 		
 		addBookRoomReserveListener();
 		addGetHotelRoomsListener();
@@ -364,6 +368,39 @@ public class MainController {
 					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
 				}
 
+			}
+		});
+	}
+
+	/**
+	 * Updates the "Manage hotel" view's price modifier spinner
+	 * based on the corresponding date in the date spinner.
+	 */
+	private void addDatePriceModifierListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getDatePriceDate().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				int date = (int) manageHotelView.getDatePriceDate().getValue();
+				manageHotelView.getDatePriceModifier().setValue(currentHotel.getDatePriceModifier(date));
+			}
+		});
+	}
+
+	/**
+	 * 
+	 */
+	private void addDatePriceModifierButtonListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getDatePriceModifierButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				int date = (int) manageHotelView.getDatePriceDate().getValue();
+				double modifier = (double) manageHotelView.getDatePriceModifier().getValue();
+
+				currentHotel.setDatePriceModifier(date, modifier);
 			}
 		});
 	}
