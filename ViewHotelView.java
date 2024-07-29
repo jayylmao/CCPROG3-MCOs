@@ -173,6 +173,8 @@ public class ViewHotelView extends View {
 
 		input.setText("");
 		availableRoomsInput.setText("");
+		roomInfoInput.removeAllItems();
+		roomInfoInput.addItem("Select a room");
 		// reservationInfoInput.setText("");
 		roomInfoInput.setSelectedItem("Select a room");
 	}
