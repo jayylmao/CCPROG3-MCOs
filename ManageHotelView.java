@@ -1,5 +1,4 @@
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
