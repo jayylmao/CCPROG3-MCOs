@@ -218,17 +218,24 @@ public class MainController {
 				Room room = currentHotel.getRoom(roomName);
 				viewHotelView.setRoomInfoName(roomName);
 
-				try {
-					for (int i = 1; i < 31; i++) {
-						if (room.isOccupied(new Date(i), new Date(i + 1))) {
-							viewHotelView.getRoomInfoCalendar().markTileOccupied(i);
-						} else {
-							viewHotelView.getRoomInfoCalendar().markTileFree(i);
+				if (room != null) {
+					try {
+						for (int i = 1; i < 31; i++) {
+							if (room.isOccupied(new Date(i), new Date(i + 1))) {
+								viewHotelView.getRoomInfoCalendar().markTileOccupied(i);
+							} else {
+								viewHotelView.getRoomInfoCalendar().markTileFree(i);
+							}
 						}
+					} catch (IllegalDateException exception) {
+						viewHotelView.showError("Date out of bounds.");
 					}
-				} catch (IllegalDateException exception) {
-					viewHotelView.showError("Date out of bounds.");
+	
+					viewHotelView.showRoomInfo();
+				} else {
+					viewHotelView.showError("A room with that name could not be found.");
 				}
+
 			}
 		});
 	}

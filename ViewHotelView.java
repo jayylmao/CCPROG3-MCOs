@@ -38,7 +38,8 @@ public class ViewHotelView extends View {
 	private InputWrapper roomInfoInputWrapper;
 	private JTextField roomInfoInput;
 	private JButton roomInfoButton;
-	private Text roomInfoResult;
+	private JPanel roomInfoOutputWrapper;
+	private SubHeader roomInfoResult;
 	private Calendar roomInfoCalendar;
 
 	private SubHeader datePriceModifierHeader;
@@ -142,12 +143,19 @@ public class ViewHotelView extends View {
 		
 		roomInfoButton = new JButton("Get room info");
 		roomInfoInputWrapper.add(roomInfoButton);
+
+		// Add wrapper for displaying room info.
+		roomInfoOutputWrapper = new JPanel();
+		roomInfoOutputWrapper.setLayout(new BoxLayout(roomInfoOutputWrapper, BoxLayout.Y_AXIS));
+		roomInfoOutputWrapper.setBackground(UI.BG_MAIN);
 		
-		roomInfoResult = new Text();
-		roomInfoInputWrapper.add(roomInfoResult);
+		roomInfoResult = new SubHeader();
+		roomInfoOutputWrapper.add(roomInfoResult);
 
 		roomInfoCalendar = new Calendar();
-		roomInfoInputWrapper.add(roomInfoCalendar);
+		roomInfoOutputWrapper.add(roomInfoCalendar);
+		
+		roomInfoOutputWrapper.setVisible(false);
 		
 		// Add wrapper for checking reservation info.
 		reservationInfoInputWrapper = new InputWrapper();
@@ -175,6 +183,7 @@ public class ViewHotelView extends View {
 		
 		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
 		lowLevelInfoWrapper.add(roomInfoInputWrapper);
+		lowLevelInfoWrapper.add(roomInfoOutputWrapper);
 		lowLevelInfoWrapper.add(reservationInfoInputWrapper);
 		lowLevelInfoWrapper.add(datePriceModifierWrapper);
 
@@ -266,6 +275,13 @@ public class ViewHotelView extends View {
 	 */
 	public JTextField getCheckRoomInfoInput() {
 		return roomInfoInput;
+	}
+
+	/**
+	 * Marks the room information as being visible.
+	 */
+	public void showRoomInfo() {
+		roomInfoOutputWrapper.setVisible(true);
 	}
 
 	/**
