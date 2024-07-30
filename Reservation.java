@@ -27,6 +27,7 @@ public class Reservation {
 	 * @param checkOut Date object describing the check out time.
 	 * @param reservedPrice Price of the reservation per night.
 	 * @param guest Guest object that is reserving the room.
+	 * @param datePriceModifier Date price modifier hashmap that determines how much more or less a single day will cost compared to the base price.
 	 */
 	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidDiscountCodeException, InvalidCheckInDateException {
 		if (checkOut.isBefore(checkIn)) {
@@ -49,6 +50,7 @@ public class Reservation {
 	 * Calculates the total price of the booking
 	 * @param checkIn Date object describing the check in time.
 	 * @param checkOut Date object describing the check out time.
+	 * @param discountCode String that represents the discount code.
 	 * @return Total price of the booking.
 	 */
 	public double calculateTotalPrice(Date checkIn, Date checkOut, String discountCode) throws InvalidDiscountCodeException, InvalidCheckInDateException {
@@ -170,6 +172,7 @@ public class Reservation {
 
 	/**
 	 * Gets the specific price modifer for a given day
+	 * @param day Day index to get the price modifier (day index starts at 1 for the first day)
 	 * @return modifier which is a double
 	 */
 	public double getDatePriceModifier(int day) {

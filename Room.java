@@ -27,6 +27,7 @@ public abstract class Room {
 	/**
 	 * Regular Constructor that creates a Room instance.
 	 * @param roomName The name of the Room. Should be unique compared to other Room instances.
+	 * @param roomPrice Base price for a room.
 	 */
 	public Room(String roomName, double roomPrice) {
 		this.name = roomName;
@@ -139,6 +140,8 @@ public abstract class Room {
 	 * @param checkIn Date object describing the check in time.
 	 * @param checkOut Date object describing the check out time.
 	 * @param reservedPrice Price of the reservation per night.
+	 * @param discountCode String that represents the discount code.
+	 * @param datePriceModifier Date price modifier hashmap that determines how much more or less a single day will cost compared to the base price.
 	 */
 	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidCheckInDateException, RoomIsOccupiedException, InvalidDiscountCodeException {
 		if (!occupied && !checkIn.isAfter(checkOut)) {

@@ -372,6 +372,7 @@ public class Hotel {
 
 	/**
 	 * Gets the specific price modifer for a given day
+	 * @param day day index to get the price modifier (day index starts at 1 for the first day).
 	 * @return modifier which is a double
 	 */
 	public double getDatePriceModifier(int day) {
@@ -380,6 +381,8 @@ public class Hotel {
 
 	/**
 	 * Sets the price modifier for a given day
+	 * @param day day index to get the price modifier (day index starts at 1 for the first day).
+	 * @param modifier new price modifier for the day.
 	 * @return true if valid day was selected (1-31), false otherwise
 	 */
 	public boolean setDatePriceModifier(int day, double modifier) {
