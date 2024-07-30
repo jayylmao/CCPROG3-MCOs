@@ -299,6 +299,7 @@ public class MainController {
 					viewHotelView.setReservationName(reservation.getGuests().get(0).getName());
 					viewHotelView.setReservationRoomName(roomName);
 					viewHotelView.setReservationPrice(reservation.getTotalPrice());
+					viewHotelView.setCheckInOutDates(reservation.getCheckIn(), reservation.getCheckOut());
 				}
 			}
 		});

@@ -169,6 +169,9 @@ public class ViewHotelView extends View {
 		// Add wrapper for output of reservation info.
 		reservationInfoOutputWrapper = new JPanel();
 		reservationInfoOutputWrapper.setBackground(UI.BG_MAIN);
+		reservationInfoOutputWrapper.setAlignmentX(LEFT_ALIGNMENT);
+		reservationInfoOutputWrapper.setLayout(new BoxLayout(reservationInfoOutputWrapper, BoxLayout.Y_AXIS));
+
 		reservationName = new SubHeader();
 		reservationRoom = new Text();
 		reservationCheckInOutDates = new Text();
@@ -367,7 +370,7 @@ public class ViewHotelView extends View {
 	 * @param roomName Name of room that guest reserved.
 	 */
 	public void setReservationRoomName(String roomName) {
-		reservationRoom.setText(roomName);
+		reservationRoom.setText("Room: " + roomName);
 	}
 
 	/**
@@ -376,7 +379,15 @@ public class ViewHotelView extends View {
 	 * @param price Price tha tthe guest reserved the room for.
 	 */
 	public void setReservationPrice(double price) {
-		reservationTotalPrice.setText(String.valueOf(price));
+		reservationTotalPrice.setText("Total price: " + String.valueOf(price));
+	}
+
+	/** 
+	 * Updates the check-in and check-out dates label with the 
+	 * selected reservation's check-in and check-out dates.
+	*/
+	public void setCheckInOutDates(Date checkInDate, Date checkOutDate) {
+		reservationCheckInOutDates.setText("Check-in: " + checkInDate.getDay() + " Check-out: " + checkOutDate.getDay());
 	}
 
 	/**
