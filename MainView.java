@@ -15,6 +15,9 @@ public class MainView extends View {
 	private ArrayList<JPanel> views;
 	private ArrayList<String> viewNames;
 
+	/**
+	 * Constructor that initializes the MainView class.
+	 */
 	public MainView() {
 		// Initialize top bar.
 		topBar = new TopBarView();
@@ -50,18 +53,31 @@ public class MainView extends View {
 		}
 	}
 
+	/**
+	 * Gets the topBar View class.
+	 */
 	public TopBarView getTopBarView() {
 		return topBar;
 	}
 
+	/**
+	 * Gets the contentPanel JPanel.
+	 */
 	public JPanel getContentPanel() {
 		return contentPanel;
 	}
 
+	/**
+	 * Gets the MainLayout to show content in.
+	 */
 	public CardLayout getMainLayout() {
 		return mainLayout;
 	}
 
+	/**
+	 * Gets the View list containing different Views for each major function in the hotel reservation system.
+	 * @return ArrayList of Jpanels.
+	 */
 	public ArrayList<JPanel> getViews() {
 		return views;
 	}

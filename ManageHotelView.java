@@ -63,6 +63,9 @@ public class ManageHotelView extends View {
 
 	private JButton deleteHotelButton;
 
+	/**
+	 * Constructor that initializes ManageHotelView
+	 */
 	public ManageHotelView() {
 		currentHotel = null;
 		header = new Header("Manage hotel");

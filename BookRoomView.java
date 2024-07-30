@@ -55,6 +55,9 @@ public class BookRoomView extends View {
 	
 	private JButton submitButton;
 
+	/**
+	 * Constructor that initializes BookRoomView
+	 */
 	public BookRoomView() {
 		header = new Header("Book a room");
 
@@ -163,26 +166,52 @@ public class BookRoomView extends View {
 		return submitButton;
 	}
 
+	/**
+	 * Returns the first name of the inputted text.
+	 * @return First name in the text field.
+	 */
 	public String getFirstName() {
 		return firstName.getText();
 	}
 
+	/**
+	 * Returns the last name of the inputted text.
+	 * @return Last name in the text field.
+	 */
 	public String getLastName() {
 		return lastName.getText();
 	}
 
+	/**
+	 * Returns the checkInDate inputted in the GUI.
+	 * @return checkInDate.
+	 * @throws IllegalDateException prevents dates from going out of range (1-30)
+	 */
 	public Date getCheckInDate() throws IllegalDateException {	
 		return new Date((int) checkInDate.getValue());
 	}
 
+	/**
+	 * Returns the checkOutDate inputted in the GUI.
+	 * @return checkOutDate.
+	 * @throws IllegalDateException prevents dates from going out of range (2-31)
+	 */
 	public Date getCheckOutDate() throws IllegalDateException {
 		return new Date((int) checkOutDate.getValue());
 	}
 
+	/**
+	 * Gets the JComboBox information regarding the hotels.
+	 * @return hotelsInput JComboBox.
+	 */
 	public JComboBox<String> getHotelsInput() {
 		return hotelsInput;
 	}
 
+	/**
+	 * Gets the JComboBox information regarding the rooms.
+	 * @return checkRoomsInput JComboBox.
+	 */
 	public JComboBox<String> getRoomsInput() {
 		return checkRoomsInput;
 	}

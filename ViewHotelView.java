@@ -54,6 +54,9 @@ public class ViewHotelView extends View {
 
 	private Hotel currentHotel;
 
+	/**
+	 * Constructor that initializes viewHotelView
+	 */
 	public ViewHotelView() {
 		currentHotel = null;
 

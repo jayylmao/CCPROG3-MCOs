@@ -20,6 +20,11 @@ public class MainController {
 
 	ArrayList<String> viewNames = new ArrayList<String>();
 
+	/**
+	 * Constructor that initializes the MainController.
+	 * @param view View to connect the MainController.
+	 * @param rSystem HotelReservationSystem that acts as the Main Model.
+	 */
 	public MainController(MainView view, HotelReservationSystem rSystem) {
 		this.view = view;
 		this.rSystem = rSystem;
