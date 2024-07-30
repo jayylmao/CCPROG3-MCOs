@@ -245,7 +245,12 @@ public class Hotel {
 					break;
 			}
 		}
-		number = Integer.parseInt(name);
+		if(name.equals("")) {
+			number = 0;
+		}
+		else {
+			number = Integer.parseInt(name);
+		}
 		return number;
 	}
 
