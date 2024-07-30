@@ -540,13 +540,7 @@ public class MainController {
 						try {
 							manageHotelView.getDeleteReservationName().removeItem(manageHotelView.getDeleteReservationName().getSelectedItem());
 							currentHotel.getRoom(roomName).removeReservation(reservationInstance - 1);
-							manageHotelView.getDeleteReservationName().setSelectedIndex(0);
-							// manageHotelView.getDeleteReservationName().removeAllItems();
-							// manageHotelView.getDeleteReservationName().addItem("Select a reservation");
-							// for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
-							// 	manageHotelView.getDeleteReservationName().addItem(reservation.getGuests().get(0).getName()+ " " + reservation.getCheckIn().getDay());
-							// }
-	
+							manageHotelView.getDeleteReservationName().setSelectedIndex(0);	
 							manageHotelView.showMessageDialog("Reservation was removed successfully.");
 						} catch (ReservationNotFoundException exception) {
 							manageHotelView.showError("A reservation with that name was not found.");
