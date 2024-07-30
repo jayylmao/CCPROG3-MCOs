@@ -4,6 +4,10 @@ import javax.swing.JFrame;
  * Main is the driver class of the program.
  */
 public class Main {
+	/**
+	 * Main function that runs the program
+	 * @param args .
+	 */
 	public static void main(String[] args) {
 		JFrame mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

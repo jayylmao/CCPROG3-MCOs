@@ -407,6 +407,8 @@ public class ViewHotelView extends View {
 	/** 
 	 * Updates the check-in and check-out dates label with the 
 	 * selected reservation's check-in and check-out dates.
+	 * @param checkInDate checkIn day.
+	 * @param checkOutDate checkOut day.
 	*/
 	public void setCheckInOutDates(Date checkInDate, Date checkOutDate) {
 		reservationCheckInOutDates.setText("Check-in: " + checkInDate.getDay() + " Check-out: " + checkOutDate.getDay());

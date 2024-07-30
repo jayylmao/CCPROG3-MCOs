@@ -165,6 +165,9 @@ public abstract class Room {
 	 * @param reservedPrice Price of the reservation per night.
 	 * @param discountCode String that represents the discount code.
 	 * @param datePriceModifier Date price modifier hashmap that determines how much more or less a single day will cost compared to the base price.
+	 * @throws InvalidCheckInDateException Exception that happens when the checkIn date is after the checkOut date.
+	 * @throws RoomIsOccupiedException Exception that happens when the Room is occupied in the specific timeframe.
+	 * @throws InvalidDiscountCodeException Exception that happens when the dicount code is invalid or the conditions are not met.
 	 */
 	public void reserveRoom(Guest guest, Date checkIn, Date checkOut, double reservedPrice, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidCheckInDateException, RoomIsOccupiedException, InvalidDiscountCodeException {
 		if (!occupied && !checkIn.isAfter(checkOut)) {

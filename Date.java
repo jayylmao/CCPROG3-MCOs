@@ -15,6 +15,7 @@ public class Date {
 	/**
 	 * This constructor creates a Date instance with just a given day, setting the month and year to June 2024.
 	 * @param day Given day.
+	 * @throws IllegalDateException Exception that shows up when the Date is out of bounds
 	 */
 	public Date(int day) throws IllegalDateException {
 		if (day < 1 || day > 31) {

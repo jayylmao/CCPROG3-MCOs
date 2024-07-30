@@ -3,6 +3,9 @@
  * is provided.
  */
 public class InvalidDiscountCodeException extends Exception {
+	/**
+	 * Constructor that makes an InvalidDiscountCodeException.
+	 */
 	public InvalidDiscountCodeException() {
 		super("Invalid discount code entered.");
 	}

@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 public class Calendar extends JPanel {
 	private ArrayList<JPanel> calendarTiles;
 	
+	/**
+	 * Constructor that creates a Calendar JPanel.
+	 */
 	public Calendar() {
 		calendarTiles = new ArrayList<JPanel>();
 		setLayout(new FlowLayout());
@@ -24,6 +27,9 @@ public class Calendar extends JPanel {
 
 	/**
 	 * Displays a tile in the calendar.
+	 * @param index index of the calendar (index is inputted assuming it starts as 1).
+	 * @param date Represents the day that the tile will show.
+	 * @param price Price of the day.
 	 */
 	public void updateTileInfo(int index, int date, double price) {
 		JLabel tileLabel = (JLabel) calendarTiles.get(index - 1).getComponent(0);

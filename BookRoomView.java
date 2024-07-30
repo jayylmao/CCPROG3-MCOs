@@ -217,8 +217,8 @@ public class BookRoomView extends View {
 	}
 
 	/**
-	 * Returns the discount code entered by the use.
-	 * @return
+	 * Returns the discount code entered by the user.
+	 * @return Discount code text from the input.
 	 */
 	public String getDiscountCode() {
 		return discountInput.getText();

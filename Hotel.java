@@ -47,7 +47,7 @@ public class Hotel {
 	 * @param standardRoomCount How many standard rooms are in the hotel.
 	 * @param deluxeRoomCount How many deluxe rooms are in the hotel.
 	 * @param executiveRoomCount How many executive rooms are in the hotel.
-	 * @throws InvalidRoomCountException 
+	 * @throws InvalidRoomCountException Exception that happens when there are too many or too little rooms.
 	 */
 	public Hotel(String name, int standardRoomCount, int deluxeRoomCount, int executiveRoomCount) throws InvalidRoomCountException {
 		int totalRoomCount = standardRoomCount + deluxeRoomCount + executiveRoomCount;
@@ -95,6 +95,10 @@ public class Hotel {
 		return name;
 	}
 
+	/**
+	 * Gets the Room List.
+	 * @return ArrayList containing the Room instances.
+	 */
 	public ArrayList<Room> getRooms() {
 		return rooms;
 	}
@@ -189,6 +193,7 @@ public class Hotel {
 	/**
 	 * addRoom() adds a specified number of rooms to the hotel.
 	 * @param count Number of rooms to add.
+	 * @param type Type of Room as a string (Standard room, Deluxe room, Executive room)
 	 * @throws InvalidRoomCountException Exception for invalid number of rooms. Hotels can have a maximum of 50 rooms as per specifications.
 	 */
 	public void addRoom(int count, String type) throws InvalidRoomCountException {
@@ -258,7 +263,8 @@ public class Hotel {
 	 * removeRoom() removes a room from the hotel.
 	 * @param name Name of room to remove.
 	 * @throws RoomNotFoundException Exception when a room with a given name is not found in the hotel.
-	 * @throws InvalidRoomCountException Exceprtion when the room being removed is the last in a hotel.
+	 * @throws InvalidRoomCountException Exception when the room being removed is the last in a hotel.
+	 * @throws RoomIsOccupiedException Exception when the room is occupied.
 	 */
 	public void removeRoom(String name) throws RoomNotFoundException, InvalidRoomCountException, RoomIsOccupiedException {
 		if (rooms.size() == 1) {
