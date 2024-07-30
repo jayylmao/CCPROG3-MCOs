@@ -274,7 +274,7 @@ public class MainController {
 					viewHotelView.getReservationInfoReservation().addItem("Select a reservation");
 					if (!roomName.equals("Select a room")) {
 						for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
-							viewHotelView.getReservationInfoReservation().addItem(reservation.getGuests().get(0).getName());
+							viewHotelView.getReservationInfoReservation().addItem(reservation.getGuests().get(0).getName()+ " " + reservation.getCheckIn().getDay());
 						}
 					}
 				}
@@ -293,13 +293,14 @@ public class MainController {
 				Hotel currentHotel = viewHotelView.getCurrentHotel();
 				String roomName = (String) viewHotelView.getReservationInfoRoom().getSelectedItem();
 				String reservationName = (String) viewHotelView.getReservationInfoReservation().getSelectedItem();
+				int reservationInstance = viewHotelView.getReservationInfoReservation().getSelectedIndex();
 
 				Reservation reservation;
 
 				if (roomName.equals("Select a room") || reservationName.equals("Select a reservation")) {
 					viewHotelView.showError("You must select a room and a reservation.");
 				} else {
-					reservation = rSystem.getHotel(currentHotel.getName()).getRoom(roomName).getReservation(reservationName);
+					reservation = rSystem.getHotel(currentHotel.getName()).getRoom(roomName).getReservation(reservationInstance - 1);
 					viewHotelView.setReservationName(reservation.getGuests().get(0).getName());
 					viewHotelView.setReservationRoomName(roomName);
 					viewHotelView.setReservationPrice(reservation.getTotalPrice());
@@ -501,12 +502,11 @@ public class MainController {
 				String roomName = (String) manageHotelView.getDeleteReservationRoom().getSelectedItem();
 
 				if (roomName != null) {
+					manageHotelView.getDeleteReservationName().removeAllItems();
+					manageHotelView.getDeleteReservationName().addItem("Select a reservation");
 					if (!roomName.equals("Select a room")) {
-						manageHotelView.getDeleteReservationName().removeAllItems();
-						manageHotelView.getDeleteReservationName().addItem("Select a reservation");
-						
 						for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
-							manageHotelView.getDeleteReservationName().addItem(reservation.getGuests().get(0).getName());
+							manageHotelView.getDeleteReservationName().addItem(reservation.getGuests().get(0).getName() + " " + reservation.getCheckIn().getDay());
 						}
 					}
 				}
@@ -525,15 +525,22 @@ public class MainController {
 			public void actionPerformed(ActionEvent e) {
 				Hotel currentHotel = manageHotelView.getCurrentHotel();
 				String roomName = (String) manageHotelView.getDeleteReservationRoom().getSelectedItem();
-				String reservationName = (String) manageHotelView.getDeleteReservationName().getSelectedItem();
+				// String reservationName = (String) manageHotelView.getDeleteReservationName().getSelectedItem();
+				int reservationInstance = manageHotelView.getDeleteReservationName().getSelectedIndex();
 
 				if (roomName != null) {
 					if (roomName.equals("Select a room") || roomName.equals("Select a reservation")) {
 						manageHotelView.showError("You must select both a room and a reservation.");
 					} else {
 						try {
-							manageHotelView.getDeleteReservationName().removeItem(manageHotelView.getDeleteReservationName().getSelectedIndex());
-							currentHotel.getRoom(roomName).removeReservation(reservationName);
+							manageHotelView.getDeleteReservationName().removeItem(manageHotelView.getDeleteReservationName().getSelectedItem());
+							currentHotel.getRoom(roomName).removeReservation(reservationInstance - 1);
+							manageHotelView.getDeleteReservationName().setSelectedIndex(0);
+							// manageHotelView.getDeleteReservationName().removeAllItems();
+							// manageHotelView.getDeleteReservationName().addItem("Select a reservation");
+							// for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
+							// 	manageHotelView.getDeleteReservationName().addItem(reservation.getGuests().get(0).getName()+ " " + reservation.getCheckIn().getDay());
+							// }
 	
 							manageHotelView.showMessageDialog("Reservation was removed successfully.");
 						} catch (ReservationNotFoundException exception) {
