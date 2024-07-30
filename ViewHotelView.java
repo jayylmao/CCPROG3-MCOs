@@ -392,7 +392,7 @@ public class ViewHotelView extends View {
 	 * @param price Price tha tthe guest reserved the room for.
 	 */
 	public void setReservationPrice(double price) {
-		reservationTotalPrice.setText("Total price: " + String.valueOf(price));
+		reservationTotalPrice.setText("Total price: " + String.format("%.2f", price));
 	}
 
 	/**
