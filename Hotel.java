@@ -137,36 +137,6 @@ public class Hotel {
 	}
 
 	/**
-	 * getAvailableRoomCount() returns the number of rooms in the hotel that are not occupied at all throughout the entire month.
-	 * @return Number of unoccupied (free) rooms.
-	 */
-	public int getAvailableRoomCount() {
-		int count = 0;
-		for (int i = 0; i < rooms.size(); i++) {
-			if (!rooms.get(i).isOccupied()) {
-				count += 1;
-			}
-		}
-
-		return count;
-	}
-
-	/**
-	 * getOccupiedRoomCount() returns the number of rooms in the hotel that are occupied or have at least one reservation throughout the month.
-	 * @return Number of occupied rooms.
-	 */
-	public int getBookedRoomCount() {
-		int count = 0;
-		for (int i = 0; i < rooms.size(); i++) {
-			if (rooms.get(i).isOccupied()) {
-				count += 1;
-			}
-		}
-
-		return count;
-	}
-
-	/**
 	 * Returns the number of rooms in the hotel that are occupied in a specific timeframe.
 	 * @param checkIn Date object describing the check in time.
 	 * @param checkOut Date object describing the check out time. These will determine timeframe for checking.
@@ -214,14 +184,6 @@ public class Hotel {
 	 */
 	public double getBasePrice() {
 		return basePrice;
-	}
-
-	/**
-	 * Gets the base price as a formatted String (real number with 2 decimal places) for all Rooms in the Hotel.
-	 * @return Base price per night as a String.
-	 */
-	public String getFormattedBasePrice() {
-		return String.format("%.2f", basePrice);
 	}
 
 	/**

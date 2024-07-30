@@ -60,14 +60,6 @@ public abstract class Room {
 	}
 
 	/**
-	 * Gets the occupancy status of the Room.
-	 * @return True if occupied. False otherwise.
-	 */
-	public boolean getOccupancyStatus() {
-		return occupied;
-	}
-
-	/**
 	 * Gets the number of reservations for the room.
 	 * @return Number of reservations for the room.
 	 */
@@ -179,6 +171,12 @@ public abstract class Room {
 		}
 	}
 
+	/**
+	 * Gets a Reservation instance based on the name of the Guest who
+	 * made the Reservation.
+	 * @param name Name of the Guest who made the Reservation.
+	 * @return Reservation instance. Returns null if no Reservation is found.
+	 */
 	public Reservation getReservation(String name) {
 		for (Reservation reservation : reservations) {
 			if (reservation.getGuests().get(0).getName().equals(name)) {
@@ -187,28 +185,6 @@ public abstract class Room {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Sorts the list of Reservations in chronological order.
-	 */
-	public void sortReservations() {
-		int minIndex;
-		Reservation temp;
-
-		for(int i = 0; i < this.reservations.size(); i++) {
-			minIndex = i;
-			for(int j = i + 1; j < this.reservations.size(); j++) {
-				if(this.reservations.get(j).getCheckIn().isBefore(this.reservations.get(minIndex).getCheckIn())) {
-					minIndex = j;
-				}
-			}
-			if(minIndex != i) {
-				temp = this.reservations.get(minIndex);
-				this.reservations.set(minIndex, this.reservations.get(i));
-				this.reservations.set(i, temp);
-			}
-		}
 	}
 
 	/**
