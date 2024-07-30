@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 public class DeluxeRoom extends Room {
 	public DeluxeRoom(String roomName, double roomPrice) {
 		super(roomName, roomPrice * 1.2);
