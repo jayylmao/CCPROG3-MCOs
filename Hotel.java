@@ -316,7 +316,7 @@ public class Hotel {
 	/**
 	 * Sets the new base price of the Hotel.
 	 * @param basePrice New base price of the Hotel.
-	 * @throws RoomIsOccupied Exception when attempting to modify a hotel with bookings.
+	 * @throws RoomIsOccupiedException Exception when attempting to modify a hotel with bookings.
 	 * @throws InvalidBasePriceException Exception when attempting tot set a base price of less than 100.
 	 */
 	public void setBasePrice(double basePrice) throws RoomIsOccupiedException, InvalidBasePriceException {
