@@ -176,11 +176,13 @@ public class ViewHotelView extends View {
 		reservationRoom = new Text();
 		reservationCheckInOutDates = new Text();
 		reservationTotalPrice = new Text();
+		reservationInfoCalendar = new Calendar();
 		
 		reservationInfoOutputWrapper.add(reservationName);
 		reservationInfoOutputWrapper.add(reservationRoom);
 		reservationInfoOutputWrapper.add(reservationCheckInOutDates);
 		reservationInfoOutputWrapper.add(reservationTotalPrice);
+		reservationInfoOutputWrapper.add(reservationInfoCalendar);
 
 		reservationInfoInputWrapper.add(reservationInfoHeader);
 		reservationInfoInputWrapper.add(reservationInfoRoomInput);
@@ -204,6 +206,7 @@ public class ViewHotelView extends View {
 		outputWrapper.setVisible(false);
 		lowLevelInfoWrapper.setVisible(false);
 		roomInfoCalendar.setVisible(false);
+		reservationInfoCalendar.setVisible(false);
 		roomInfoResult.setVisible(false);
 
 		input.setText("");
@@ -380,6 +383,15 @@ public class ViewHotelView extends View {
 	 */
 	public void setReservationPrice(double price) {
 		reservationTotalPrice.setText("Total price: " + String.valueOf(price));
+	}
+
+	/**
+	 * Returns the calendar for showing a reservation's check-in and check-out
+	 * duration.
+	 * @return Calendar for showing reservation duration.
+	 */
+	public Calendar getReservationCalendar() {
+		return reservationInfoCalendar;
 	}
 
 	/** 

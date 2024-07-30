@@ -266,12 +266,13 @@ public class MainController {
 				Hotel currentHotel = viewHotelView.getCurrentHotel();
 				String roomName = (String) viewHotelView.getReservationInfoRoom().getSelectedItem();
 
-				if (roomName != null && !roomName.equals("Select a room")) {
+				if (roomName != null) {
 					viewHotelView.getReservationInfoReservation().removeAllItems();
 					viewHotelView.getReservationInfoReservation().addItem("Select a reservation");
-					
-					for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
-						viewHotelView.getReservationInfoReservation().addItem(reservation.getGuests().get(0).getName());
+					if (!roomName.equals("Select a room")) {
+						for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
+							viewHotelView.getReservationInfoReservation().addItem(reservation.getGuests().get(0).getName());
+						}
 					}
 				}
 			}
@@ -300,6 +301,17 @@ public class MainController {
 					viewHotelView.setReservationRoomName(roomName);
 					viewHotelView.setReservationPrice(reservation.getTotalPrice());
 					viewHotelView.setCheckInOutDates(reservation.getCheckIn(), reservation.getCheckOut());
+
+					for (int i = 1; i < 31; i++) {
+						viewHotelView.getReservationCalendar().markTileFree(i);
+					}
+
+					for (int i = reservation.getCheckIn().getDay(); i < reservation.getCheckOut().getDay(); i++) {
+						viewHotelView.getReservationCalendar().markTileOccupied(i);
+						viewHotelView.getReservationCalendar().updateTileInfo(i, i, currentHotel.getBasePrice() * currentHotel.getDatePriceModifier(i));
+					}
+
+					viewHotelView.getReservationCalendar().setVisible(true);
 				}
 			}
 		});
@@ -531,7 +543,12 @@ public class MainController {
 															checkIn, checkOut,
 															rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getRoom((String) bookRoomView.getRoomsInput().getSelectedItem()).getRoomPrice(),
 															bookRoomView.getDiscountCode(), rSystem.getHotel((String) bookRoomView.getHotelsInput().getSelectedItem()).getDatePriceModifiers());
-							bookRoomView.showMessageDialog("Your booking was successful.");
+							
+							if (bookRoomView.getDiscountCode().equals("")) {
+								bookRoomView.showMessageDialog("Your booking was successful.");
+							} else {
+								bookRoomView.showMessageDialog("Your booking was successful. Your discount code " + bookRoomView.getDiscountCode() + " was applied.");
+							}
 						} catch (InvalidDiscountCodeException exception) {
 							bookRoomView.showError("Invalid discount code entered.");
 						}
