@@ -27,7 +27,7 @@ public class Calendar extends JPanel {
 	 */
 	public void updateTileInfo(int index, int date, double price) {
 		JLabel tileLabel = (JLabel) calendarTiles.get(index - 1).getComponent(0);
-		tileLabel.setText(String.valueOf(date) + " - " + String.valueOf(price));
+		tileLabel.setText(String.valueOf(date) + " - " + String.format("%.2f", price));
 	}
 
 	/**

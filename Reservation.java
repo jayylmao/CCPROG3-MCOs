@@ -72,15 +72,24 @@ public class Reservation {
 			switch (discountCode) {
 			case "I_WORK_HERE":
 				reservePrice -= reservePrice * 0.1;
+				this.reservedPrice = this.reservedPrice * 0.9;
 				break;
 			case "STAY4_GET1":
 				if (checkIn.getDayDifference(checkOut) >= 5) {
 					reservePrice -= this.reservedPrice * this.datePriceModifier.get(checkIn.getDay());
+					this.datePriceModifier.put(checkIn.getDay(), 0.0);
+				}
+				else {
+					throw new InvalidDiscountCodeException();
 				}
 				break;
 			case "PAYDAY":
 				if (payday1.isBetween(checkIn, checkOut) || payday2.isBetween(checkIn, checkOut)) {
 					reservePrice -= reservePrice * 0.07;
+					this.reservedPrice = this.reservedPrice * 0.93;
+				}
+				else {
+					throw new InvalidDiscountCodeException();
 				}
 				break;
 			case "":
