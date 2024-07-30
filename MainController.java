@@ -103,6 +103,7 @@ public class MainController {
 		addGetAvailableRoomsListener();
 		addGetCheckRoomInfoListener();
 		addCheckReservationListener();
+		addGetReservationsListener();
 		
 		addManageHotelListener();
 		addChangeHotelNameListener();
@@ -167,6 +168,10 @@ public class MainController {
 
 				if (foundHotel != null) {
 					viewHotelView.showResult(foundHotel);
+
+					for (Room room : foundHotel.getRooms()) {
+						viewHotelView.getReservationInfoRoom().addItem(room.getName());
+					}
 				} else {
 					viewHotelView.showError("A hotel matching your search query could not be found.");
 				}
@@ -250,6 +255,32 @@ public class MainController {
 		});
 	}
 
+	/**
+	 * Gets reservations from the system based on the selected room number.
+	 */
+	private void addGetReservationsListener() {
+		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
+
+		viewHotelView.getReservationInfoRoom().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = viewHotelView.getCurrentHotel();
+				String roomName = (String) viewHotelView.getReservationInfoRoom().getSelectedItem();
+
+				if (roomName != null && !roomName.equals("Select a room")) {
+					viewHotelView.getReservationInfoReservation().removeAllItems();
+					viewHotelView.getReservationInfoReservation().addItem("Select a reservation");
+					
+					for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
+						viewHotelView.getReservationInfoReservation().addItem(reservation.getGuests().get(0).getName());
+					}
+				}
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Check reservation info" button to the model.
+	 */
 	private void addCheckReservationListener() {
 		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
 
@@ -265,7 +296,9 @@ public class MainController {
 					viewHotelView.showError("You must select a room and a reservation.");
 				} else {
 					reservation = rSystem.getHotel(currentHotel.getName()).getRoom(roomName).getReservation(reservationName);
-
+					viewHotelView.setReservationName(reservation.getGuests().get(0).getName());
+					viewHotelView.setReservationRoomName(roomName);
+					viewHotelView.setReservationPrice(reservation.getTotalPrice());
 				}
 			}
 		});

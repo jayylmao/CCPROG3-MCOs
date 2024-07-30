@@ -353,6 +353,33 @@ public class ViewHotelView extends View {
 	}
 
 	/**
+	 * Updates the name label in the get reservation info part with the name
+	 * of the person who reserved the room.
+	 * @param name Name to update label with.
+	 */
+	public void setReservationName(String name) {
+		reservationName.setText(name);
+	}
+
+	/**
+	 * Updates the room name label in the get reservation info part with the
+	 * room name that the guest reserved.
+	 * @param roomName Name of room that guest reserved.
+	 */
+	public void setReservationRoomName(String roomName) {
+		reservationRoom.setText(roomName);
+	}
+
+	/**
+	 * Updates the total price label in the get reservation info part with
+	 * the total price that the guest reserved the room for.
+	 * @param price Price tha tthe guest reserved the room for.
+	 */
+	public void setReservationPrice(double price) {
+		reservationTotalPrice.setText(String.valueOf(price));
+	}
+
+	/**
 	 * Returns the hotel whose information is being viewed in the interface.
 	 * @return Hotel instance being viewed in the interface.
 	 */
