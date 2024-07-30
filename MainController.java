@@ -88,6 +88,7 @@ public class MainController {
 						
 						if (rSystem.getHotels().size() > 0) {
 							mainLayout.show(contentPanel, viewNames.get(idx));
+							bookRoomView.hideOutput();
 						} else {
 							view.showError("No hotels have been created yet.");
 						}
@@ -334,7 +335,7 @@ public class MainController {
 				manageHotelView.getDeleteReservationRoom().removeAllItems();
 				manageHotelView.getDeleteReservationRoom().addItem("Select a room");
 				for (Room room : foundHotel.getRooms()) {
-					System.out.println(room.getName());
+					// System.out.println(room.getName());
 					manageHotelView.getDeleteReservationRoom().addItem(room.getName());
 				}
 

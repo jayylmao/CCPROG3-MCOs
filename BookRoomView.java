@@ -134,6 +134,25 @@ public class BookRoomView extends View {
 	}
 	
 	/**
+	 * Hides the output container for hiding current information
+	 * when a hotel is deleted.
+	 */
+	public void hideOutput() {
+		firstName.setText("");
+		lastName.setText("");
+
+		checkInDate.setValue(1);
+		checkOutDate.setValue(2);
+
+		checkRoomsInput.removeAllItems();
+		checkRoomsInput.addItem("Select a room");
+		checkRoomsInput.setEnabled(false);
+
+		discountInput.setText("");
+
+	}
+
+	/**
 	 * Returns the button to submit a customer's name.
 	 * @return Button to submit a customer's name.
 	 */
