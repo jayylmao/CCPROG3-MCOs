@@ -28,7 +28,7 @@ public class Reservation {
 	 * @param reservedPrice Price of the reservation per night.
 	 * @param guest Guest object that is reserving the room.
 	 */
-	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidDiscountCodeException {
+	public Reservation(Date checkIn, Date checkOut, double reservedPrice, Guest guest, String discountCode, HashMap<Integer, Double> datePriceModifier) throws InvalidDiscountCodeException, InvalidCheckInDateException {
 		if (checkOut.isBefore(checkIn)) {
 			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
 		} else {
@@ -51,14 +51,14 @@ public class Reservation {
 	 * @param checkOut Date object describing the check out time.
 	 * @return Total price of the booking.
 	 */
-	public double calculateTotalPrice(Date checkIn, Date checkOut, String discountCode) throws InvalidDiscountCodeException {
+	public double calculateTotalPrice(Date checkIn, Date checkOut, String discountCode) throws InvalidDiscountCodeException, InvalidCheckInDateException {
 		// double reservePrice = this.reservedPrice * checkIn.getDayDifference(checkOut);
 		double reservePrice = 0;
 		Date payday1;
 		Date payday2;
 		
 		if (checkOut.getDay() == checkIn.getDay() || checkOut.isBefore(checkIn)) {
-			throw new IllegalArgumentException("Check-out date must be later than check-in date.");
+			throw new InvalidCheckInDateException();
 		}
 		
 		for(int i = checkIn.getDay(); i < checkOut.getDay(); i++) {
@@ -133,14 +133,6 @@ public class Reservation {
 	 */
 	public double getTotalPrice() {
 		return this.totalPrice;
-	}
-
-	/**
-	 * Gets the total price as a formatted String (real number with 2 decimal places) for the Reservation.
-	 * @return Total price as a String.
-	 */
-	public String getFormattedTotalPrice() {
-		return String.format("%.2f", this.totalPrice);
 	}
 
 	/**
