@@ -483,6 +483,7 @@ public class MainController {
 				double modifier = (double) manageHotelView.getDatePriceModifier().getValue();
 
 				currentHotel.setDatePriceModifier(date, modifier);
+				manageHotelView.showMessageDialog(String.format("Successfully changed day %d's modifier to %.2f", date, modifier));
 			}
 		});
 	}
