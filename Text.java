@@ -1,5 +1,8 @@
 import javax.swing.JLabel;
 
+/**
+ * Text is used for descriptions and smaller outputs.
+ */
 public class Text extends JLabel {
 	public Text() {
 		super();
