@@ -419,7 +419,7 @@ public class MainController {
 					manageHotelView.showError("A room with that name was not found.");
 				} catch (InvalidRoomCountException exception) {
 					manageHotelView.showError("You cannot remove the last room in a hotel.");
-				} catch (RoomHasBookingsException exception) {
+				} catch (RoomIsOccupiedException exception) {
 					manageHotelView.showError("This room has bookings and cannot be removed.");
 				}
 			}
@@ -444,7 +444,7 @@ public class MainController {
 					manageHotelView.showMessageDialog("Base price was updated successfully.");
 				} catch (NumberFormatException exception) {
 					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
-				} catch (RoomHasBookingsException exception) {
+				} catch (RoomIsOccupiedException exception) {
 					manageHotelView.showError("You cannot modify the base room price of a hotel with bookings.");
 				} catch (InvalidBasePriceException exception) {
 					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
