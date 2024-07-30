@@ -161,9 +161,9 @@ public class ViewHotelView extends View {
 		
 		reservationInfoHeader = new SubHeader("Check reservation info");
 		reservationInfoRoomInput = new JComboBox<String>();
-		reservationInfoRoomInput.setPreferredSize(new Dimension(150, 30));
+		reservationInfoRoomInput.setMinimumSize(new Dimension(150, 30));
 		reservationInfoReservationInput = new JComboBox<String>();
-		reservationInfoReservationInput.setPreferredSize(new Dimension(150, 30));
+		reservationInfoReservationInput.setMinimumSize(new Dimension(150, 30));
 		reservationInfoButton = new JButton("Check reservation info");
 		
 		// Add wrapper for output of reservation info.
