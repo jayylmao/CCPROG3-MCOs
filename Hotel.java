@@ -255,7 +255,7 @@ public class Hotel {
 	 * @throws RoomNotFoundException Exception when a room with a given name is not found in the hotel.
 	 * @throws InvalidRoomCountException Exceprtion when the room being removed is the last in a hotel.
 	 */
-	public void removeRoom(String name) throws RoomNotFoundException, InvalidRoomCountException, RoomHasBookingsException {
+	public void removeRoom(String name) throws RoomNotFoundException, InvalidRoomCountException, RoomIsOccupiedException {
 		if (rooms.size() == 1) {
 			throw new InvalidRoomCountException();
 		}
@@ -274,7 +274,7 @@ public class Hotel {
 					rooms.remove(i);
 					return;
 				} else {
-					throw new RoomHasBookingsException();
+					throw new RoomIsOccupiedException();
 				}
 			}
 		}
@@ -311,13 +311,13 @@ public class Hotel {
 	/**
 	 * Sets the new base price of the Hotel.
 	 * @param basePrice New base price of the Hotel.
-	 * @throws RoomHasBookingsException Exception when attempting to modify a hotel with bookings.
+	 * @throws RoomIsOccupied Exception when attempting to modify a hotel with bookings.
 	 * @throws InvalidBasePriceException Exception when attempting tot set a base price of less than 100.
 	 */
-	public void setBasePrice(double basePrice) throws RoomHasBookingsException, InvalidBasePriceException {
+	public void setBasePrice(double basePrice) throws RoomIsOccupiedException, InvalidBasePriceException {
 		for (int i = 0; i < getRoomCount(); i++) {
 			if (getRoom(i).getReservationCount() != 0) {
-				throw new RoomHasBookingsException();
+				throw new RoomIsOccupiedException();
 			}
 		}
 

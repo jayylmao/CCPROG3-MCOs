@@ -335,14 +335,17 @@ public class MainController {
 				String searchQuery = manageHotelView.getInput().getText();
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
 				
-				manageHotelView.getDeleteReservationRoom().removeAllItems();
-				manageHotelView.getDeleteReservationRoom().addItem("Select a room");
-				for (Room room : foundHotel.getRooms()) {
-					// System.out.println(room.getName());
-					manageHotelView.getDeleteReservationRoom().addItem(room.getName());
+				if (foundHotel != null) {
+					manageHotelView.getDeleteReservationRoom().removeAllItems();
+					manageHotelView.getDeleteReservationRoom().addItem("Select a room");
+					for (Room room : foundHotel.getRooms()) {
+						manageHotelView.getDeleteReservationRoom().addItem(room.getName());
+					}
+	
+					manageHotelView.showResult(foundHotel);
+				} else {
+					manageHotelView.showError("A hotel matching your search query could not be found.");
 				}
-
-				manageHotelView.showResult(foundHotel);
 			}
 		});
 	}
@@ -420,7 +423,7 @@ public class MainController {
 					manageHotelView.showError("A room with that name was not found.");
 				} catch (InvalidRoomCountException exception) {
 					manageHotelView.showError("You cannot remove the last room in a hotel.");
-				} catch (RoomHasBookingsException exception) {
+				} catch (RoomIsOccupiedException exception) {
 					manageHotelView.showError("This room has bookings and cannot be removed.");
 				}
 			}
@@ -445,7 +448,7 @@ public class MainController {
 					manageHotelView.showMessageDialog("Base price was updated successfully.");
 				} catch (NumberFormatException exception) {
 					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
-				} catch (RoomHasBookingsException exception) {
+				} catch (RoomIsOccupiedException exception) {
 					manageHotelView.showError("You cannot modify the base room price of a hotel with bookings.");
 				} catch (InvalidBasePriceException exception) {
 					manageHotelView.showError("Enter a valid number greater than or equal to 100 as the base price.");
