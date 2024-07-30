@@ -5,6 +5,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * TopBarView contains the layout for the persistent top navigation bar.
+ */
 public class TopBarView extends JPanel {
 	private ArrayList<JButton> buttons;
 	private ArrayList<JLabel> labels;
