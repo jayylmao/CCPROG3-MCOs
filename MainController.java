@@ -110,6 +110,8 @@ public class MainController {
 		addAddRoomsListener();
 		addRemoveRoomsListener();
 		addUpdateBasePriceListener();
+		addDeleteReservationListener();
+		addDeleteReservationButtonListener();
 		addDeleteHotelListener();
 		addDatePriceModifierListener();
 		addDatePriceModifierButtonListener();
@@ -328,12 +330,15 @@ public class MainController {
 			public void actionPerformed(ActionEvent e) {
 				String searchQuery = manageHotelView.getInput().getText();
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
-
-				if (foundHotel != null) {
-					manageHotelView.showResult(foundHotel);
-				} else {
-					manageHotelView.showError("A hotel matching your search query could not be found.");
+				
+				manageHotelView.getDeleteReservationRoom().removeAllItems();
+				manageHotelView.getDeleteReservationRoom().addItem("Select a room");
+				for (Room room : foundHotel.getRooms()) {
+					System.out.println(room.getName());
+					manageHotelView.getDeleteReservationRoom().addItem(room.getName());
 				}
+
+				manageHotelView.showResult(foundHotel);
 			}
 		});
 	}
@@ -475,6 +480,63 @@ public class MainController {
 				double modifier = (double) manageHotelView.getDatePriceModifier().getValue();
 
 				currentHotel.setDatePriceModifier(date, modifier);
+			}
+		});
+	}
+
+	/**
+	 * Updates the dropdown box of reservations in the "Manage hotel" screen
+	 * based on the selected room.
+	 */
+	private void addDeleteReservationListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getDeleteReservationRoom().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				String roomName = (String) manageHotelView.getDeleteReservationRoom().getSelectedItem();
+
+				if (roomName != null) {
+					if (!roomName.equals("Select a room")) {
+						manageHotelView.getDeleteReservationName().removeAllItems();
+						manageHotelView.getDeleteReservationName().addItem("Select a reservation");
+						
+						for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
+							manageHotelView.getDeleteReservationName().addItem(reservation.getGuests().get(0).getName());
+						}
+					}
+				}
+			}
+		});
+	}
+
+	/**
+	 * Connects the "Delete reservation" button found in the "Manage hotel"
+	 * screen to the model.
+	 */
+	private void addDeleteReservationButtonListener() {
+		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);
+
+		manageHotelView.getDeleteReservationButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = manageHotelView.getCurrentHotel();
+				String roomName = (String) manageHotelView.getDeleteReservationRoom().getSelectedItem();
+				String reservationName = (String) manageHotelView.getDeleteReservationName().getSelectedItem();
+
+				if (roomName != null) {
+					if (roomName.equals("Select a room") || roomName.equals("Select a reservation")) {
+						manageHotelView.showError("You must select both a room and a reservation.");
+					} else {
+						try {
+							manageHotelView.getDeleteReservationName().removeItem(manageHotelView.getDeleteReservationName().getSelectedIndex());
+							currentHotel.getRoom(roomName).removeReservation(reservationName);
+	
+							manageHotelView.showMessageDialog("Reservation was removed successfully.");
+						} catch (ReservationNotFoundException exception) {
+							manageHotelView.showError("A reservation with that name was not found.");
+						}
+					}
+				}
 			}
 		});
 	}

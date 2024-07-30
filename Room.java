@@ -214,18 +214,38 @@ public abstract class Room {
 	/**
 	 * Removes a Reservation instance using an index.
 	 * @param n Index of reservation to be removed.
-	 * @return True if a reservation is successfully removed. False otherwise.
+	 * @throws ReservationNotFoundException Exception when a reservation is not found.
 	 */
-	public boolean removeReservation(int n) {
+	public void removeReservation(int n) throws ReservationNotFoundException {
 		if (n < this.reservations.size() && n >= 0) {
 			this.reservations.remove(n);
 			if(this.reservations.size() == 0) {
 				setOccupationState(false);
 			}
-			return true;
 		}
 		else {
-			return false;
+			throw new ReservationNotFoundException();
 		}
+	}
+
+	/**
+	 * Removes a Reservation instance using the name of the first guest.
+	 * @param reservationName Name of the guest who made the reservation.
+	 * @throws ReservationNotFoundException Exception when a Reservation instance with that name was not found.
+	 */
+	public void removeReservation(String reservationName) throws ReservationNotFoundException {
+		for (Reservation reservation : reservations) {
+			if (reservation.getGuests().get(0).getName().equals(reservationName)) {
+				this.reservations.remove(reservation);
+
+				if (this.reservations.size() == 0) {
+					setOccupationState(false);
+				}
+
+				return;
+			}
+		}
+
+		throw new ReservationNotFoundException();
 	}
 }

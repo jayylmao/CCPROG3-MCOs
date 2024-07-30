@@ -255,6 +255,8 @@ public class ManageHotelView extends View {
 		datePriceModifierModifierInput.setValue(1);
 		removeRoomsInput.removeAllItems();
 		removeRoomsInput.addItem("Select a room");
+		deleteReservationName.removeAllItems();
+		deleteReservationName.addItem("Select a reservation");
 
 		outputWrapper.setVisible(false);
 	}
@@ -362,6 +364,32 @@ public class ManageHotelView extends View {
 	 */
 	public JButton getDatePriceModifierButton() {
 		return datePriceModifierButton;
+	}
+
+	/**
+	 * Returns the dropdown box that lets a user select the room
+	 * to choose a reservation to remove from.
+	 * @return Dropdown box for selecting a room to remove a reservation from.
+	 */
+	public JComboBox<String> getDeleteReservationRoom() {
+		return deleteReservationRoom;
+	}
+
+	/**
+	 * Returns the dropdown box that lets a user select the name of a
+	 * reservation to remove.
+	 * @return Dropdown box for selecting a reservation to remove.
+	 */
+	public JComboBox<String> getDeleteReservationName() {
+		return deleteReservationName;
+	}
+
+	/**
+	 * Returns the button that triggers deletion of a reservation.
+	 * @return Button that triggers deletion of a reservation.
+	 */
+	public JButton getDeleteReservationButton() {
+		return deleteReservationButton;
 	}
 
 	/**
