@@ -273,6 +273,7 @@ public class MainController {
 					viewHotelView.getReservationInfoReservation().removeAllItems();
 					viewHotelView.getReservationInfoReservation().addItem("Select a reservation");
 					if (!roomName.equals("Select a room")) {
+						currentHotel.getRoom(roomName).sortReservations();
 						for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
 							viewHotelView.getReservationInfoReservation().addItem(reservation.getGuests().get(0).getName()+ " " + reservation.getCheckIn().getDay());
 						}
@@ -510,6 +511,7 @@ public class MainController {
 					manageHotelView.getDeleteReservationName().removeAllItems();
 					manageHotelView.getDeleteReservationName().addItem("Select a reservation");
 					if (!roomName.equals("Select a room")) {
+						currentHotel.getRoom(roomName).sortReservations();
 						for (Reservation reservation : currentHotel.getRoom(roomName).getReservations()) {
 							manageHotelView.getDeleteReservationName().addItem(reservation.getGuests().get(0).getName() + " " + reservation.getCheckIn().getDay());
 						}
