@@ -334,13 +334,17 @@ public class MainController {
 				String searchQuery = manageHotelView.getInput().getText();
 				Hotel foundHotel = rSystem.getHotel(searchQuery);
 				
-				manageHotelView.getDeleteReservationRoom().removeAllItems();
-				manageHotelView.getDeleteReservationRoom().addItem("Select a room");
-				for (Room room : foundHotel.getRooms()) {
-					manageHotelView.getDeleteReservationRoom().addItem(room.getName());
+				if (foundHotel != null) {
+					manageHotelView.getDeleteReservationRoom().removeAllItems();
+					manageHotelView.getDeleteReservationRoom().addItem("Select a room");
+					for (Room room : foundHotel.getRooms()) {
+						manageHotelView.getDeleteReservationRoom().addItem(room.getName());
+					}
+	
+					manageHotelView.showResult(foundHotel);
+				} else {
+					manageHotelView.showError("A hotel matching your search query could not be found.");
 				}
-
-				manageHotelView.showResult(foundHotel);
 			}
 		});
 	}
