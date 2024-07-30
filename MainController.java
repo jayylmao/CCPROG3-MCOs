@@ -395,7 +395,7 @@ public class MainController {
 	}
 
 	/**
-	 * 
+	 * Updates the date price modifier based on the selected date and modifier.
 	 */
 	private void addDatePriceModifierButtonListener() {
 		ManageHotelView manageHotelView = (ManageHotelView) view.getViews().get(2);

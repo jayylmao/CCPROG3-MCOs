@@ -28,11 +28,6 @@ public class ViewHotelView extends View {
 	private JButton availableRoomsButton;
 	private Text availableRoomsResult;
 	
-	private SubHeader reservationInfoHeader;
-	private InputWrapper reservationInfoInputWrapper;
-	private JTextField reservationInfoInput;
-	private JButton reservationInfoButton;
-
 	private SubHeader roomInfoHeader;
 	private InputWrapper roomInfoInputWrapper;
 	private JComboBox<String> roomInfoInput;
@@ -40,6 +35,13 @@ public class ViewHotelView extends View {
 	private JPanel roomInfoOutputWrapper;
 	private SubHeader roomInfoResult;
 	private Calendar roomInfoCalendar;
+	
+	private SubHeader reservationInfoHeader;
+	private InputWrapper reservationInfoInputWrapper;
+	private JComboBox<String> reservationInfoRoomInput;
+	private JComboBox<String> reservationInfoReservationInput;
+	private JButton reservationInfoButton;
+	private JPanel reservationInfoOutputWrapper;
 
 	private Hotel currentHotel;
 
@@ -152,12 +154,24 @@ public class ViewHotelView extends View {
 		reservationInfoInputWrapper = new InputWrapper();
 		
 		reservationInfoHeader = new SubHeader("Check reservation info");
+		reservationInfoRoomInput = new JComboBox<String>();
+		reservationInfoRoomInput.setPreferredSize(new Dimension(150, 30));
+		reservationInfoReservationInput = new JComboBox<String>();
+		reservationInfoReservationInput.setPreferredSize(new Dimension(150, 30));
+		reservationInfoButton = new JButton("Check reservation info");
+		reservationInfoOutputWrapper = new JPanel();
+		reservationInfoOutputWrapper.setBackground(UI.BG_MAIN);
+
 		reservationInfoInputWrapper.add(reservationInfoHeader);
+		reservationInfoInputWrapper.add(reservationInfoRoomInput);
+		reservationInfoInputWrapper.add(reservationInfoReservationInput);
+		reservationInfoInputWrapper.add(reservationInfoButton);
 		
 		lowLevelInfoWrapper.add(availableRoomsInputWrapper);
 		lowLevelInfoWrapper.add(roomInfoInputWrapper);
 		lowLevelInfoWrapper.add(roomInfoOutputWrapper);
 		lowLevelInfoWrapper.add(reservationInfoInputWrapper);
+		lowLevelInfoWrapper.add(reservationInfoOutputWrapper);
 
 		lowLevelInfoWrapper.setVisible(false);
 	}
@@ -228,8 +242,8 @@ public class ViewHotelView extends View {
 	 * to check when the room is available throughout the month.
 	 * @return Input field for a room name.
 	 */
-	public JTextField getCheckRoomsAvailabilityInput() {
-		return reservationInfoInput;
+	public JComboBox<String> getCheckRoomsAvailabilityInput() {
+		return reservationInfoReservationInput;
 	}
 
 	/**

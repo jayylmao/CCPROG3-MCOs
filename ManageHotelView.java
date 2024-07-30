@@ -151,7 +151,6 @@ public class ManageHotelView extends View {
 		removeRoomsInput = new JComboBox<String>();
 		removeRoomsInput.addItem("Select a room");
 		removeRoomsInput.setPreferredSize(new Dimension(150, 30));
-		// removeRoomsInput.setPreferredSize(new Dimension(60, 30));
 
 		removeRoomsButton = new JButton("Remove room");
 
