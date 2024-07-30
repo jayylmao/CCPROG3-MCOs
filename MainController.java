@@ -545,8 +545,8 @@ public class MainController {
 						manageHotelView.showError("You must select both a room and a reservation.");
 					} else {
 						try {
-							manageHotelView.getDeleteReservationName().removeItem(manageHotelView.getDeleteReservationName().getSelectedItem());
 							currentHotel.getRoom(roomName).removeReservation(reservationInstance - 1);
+							manageHotelView.getDeleteReservationName().removeItem(manageHotelView.getDeleteReservationName().getSelectedItem());
 							manageHotelView.getDeleteReservationName().setSelectedIndex(0);	
 							manageHotelView.showMessageDialog("Reservation was removed successfully.");
 						} catch (ReservationNotFoundException exception) {
