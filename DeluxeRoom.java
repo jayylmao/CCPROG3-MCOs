@@ -1,8 +1,8 @@
 import java.util.HashMap;
 
 public class DeluxeRoom extends Room {
-	public DeluxeRoom(String roomName, double roomPrice, HashMap<Integer, Double> datePriceModifier) {
-		super(roomName, roomPrice * 1.2, datePriceModifier);
+	public DeluxeRoom(String roomName, double roomPrice) {
+		super(roomName, roomPrice * 1.2);
 	}
 
 	@Override

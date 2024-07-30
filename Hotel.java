@@ -68,15 +68,15 @@ public class Hotel {
 
 			// Initialize rooms when creating the hotel. Names go from 001, 002, ... 00n
 			for (int i = 0; i < this.standardRoomCount; i++) {
-				rooms.add(new StandardRoom(String.format("S%03d", i + 1), basePrice, datePriceModifier));
+				rooms.add(new StandardRoom(String.format("S%03d", i + 1), basePrice));
 			}
 			
 			for (int i = 0; i < this.deluxeRoomCount; i++) {
-				rooms.add(new DeluxeRoom(String.format("D%03d", i + 1), basePrice, datePriceModifier));
+				rooms.add(new DeluxeRoom(String.format("D%03d", i + 1), basePrice));
 			}
 			
 			for (int i = 0; i < this.executiveRoomCount; i++) {
-				rooms.add(new ExecutiveRoom(String.format("E%03d", i + 1), basePrice, datePriceModifier));
+				rooms.add(new ExecutiveRoom(String.format("E%03d", i + 1), basePrice));
 			}
 
 			for(int i = 1; i <= 31; i++) {
@@ -201,17 +201,17 @@ public class Hotel {
 				case "Standard room":
 					standardRoomCount += 1;
 					lastRoomNumber = getLastRoomNumber(type);
-					rooms.add(new StandardRoom(String.format("S%03d", lastRoomNumber + 1), basePrice, datePriceModifier));
+					rooms.add(new StandardRoom(String.format("S%03d", lastRoomNumber + 1), basePrice));
 					break;
 				case "Deluxe room":
 					deluxeRoomCount += 1;
 					lastRoomNumber = getLastRoomNumber(type);
-					rooms.add(new DeluxeRoom(String.format("D%03d", lastRoomNumber + 1), basePrice, datePriceModifier));
+					rooms.add(new DeluxeRoom(String.format("D%03d", lastRoomNumber + 1), basePrice));
 					break;
 				case "Executive room":
 					executiveRoomCount += 1;
 					lastRoomNumber = getLastRoomNumber(type);
-					rooms.add(new ExecutiveRoom(String.format("E%03d", lastRoomNumber + 1), basePrice, datePriceModifier));
+					rooms.add(new ExecutiveRoom(String.format("E%03d", lastRoomNumber + 1), basePrice));
 					break;
 				}
 			}
