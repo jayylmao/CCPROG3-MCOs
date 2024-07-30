@@ -179,6 +179,16 @@ public abstract class Room {
 		}
 	}
 
+	public Reservation getReservation(String name) {
+		for (Reservation reservation : reservations) {
+			if (reservation.getGuests().get(0).getName().equals(name)) {
+				return reservation;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * Sorts the list of Reservations in chronological order.
 	 */

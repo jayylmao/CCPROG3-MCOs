@@ -36,6 +36,7 @@ public class Calendar extends JPanel {
 	private void displayTile(int date) {
 		JPanel tile = new JPanel();
 		Text label = new Text(String.valueOf(date));
+		tile.setAlignmentX(Component.LEFT_ALIGNMENT);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		tile.setBackground(UI.BG_SECONDARY);
 		

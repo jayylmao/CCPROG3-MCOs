@@ -41,7 +41,13 @@ public class ViewHotelView extends View {
 	private JComboBox<String> reservationInfoRoomInput;
 	private JComboBox<String> reservationInfoReservationInput;
 	private JButton reservationInfoButton;
+	
 	private JPanel reservationInfoOutputWrapper;
+	private SubHeader reservationName;
+	private Text reservationRoom;
+	private Text reservationCheckInOutDates;
+	private Text reservationTotalPrice;
+	private Calendar reservationInfoCalendar;
 
 	private Hotel currentHotel;
 
@@ -159,8 +165,19 @@ public class ViewHotelView extends View {
 		reservationInfoReservationInput = new JComboBox<String>();
 		reservationInfoReservationInput.setPreferredSize(new Dimension(150, 30));
 		reservationInfoButton = new JButton("Check reservation info");
+		
+		// Add wrapper for output of reservation info.
 		reservationInfoOutputWrapper = new JPanel();
 		reservationInfoOutputWrapper.setBackground(UI.BG_MAIN);
+		reservationName = new SubHeader();
+		reservationRoom = new Text();
+		reservationCheckInOutDates = new Text();
+		reservationTotalPrice = new Text();
+		
+		reservationInfoOutputWrapper.add(reservationName);
+		reservationInfoOutputWrapper.add(reservationRoom);
+		reservationInfoOutputWrapper.add(reservationCheckInOutDates);
+		reservationInfoOutputWrapper.add(reservationTotalPrice);
 
 		reservationInfoInputWrapper.add(reservationInfoHeader);
 		reservationInfoInputWrapper.add(reservationInfoRoomInput);
@@ -190,7 +207,18 @@ public class ViewHotelView extends View {
 		availableRoomsInput.setText("");
 		roomInfoInput.removeAllItems();
 		roomInfoInput.addItem("Select a room");
-		// reservationInfoInput.setText("");
+
+		reservationInfoRoomInput.removeAllItems();
+		reservationInfoRoomInput.addItem("Select a room");
+		
+		reservationInfoReservationInput.removeAllItems();
+		reservationInfoReservationInput.addItem("Select a reservation");
+
+		reservationName.setText("");
+		reservationRoom.setText("");
+		reservationCheckInOutDates.setText("");
+		reservationTotalPrice.setText("");
+
 		roomInfoInput.setSelectedItem("Select a room");
 	}
 
@@ -252,7 +280,7 @@ public class ViewHotelView extends View {
 	 * @return Button for checking a room's availability on a date.
 	 */
 	public JButton getCheckRoomsAvailabilityButton() {
-		return reservationInfoButton;
+		return availableRoomsButton;
 	}
 
 	/**
@@ -298,6 +326,30 @@ public class ViewHotelView extends View {
 	 */
 	public void setRoomInfoName(String roomName) {
 		roomInfoResult.setText(roomName);
+	}
+
+	/**
+	 * Returns the dropdown box containing the room to get a reservation from.
+	 * @return Dropdown box containing the room to get a reservation from.
+	 */
+	public JComboBox<String> getReservationInfoRoom() {
+		return reservationInfoRoomInput;
+	}
+
+	/**
+	 * Returns the dropdown box containing the reservation to get.
+	 * @return Dropdown box containing the reservation to get.
+	 */
+	public JComboBox<String> getReservationInfoReservation() {
+		return reservationInfoReservationInput;
+	}
+
+	/**
+	 * Returns the button that triggers a search for reservation info.
+	 * @return Button that triggers reservation info search.
+	 */
+	public JButton getReservationInfoButton() {
+		return reservationInfoButton;
 	}
 
 	/**

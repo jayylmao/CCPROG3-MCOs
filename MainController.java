@@ -102,6 +102,7 @@ public class MainController {
 		addSearchHotelListener();
 		addGetAvailableRoomsListener();
 		addGetCheckRoomInfoListener();
+		addCheckReservationListener();
 		
 		addManageHotelListener();
 		addChangeHotelNameListener();
@@ -245,6 +246,27 @@ public class MainController {
 					viewHotelView.showError("A room with that name could not be found.");
 				}
 
+			}
+		});
+	}
+
+	private void addCheckReservationListener() {
+		ViewHotelView viewHotelView = (ViewHotelView) view.getViews().get(1);
+
+		viewHotelView.getReservationInfoButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Hotel currentHotel = viewHotelView.getCurrentHotel();
+				String roomName = (String) viewHotelView.getReservationInfoRoom().getSelectedItem();
+				String reservationName = (String) viewHotelView.getReservationInfoReservation().getSelectedItem();
+
+				Reservation reservation;
+
+				if (roomName.equals("Select a room") || reservationName.equals("Select a reservation")) {
+					viewHotelView.showError("You must select a room and a reservation.");
+				} else {
+					reservation = rSystem.getHotel(currentHotel.getName()).getRoom(roomName).getReservation(reservationName);
+
+				}
 			}
 		});
 	}
