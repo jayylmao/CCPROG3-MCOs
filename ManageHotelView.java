@@ -443,10 +443,6 @@ public class ManageHotelView extends View {
 		outputWrapper.setVisible(true);
 	}
 
-	public void updateHotelName(Hotel hotel) {
-		currentHotel = hotel;
-	}
-
 	/**
 	 * Updates the Room dropdown menu when deleting a room
 	 * @param roomName Room name to delete
