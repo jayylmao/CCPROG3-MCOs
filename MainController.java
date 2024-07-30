@@ -337,7 +337,6 @@ public class MainController {
 				manageHotelView.getDeleteReservationRoom().removeAllItems();
 				manageHotelView.getDeleteReservationRoom().addItem("Select a room");
 				for (Room room : foundHotel.getRooms()) {
-					// System.out.println(room.getName());
 					manageHotelView.getDeleteReservationRoom().addItem(room.getName());
 				}
 
