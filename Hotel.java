@@ -256,6 +256,11 @@ public class Hotel {
 		}
 	}
 
+	/**
+	 * getLastRoomNumber gets the last room number of a specific type of room
+	 * @param type type of room as a String
+	 * @return integer that represents the last room number
+	 */
 	public int getLastRoomNumber(String type) {
 		String name = "";
 		int number;
