@@ -368,6 +368,8 @@ public class MainController {
 					manageHotelView.showMessageDialog("Your hotel name was changed successfully.");
 				} catch (DuplicateNameException exception) {
 					manageHotelView.showError("Duplicate hotel name. Your hotel name was not changed.");
+				} catch (InvalidHotelNameException exception) {
+					manageHotelView.showError("You must enter a name. Your hotel name was not changed.");
 				}
 			}
 		});

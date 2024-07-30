@@ -78,9 +78,11 @@ public class HotelReservationSystem {
 	 * @param name Name to set.
 	 * @throws DuplicateNameException Exception when a duplicate name is found.
 	 */
-	public void changeHotelName(Hotel hotel, String name) throws DuplicateNameException {
-		if (!isDuplicate(name)) {
+	public void changeHotelName(Hotel hotel, String name) throws DuplicateNameException, InvalidHotelNameException {
+		if (!isDuplicate(name) && !name.equals("")) {
 			hotel.setName(name);
+		} else if (name.equals("")) {
+			throw new InvalidHotelNameException();
 		} else {
 			throw new DuplicateNameException();
 		}
