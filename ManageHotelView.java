@@ -43,6 +43,12 @@ public class ManageHotelView extends View {
 	private JTextField updateBasePriceInput;
 	private JButton updateBasePriceButton;
 
+	private InputWrapper deleteReservationWrapper;
+	private SubHeader deleteReservationLabel;
+	private JComboBox<String> deleteReservationRoom;
+	private JComboBox<String> deleteReservationName;
+	private JButton deleteReservationButton;
+
 	private SubHeader datePriceModifierHeader;
 	private InputWrapper datePriceModifierWrapper;
 	private SpinnerNumberModel datePriceModifierDateModel;
@@ -80,7 +86,8 @@ public class ManageHotelView extends View {
 		setupAddRoomsView();
 		setupRemoveRoomsView();
 		setupUpdateBasePriceView();
-		setupDatePriceModifier();
+		setupDatePriceModifierView();
+		setupDeleteReservationView();
 		setupDeleteHotelButton();
 
 		add(Box.createRigidArea(new Dimension(20, 20)));
@@ -180,7 +187,27 @@ public class ManageHotelView extends View {
 		updateBasePriceWrapper.add(updateBasePriceButton);
 	}
 	
-	private void setupDatePriceModifier() {
+	/**
+	 * Adds the necessary components for deleting a reservation.
+	 */
+	private void setupDeleteReservationView() {
+		deleteReservationWrapper = new InputWrapper();
+		deleteReservationLabel = new SubHeader("Delete reservation");
+		deleteReservationRoom = new JComboBox<String>();
+		deleteReservationName = new JComboBox<String>();
+		deleteReservationButton = new JButton("Delete reservation");
+
+		outputWrapper.add(deleteReservationWrapper);
+		deleteReservationWrapper.add(deleteReservationLabel);
+		deleteReservationWrapper.add(deleteReservationRoom);
+		deleteReservationWrapper.add(deleteReservationName);
+		deleteReservationWrapper.add(deleteReservationButton);
+	}
+	
+	/**
+	 * Adds the necessary components for editing the date price modifier of a hotel.
+	 */
+	private void setupDatePriceModifierView() {
 		// Add wrapper for changing date price modifier.
 		datePriceModifierWrapper = new InputWrapper();
 
@@ -201,6 +228,9 @@ public class ManageHotelView extends View {
 		datePriceModifierWrapper.add(datePriceModifierButton);
 	}
 
+	/**
+	 * Adds the button to delete the current hotel from the system.
+	 */
 	private void setupDeleteHotelButton() {
 		deleteHotelButton = new JButton("Delete hotel");
 		deleteHotelButton.setOpaque(true);
