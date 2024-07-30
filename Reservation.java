@@ -37,7 +37,10 @@ public class Reservation {
 			this.checkOut = checkOut;
 			this.reservedPrice = reservedPrice;
 			this.guests.add(guest);
-			this.datePriceModifier = datePriceModifier;
+			this.datePriceModifier = new HashMap<Integer, Double>();
+			for(int i = 1; i <= datePriceModifier.size(); i++) {
+				this.datePriceModifier.put(i, datePriceModifier.get(i));
+			}
 			this.totalPrice = calculateTotalPrice(checkIn, checkOut, discountCode);
 		}
 	}
@@ -162,5 +165,13 @@ public class Reservation {
 	 */
 	public Date getCheckOut() {
 		return checkOut;
+	}
+
+	/**
+	 * Gets the specific price modifer for a given day
+	 * @return modifier which is a double
+	 */
+	public double getDatePriceModifier(int day) {
+		return this.datePriceModifier.get(day);
 	}
 }

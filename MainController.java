@@ -307,11 +307,13 @@ public class MainController {
 
 					for (int i = 1; i < 31; i++) {
 						viewHotelView.getReservationCalendar().markTileFree(i);
+						viewHotelView.getReservationCalendar().updateTileInfo(i, i, currentHotel.getDatePriceModifier(i) * currentHotel.getRoom(roomName).getRoomPrice());
 					}
 
 					for (int i = reservation.getCheckIn().getDay(); i < reservation.getCheckOut().getDay(); i++) {
 						viewHotelView.getReservationCalendar().markTileOccupied(i);
-						viewHotelView.getReservationCalendar().updateTileInfo(i, i, currentHotel.getBasePrice() * currentHotel.getDatePriceModifier(i));
+						// viewHotelView.getReservationCalendar().updateTileInfo(i, i, currentHotel.getBasePrice() * currentHotel.getDatePriceModifier(i));
+						viewHotelView.getReservationCalendar().updateTileInfo(i, i, reservation.getReservedPrice() * reservation.getDatePriceModifier(i));
 					}
 
 					viewHotelView.getReservationCalendar().setVisible(true);
