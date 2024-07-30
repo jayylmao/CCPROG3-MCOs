@@ -328,6 +328,10 @@ public class ViewHotelView extends View {
 		return roomInfoButton;
 	}
 
+	/**
+	 * Returns the calendar view that displays the calendar.
+	 * @return Calendar that displays the calendar.
+	 */
 	public Calendar getRoomInfoCalendar() {
 		return roomInfoCalendar;
 	}
