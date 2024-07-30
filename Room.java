@@ -61,6 +61,29 @@ public abstract class Room {
 	}
 
 	/**
+	 * Sorts the list of Reservations in chronological order.
+	 */
+	public void sortReservations() {
+		int minIndex;
+		Reservation temp;
+
+		for(int i = 0; i < this.reservations.size(); i++) {
+			minIndex = i;
+			for(int j = i + 1; j < this.reservations.size(); j++) {
+				if(this.reservations.get(j).getCheckIn().isBefore(this.reservations.get(minIndex).getCheckIn())) {
+					minIndex = j;
+				}
+			}
+			if(minIndex != i) {
+				temp = this.reservations.get(minIndex);
+				this.reservations.set(minIndex, this.reservations.get(i));
+				this.reservations.set(i, temp);
+			}
+		}
+	}
+
+
+	/**
 	 * Gets the number of reservations for the room.
 	 * @return Number of reservations for the room.
 	 */
