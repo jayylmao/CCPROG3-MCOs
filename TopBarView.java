@@ -12,6 +12,9 @@ public class TopBarView extends JPanel {
 	private ArrayList<JButton> buttons;
 	private ArrayList<JLabel> labels;
 
+	/**
+	 * Constructor that initializes the TopBarView containing the buttons to switch to the major functionalities
+	 */
 	public TopBarView() {
 		buttons = new ArrayList<JButton>();
 		labels = new ArrayList<JLabel>();
@@ -37,10 +40,19 @@ public class TopBarView extends JPanel {
 		}
 	}
 
+	/**
+	 * Gets the array of buttons that switch to major functionalities.
+	 * @return Array of JButtons.
+	 */
 	public ArrayList<JButton> getButtons() {
 		return buttons;
 	}
 
+	/**
+	 * Gets a specific JButton based on an index.
+	 * @param buttonNumber index of the button.
+	 * @return JButton representing a major functionality.
+	 */
 	public JButton getButton(int buttonNumber) {
 		return buttons.get(buttonNumber);
 	}
