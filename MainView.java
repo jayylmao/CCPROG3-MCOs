@@ -55,6 +55,7 @@ public class MainView extends View {
 
 	/**
 	 * Gets the topBar View class.
+	 * @return TopBarView instance.
 	 */
 	public TopBarView getTopBarView() {
 		return topBar;
@@ -62,6 +63,7 @@ public class MainView extends View {
 
 	/**
 	 * Gets the contentPanel JPanel.
+	 * @return JPanel.
 	 */
 	public JPanel getContentPanel() {
 		return contentPanel;
@@ -69,6 +71,7 @@ public class MainView extends View {
 
 	/**
 	 * Gets the MainLayout to show content in.
+	 * @return Main layout.
 	 */
 	public CardLayout getMainLayout() {
 		return mainLayout;
