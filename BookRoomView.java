@@ -225,9 +225,9 @@ public class BookRoomView extends View {
 	}
 
 	/**
-	 * Updates the output labels with the corresponding values upon
-	 * receiving data from the model.
-	 * @param hotel Hotel to display information of.
+	 * Updates the list model with the updated list of rooms
+	 * from the hotel.
+	 * @param rooms List of rooms to add to list model.
 	 */
 	public void showResult(ArrayList<Room> rooms) {
 		DefaultListModel<String> listModel = new DefaultListModel<>();
