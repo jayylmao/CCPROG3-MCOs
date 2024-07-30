@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 
+/**
+ * BookRoomView contains the layout for the "Book Room" screen.
+ */
 public class BookRoomView extends View {
 
 	private Header header;

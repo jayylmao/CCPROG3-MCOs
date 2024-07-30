@@ -7,6 +7,9 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
+/**
+ * ViewHotelView contains the layout for the "View Hotel" screen.
+ */
 public class ViewHotelView extends View {
 	private Header header;
 	private Text description;

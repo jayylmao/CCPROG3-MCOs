@@ -9,6 +9,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
+/**
+ * ManageHotelView contains the layout for the "Manage Hotel" screen.
+ */
 public class ManageHotelView extends View {
 	private Hotel currentHotel;
 	
